@@ -15,7 +15,7 @@ const path = require('path');
 const moment = require('moment-timezone');
 const { time } = require('console');
 
-// give gmail access to your email
+// give gmail access to your emails
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
