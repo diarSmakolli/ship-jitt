@@ -14,14 +14,14 @@ const multer = require('multer');
 const path = require('path');
 const moment = require('moment-timezone');
 const { time } = require('console');
+const mailgun = require('mailgun-js');
+const { sendVerificationEmail, sendWelcomeEmail } = require('../services/email');
 
-// give gmail access to your emails
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.USEREMAIL,
-        pass: process.env.PASSEMAIL,
-    },
+
+// mailgun config
+const mg = mailgun({
+    apiKey: process.env.MAILGUN_API_KEY,
+    domain: process.env.MAILGUN_DOMAIN
 });
 
 // set storage engine for multer
@@ -139,6 +139,8 @@ router.post('/register', async (req, res) => {
             createdAt: createdAtTimeZone
         });
 
+        await sendWelcomeEmail(email);
+
         res.status(201).json({
             status: 'success',
             statusCode: 201,
@@ -156,6 +158,7 @@ router.post('/register', async (req, res) => {
         });
     }
 });
+
 // login user if isVerified is true if not send email verify account  ✅
 router.post('/login', async (req, res) => {
     const { email, password, verification_token, createdBy, timeZone, updatedAt } = req.body;
@@ -196,6 +199,7 @@ router.post('/login', async (req, res) => {
             // Resend verification email
             const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
             await User.update({ verification_token: verificationToken, updatedAt: updatedAtTimeZone }, { where: { email: email } });
+            // await sendVerificationEmail(email, verificationToken);
             await sendVerificationEmail(email, verificationToken);
 
             return res.status(403).json({
@@ -257,29 +261,6 @@ router.get('/verify-email', async(req, res) => {
         });
     }
 });
-
-// send the verification in the email ✅
-const sendVerificationEmail = async (email, token) => {
-    const mailOptions = {
-        from: 'dijarsmakolli99@gmail.com',
-        to: email,
-        subject: 'Verify your email address',
-        html: `<p>Please click <a href="http://localhost:6099/verify-email?token=${token}">here</a> to verify your email address.</p>`
-    };
-
-    try {
-        await transporter.sendMail(mailOptions);
-        console.log('Verification email sent successfully.');
-    } catch (error) {
-        console.error("An Error has occurred and we're working to fix the problem!");
-        console.error(error);
-        res.status(500).json({
-            status: 'error',
-            statusCode: 500,
-            message: "An Error has occurred and we're working to fix the problem!"
-        });
-    }
-};
 
 // update all the fiedls - Admin ✅
 router.put('/update-user/:id', async(req, res) => {
@@ -823,6 +804,5 @@ router.delete('/:id', async(req, res) => {
         });
     }
 })
-
 
 module.exports = router;
