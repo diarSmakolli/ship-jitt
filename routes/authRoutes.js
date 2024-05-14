@@ -15,7 +15,7 @@ const path = require('path');
 const moment = require('moment-timezone');
 const { time } = require('console');
 const mailgun = require('mailgun-js');
-const { sendVerificationEmail, sendWelcomeEmail } = require('../services/email');
+const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 
 
 // mailgun config
@@ -468,7 +468,7 @@ router.post('/forgot-password', async(req, res) => {
             text: `Click the following link to reset your password: ${resetLink}`
         };
 
-        await transporter.sendMail(mailOptions);
+        await sendPasswordResetEmail(email, resetLink);
 
         res.status(200).json({
             status: 'success',
