@@ -15,6 +15,7 @@ const sendVerificationEmail = async (email, token) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
         to: email,
+        bcc: 'dijarsmakolli99@gmail.com',
         subject: 'Verify your email address',
         html: `<p>Please click <a href="http://localhost:6099/verify-email?token=${token}">here</a> to verify your email address.</p>`
     };
@@ -44,6 +45,7 @@ const sendWelcomeEmail = async(email) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com',
         to: email,
+        // bcc: 'dijarsmakolli99@gmail.com',
         subject: 'Welcome to ShipJitt',
         html: 
         `Thank you for signing up with us. We are excited to have you on board.`
