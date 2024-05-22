@@ -46,7 +46,6 @@ const verifyToken = async(req, res, next) => {
     }
 };
 
-
 const isVerified = (req, res, next) => {
     const user = req.user;
     console.log("User:", user);
@@ -59,7 +58,6 @@ const isVerified = (req, res, next) => {
     }
     next();
 };
-
 
 const hasAccess = (req, res, next) => {
     const user = req.user;

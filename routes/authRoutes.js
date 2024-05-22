@@ -97,7 +97,7 @@ router.post('/update-profile-picture/:id', async(req, res) => {
             message: "An Error has occurred and we're working to fix the problem!"
         });
     }
-})
+});
 
 // register user and sent the verification email  ✅
 router.post('/register', async (req, res) => {

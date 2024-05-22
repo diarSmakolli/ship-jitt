@@ -79,6 +79,20 @@ const User = sequelize.define('users', {
     },
     updatedBy: {
         type: Sequelize.DataTypes.STRING
+    },
+    customerId: {
+        type: Sequelize.DataTypes.STRING,
+        // validate: {
+        //     is: /^cus_.+/,
+        // },
+        allowNull: true,
+    },
+    priceId: {
+        type: Sequelize.DataTypes.STRING,
+        // validate: {
+        //     is: /^price_.+/,
+        // },
+        allowNull: true,
     }
 }, {
     tableName: 'users',
