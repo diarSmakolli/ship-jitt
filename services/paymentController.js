@@ -131,5 +131,7 @@ const handleWebhook = async (req, res) => {
     }
 }
 
+// tested in the postman and it works fine but i need to know how to deploy the webhook handler in the server
 
-module.exports = { createCheckoutSession };
+
+module.exports = { createCheckoutSession, handleWebhook };
