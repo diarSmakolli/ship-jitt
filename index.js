@@ -19,6 +19,7 @@ app.use(cookieParser());
 app.use('/api/users', authRoute);
 app.use('/api/stripe', stripeRoute);
 
+
 const sequelize = new Sequelize({
     dialect: process.env.DIALECT,
     host: process.env.HOST,
