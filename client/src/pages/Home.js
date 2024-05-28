@@ -12,6 +12,7 @@ import FastAccess from '../components/FastAccess';
 import Footer from '../components/Footer';
 import Pricing from '../components/Pricing';
 import GetStarted from '../components/GetStarted';
+import Testimonial from '../components/Testimonials';
 
 export default function Home() {
     return (
@@ -30,9 +31,12 @@ export default function Home() {
                         <FastAccess />
                         <Services />
                         <Pricing />
+                        <Testimonial />
                         <GetStarted />
                         <Footer />
                     </Container>
+
+
 
             </Box>
         </div>
