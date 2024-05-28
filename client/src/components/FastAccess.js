@@ -17,7 +17,7 @@ const FastAccess = () => {
  
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} mt={10}>
                 <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
-                    <Image src="https://cdn-icons-png.flaticon.com/128/10490/10490223.png" width='50px' height='50px' />
+                    <Image src="https://cdn-icons-png.flaticon.com/128/10473/10473692.png" width='50px' height='50px' />
  
                     <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Syne" fontWeight={600}>Seamless payments</Text>
  
@@ -30,7 +30,7 @@ const FastAccess = () => {
                 </Box>
  
                 <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
-                    <Image src="https://cdn-icons-png.flaticon.com/128/10490/10490223.png" width='50px' height='50px' />
+                    <Image src="https://cdn-icons-png.flaticon.com/128/10484/10484291.png" width='50px' height='50px' />
  
                     <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Syne" fontWeight={600}>Custom authentication</Text>
  
@@ -56,7 +56,7 @@ const FastAccess = () => {
                 </Box>
  
                 <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
-                    <Image src="https://cdn-icons-png.flaticon.com/128/10490/10490223.png" width='50px' height='50px' />
+                    <Image src="https://cdn-icons-png.flaticon.com/128/8488/8488859.png" width='50px' height='50px' />
  
                     <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Syne" fontWeight={600}>Chakra UI components</Text>
  
