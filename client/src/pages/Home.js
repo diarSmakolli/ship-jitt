@@ -9,6 +9,7 @@ import Hero from '../components/Hero';
 import Companies from '../components/Companies';
 import Services from '../components/Services';
 import FastAccess from '../components/FastAccess';
+import Footer from '../components/Footer';
 
 export default function Home() {
     return (
@@ -26,6 +27,7 @@ export default function Home() {
                         <Companies />
                         <FastAccess />
                         <Services />
+                        <Footer />
                     </Container>
 
             </Box>

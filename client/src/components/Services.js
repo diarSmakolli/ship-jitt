@@ -6,7 +6,7 @@ import { CheckIcon } from '@chakra-ui/icons';
 
 const Services = () => {
     return (
-        <Box>
+        <Box py={10}>
             <Text 
             textAlign={'center'} 
             color='white' 
