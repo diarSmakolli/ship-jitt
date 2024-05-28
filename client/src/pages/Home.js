@@ -25,7 +25,7 @@ export default function Home() {
                     <Container maxW={'6xl'}>
                         <Companies />
                         <FastAccess />
-                        {/* <Services /> */}
+                        <Services />
                     </Container>
 
             </Box>

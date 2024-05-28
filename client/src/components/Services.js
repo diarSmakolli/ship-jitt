@@ -1,3 +1,5 @@
+// Services.js -- Features
+
 import React from 'react';
 import { Box, Center, Text, SimpleGrid, Image } from '@chakra-ui/react';
 import { CheckIcon } from '@chakra-ui/icons';
