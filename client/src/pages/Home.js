@@ -8,12 +8,13 @@ import {
 import Hero from '../components/Hero';
 import Companies from '../components/Companies';
 import Services from '../components/Services';
+import FastAccess from '../components/FastAccess';
 
 export default function Home() {
     return (
         <div>
             <Box
-                height={'200vh'}
+                height={'auto'}
                 background={'#0d1117'}
             >
                     <Box>
@@ -23,7 +24,8 @@ export default function Home() {
 
                     <Container maxW={'6xl'}>
                         <Companies />
-                        <Services />
+                        <FastAccess />
+                        {/* <Services /> */}
                     </Container>
 
             </Box>

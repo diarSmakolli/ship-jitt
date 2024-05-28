@@ -1,196 +1,161 @@
 import React from 'react';
-import { Box, Center, Text, SimpleGrid } from '@chakra-ui/react';
+import { Box, Center, Text, SimpleGrid, Image } from '@chakra-ui/react';
+import { CheckIcon } from '@chakra-ui/icons';
 
 const Services = () => {
     return (
         <Box>
-            <Text textAlign={'center'} color='white' fontFamily={'Poppins'} fontSize={{ base: 'xl', md: '4xl' }}
-                fontWeight={'bold'}
+            <Text 
+            textAlign={'center'} 
+            color='white' 
+            fontFamily={'Syne'} 
+            fontSize={{ base: 'xl', md: '6xl' }}
+            fontWeight={'600'}
             >
                 Compare with <br />
                 everything you need
             </Text>
 
-            <SimpleGrid columns={3} spacing={4} mt={10}>
-                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z"
-                            fill="currentColor"
-                        />
-                    </svg>
+            <SimpleGrid columns={{base: 1, md: 3}} spacing={4} mt={10}>
+                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
+                    <Image src="https://cdn-icons-png.flaticon.com/128/10490/10490223.png" width='50px' height='50px'/>
 
-                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Bricolage Grotesque'} fontWeight={600}>Emails</Text>
+                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Syne" fontWeight={600}>Emails</Text>
 
                     <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
-
-                        Send transactional emails</Text>
-
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)</Text>
-
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Webhook to receive & forward emails</Text>
-
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Mailgun integration</Text>
-
-
-
-                </Box>
-
-                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z"
-                            fill="currentColor"
-                        />
-                    </svg>
-
-                    <Text mt={2} color='white' fontSize={'3xl'} fontFamily={'Bricolage Grotesque'}>Payments</Text>
-
-                    <Text mt={2} color='gray.400' fontSize={'lg'} fontFamily={'Epilogue'}>Send transactional emails</Text>
-
-                    <Text mt={2} color='gray.400' fontSize={'lg'} fontFamily={'Epilogue'}>DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)</Text>
-
-                    <Text mt={2} color='gray.400' fontSize={'lg'} fontFamily={'Epilogue'}>Webhook to receive & forward emails</Text>
-
-
-
-                </Box>
-
-                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z"
-                            fill="currentColor"
-                        />
-                    </svg>
-
-                    <Text mt={2} color='white' fontSize={'3xl'} fontFamily={'Bricolage Grotesque'}>Auth</Text>
-
-                    <Text mt={2} color='gray.400' fontSize={'lg'} fontFamily={'Epilogue'}>Send transactional emails</Text>
-
-                    <Text mt={2} color='gray.400' fontSize={'lg'} fontFamily={'Epilogue'}>DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)</Text>
-
-                    <Text mt={2} color='gray.400' fontSize={'lg'} fontFamily={'Epilogue'}>Webhook to receive & forward emails</Text>
-
-
-
-                </Box>
-
-                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z"
-                            fill="currentColor"
-                        />
-                    </svg>
-
-                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Bricolage Grotesque'} fontWeight={600}>Database</Text>
+                        <CheckIcon /> Send transactional emails
+                    </Text>
 
                     <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                    <CheckIcon /> DNS setup to avoid spam folder.
+                    </Text>
 
-                        Send transactional emails</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Webhook to receive & forward emails
+                    </Text>
 
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)</Text>
-
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Webhook to receive & forward emails</Text>
-
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Mailgun integration</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Mailgun integration
+                    </Text>
 
 
 
                 </Box>
 
-                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z"
-                            fill="currentColor"
-                        />
-                    </svg>
+                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
+                    <Image src="https://cdn-icons-png.flaticon.com/128/10473/10473692.png" width='50px' height='50px'/>
 
-                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Bricolage Grotesque'} fontWeight={600}>SEO</Text>
+                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Syne'} fontWeight={600}>Payments</Text>
 
                     <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Create checkout sessions
+                    </Text>
 
-                        Send transactional emails</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                    <CheckIcon /> Handle endpoints to update the user account (one-time payments).
+                    </Text>
 
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Tutorial to setup your account in Stripe.
+                    </Text>
 
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Webhook to receive & forward emails</Text>
-
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Mailgun integration</Text>
+                  
 
 
 
                 </Box>
 
-                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M3.00977 5.83789C3.00977 5.28561 3.45748 4.83789 4.00977 4.83789H20C20.5523 4.83789 21 5.28561 21 5.83789V17.1621C21 18.2667 20.1046 19.1621 19 19.1621H5C3.89543 19.1621 3 18.2667 3 17.1621V6.16211C3 6.11449 3.00333 6.06765 3.00977 6.0218V5.83789ZM5 8.06165V17.1621H19V8.06199L14.1215 12.9405C12.9499 14.1121 11.0504 14.1121 9.87885 12.9405L5 8.06165ZM6.57232 6.80554H17.428L12.7073 11.5263C12.3168 11.9168 11.6836 11.9168 11.2931 11.5263L6.57232 6.80554Z"
-                            fill="currentColor"
-                        />
-                    </svg>
+                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
+                    <Image src="https://cdn-icons-png.flaticon.com/128/10645/10645744.png" width='50px' height='50px'/>
 
-                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Bricolage Grotesque'} fontWeight={600}>Components</Text>
+                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Syne'} fontWeight={600}>Authentication</Text>
 
                     <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Custom authentication
+                    </Text>
 
-                        Send transactional emails</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                    <CheckIcon /> Save user in database.
+                    </Text>
 
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>DNS setup to avoid spam folder (DKIM, DMARC, SPF in subdomain)</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Private protected routes.
+                    </Text>
 
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Webhook to receive & forward emails</Text>
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Features like update password, update profile picture, verify email, forgot password.
+                    </Text>
 
-                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>Mailgun integration</Text>
+
+
+                </Box>
+
+                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
+                    <Image src="https://cdn-icons-png.flaticon.com/128/9850/9850774.png" width='50px' height='50px'/>
+
+                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Syne'} fontWeight={600}>Database</Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> MongoDB Schema
+                    </Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                    <CheckIcon /> Postgres Schema
+                    </Text>
+
+
+
+                </Box>
+
+                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
+                    <Image src="https://cdn-icons-png.flaticon.com/128/1292/1292765.png" width='50px' height='50px'/>
+
+                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Syne'} fontWeight={600}>SEO</Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Blog
+                    </Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                    <CheckIcon /> All meta tags to rank on search engines.
+                    </Text>
+
+                    {/* <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Opengraph to share on social media
+                    </Text> */}
+
+                    {/* <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Automated sitemap generation to fasten Google indexing
+                    </Text> */}
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> SEO-optimized UI components
+                    </Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Structured data markup for Rich Snippets
+                    </Text>
+
+
+                </Box>
+
+                <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'>
+                    <Image src="https://cdn-icons-png.flaticon.com/128/16359/16359637.png" width='50px' height='50px'/>
+
+                    <Text mt={2} color='white' fontSize={'2xl'} fontFamily={'Syne'} fontWeight={600}>Others</Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Chakra UI integration.
+                    </Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                    <CheckIcon /> Chakra UI 20+ themes, Components, animations, and sections like this features section.
+                    </Text>
+
+                    <Text mt={2} color='#8b949e' fontSize={'md'} fontFamily={'Poppins'} fontWeight={500}>
+                        <CheckIcon /> Copy paste code templates
+                    </Text>
+
 
 
 

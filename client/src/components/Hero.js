@@ -11,6 +11,9 @@ import {
     Container
 } from '@chakra-ui/react';
 
+// import CheckIcon from chakra ui icons
+import { CheckIcon } from '@chakra-ui/icons';
+
 
 
 export default function Hero() {
@@ -48,7 +51,7 @@ export default function Hero() {
                                     <Text
                                         as={'span'}
                                         position={'relative'}
-                                        fontFamily={'Poppins'}
+                                        fontFamily={'Questrial'}
                                         lineHeight={'1.5'}
                                         fontWeight={700}
                                         className='text-select'
@@ -56,10 +59,11 @@ export default function Hero() {
                                         
                                     >
 
-                                       Supercharge your projects with
+                                       Supercharge your projects with <br />
                                         <Box ml={2} display='inline'>
-                                            <Text as='span' className='text-gradient' border='1px solid rgb(150, 152, 157)' 
-                                            rounded={{base: '2xl', md: '3xl'}} pr={3}>
+                                            <Text as='span' className='text-gradient' 
+                                            // border='1px solid rgb(150, 152, 157)' 
+                                            rounded={{base: '2xl', md: '3xl'}} pr={4}> 
                                                 {' '} Ship jitt
                                             </Text>
                                         </Box>
@@ -106,6 +110,7 @@ export default function Hero() {
                                     opacity={'0.8'}
                                     fontSize={'lg'} fontWeight={500}
                                     fontFamily={'Epilogue'}
+                                    textAlign={{base: 'center', md: 'left'}}
                                 >
                                     The NodeJS boilerplate with all you need to build your SaaS
                                     or any other web app and make your first $ online fast.
@@ -122,6 +127,7 @@ export default function Hero() {
                                         as='a'
                                         href='/contact'
                                         fontFamily={'Bricolage Grotesque'}
+                                        width={{base: 'full', sm: 'auto'}}
                                     >
                                         Get started with <Text as='span'>Ship jitt</Text>
                                     </Button>
