@@ -12,7 +12,7 @@ const FastAccess = () => {
                 fontSize={{ base: 'xl', md: '6xl' }}
                 fontWeight={'600'}
             >
-                FAST ACCESS
+                Fast access to everything you need
             </Text>
  
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} mt={10}>
@@ -25,7 +25,6 @@ const FastAccess = () => {
                          Effortesly manage transactions with our seamless Stripe integration,
                         ensuring secure and fast payment processing for your customers.
                     </Text>
- 
  
                 </Box>
  

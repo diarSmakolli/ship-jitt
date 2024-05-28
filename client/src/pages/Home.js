@@ -10,6 +10,7 @@ import Companies from '../components/Companies';
 import Services from '../components/Services';
 import FastAccess from '../components/FastAccess';
 import Footer from '../components/Footer';
+import Pricing from '../components/Pricing';
 
 export default function Home() {
     return (
@@ -27,6 +28,7 @@ export default function Home() {
                         <Companies />
                         <FastAccess />
                         <Services />
+                        <Pricing />
                         <Footer />
                     </Container>
 
