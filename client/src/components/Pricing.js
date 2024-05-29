@@ -114,8 +114,8 @@ const Pricing = () => {
             <Text
                 // textAlign={'center'}
                 color='white'
-                fontFamily={'Poppins'}
-                fontSize={{ base: 'xl', md: '7xl' }}
+                fontFamily={'Bricolage Grotesque'}
+                fontSize={{ base: 'xl', md: '6xl' }}
                 fontWeight={'600'}
             >
                 Take flight with Ship Jitt

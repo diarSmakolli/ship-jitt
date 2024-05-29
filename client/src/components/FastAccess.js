@@ -8,11 +8,11 @@ const FastAccess = () => {
             <Text
                 textAlign={'center'}
                 color='white'
-                fontFamily={'Syne'}
-                fontSize={{ base: 'xl', md: '6xl' }}
+                fontFamily={'Bricolage Grotesque'}
+                fontSize={{ base: 'xl', md: '5xl' }}
                 fontWeight={'600'}
             >
-                Fast access to everything you need
+                Fast access to essential tools
             </Text>
  
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} mt={10}>

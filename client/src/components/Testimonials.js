@@ -17,6 +17,7 @@ export default function Testimonials() {
                 fontSize={'5xl'}
                 color='white'
                 fontFamily={'Bricolage Grotesque'}
+                fontWeight={500}
             >
                 Trusted by the world's best.
             </Text>
@@ -32,12 +33,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -48,12 +51,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -64,12 +69,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -84,12 +91,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -100,12 +109,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -116,12 +127,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -136,12 +149,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -152,12 +167,14 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
+
+
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
@@ -168,20 +185,18 @@ export default function Testimonials() {
                                 rounded={'full'} width='40px' height='40px'
                             />
 
-                            <Text>
-                                Dev Ed
+                            <Text color='gray.200' fontFamily={'Poppins'}>
+                                Dev Ed - Software Developer
                             </Text>
                         </HStack>
 
-                        <Text mt={5}>
+                        <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
                             Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
                         </Text>
                     </Box>
 
                 </VStack>
-            </HStack>   
-
-
+            </HStack>
         </Box>
     )
 }

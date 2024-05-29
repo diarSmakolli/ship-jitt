@@ -51,7 +51,7 @@ export default function Hero() {
                                     <Text
                                         as={'span'}
                                         position={'relative'}
-                                        fontFamily={'Questrial'}
+                                        fontFamily={'Bricolage Grotesque'}
                                         lineHeight={'1.5'}
                                         fontWeight={700}
                                         className='text-select'
@@ -60,13 +60,13 @@ export default function Hero() {
                                     >
 
                                        Supercharge your projects with <br />
-                                        <Box ml={2} display='inline'>
+                                        {/* <Box ml={2} display='inline'> */}
                                             <Text as='span' className='text-gradient' 
                                             // border='1px solid rgb(150, 152, 157)' 
                                             rounded={{base: '2xl', md: '3xl'}} pr={4}> 
-                                                {' '} Ship jitt
+                                                Ship jitt
                                             </Text>
-                                        </Box>
+                                        {/* </Box> */}
                                         
                                     </Text>
 
@@ -129,7 +129,7 @@ export default function Hero() {
                                         fontFamily={'Bricolage Grotesque'}
                                         width={{base: 'full', sm: 'auto'}}
                                     >
-                                        Get started with <Text as='span'>Ship jitt</Text>
+                                        Get started with Ship jitt
                                     </Button>
 
 

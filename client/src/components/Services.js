@@ -10,8 +10,8 @@ const Services = () => {
             <Text 
             textAlign={'center'} 
             color='white' 
-            fontFamily={'Syne'} 
-            fontSize={{ base: 'xl', md: '6xl' }}
+            fontFamily={'Bricolage Grotesque'} 
+            fontSize={{ base: 'xl', md: '5xl' }}
             fontWeight={'600'}
             >
                 Compare with <br />
