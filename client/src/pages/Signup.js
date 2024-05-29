@@ -18,15 +18,30 @@ import {
       >
         <Flex p={8} flex={1} align={'center'} justify={'center'}>
           <Stack spacing={4} w={'full'} maxW={'md'}>
-            <Heading fontSize={'2xl'} color='gray.200' fontFamily={'Bricolage Grotesque'}>Welcome to Ship jitt</Heading>
+            <Heading fontSize={'2xl'} color='gray.200' fontFamily={'Bricolage Grotesque'}>
+                Create an account in Ship jitt
+            </Heading>
+
+            <FormControl id="email">
+              <FormLabel color='gray.200'>First name</FormLabel>
+              <Input type="text" border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)"  color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)'}} />
+            </FormControl>
+
+            <FormControl id="email">
+              <FormLabel color='gray.200'>Last name</FormLabel>
+              <Input type="text" border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)"  color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)'}} />
+            </FormControl>
+
             <FormControl id="email">
               <FormLabel color='gray.200'>Email address</FormLabel>
               <Input type="email" border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)"  color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)'}} />
             </FormControl>
+
             <FormControl id="password">
               <FormLabel color='gray.200'>Password</FormLabel>
               <Input type="password" border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)"  color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)'}} />
             </FormControl>
+            
             <Stack spacing={6}>
               <Stack
                 direction={{ base: 'column', sm: 'row' }}
