@@ -55,12 +55,15 @@ export default function WithSubnavigation() {
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Text
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={useColorModeValue('white', 'white')}>
-            Logo
+            fontFamily={'Bricolage Grotesque'} 
+            color='gray.50'
+            fontSize={'3xl'}
+            fontWeight={'500'}
+            >
+            Ship jitt
           </Text>
 
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+          <Flex display={{ base: 'none', md: 'flex' }} ml={10} mt={3}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -76,7 +79,7 @@ export default function WithSubnavigation() {
             color='white'
             fontWeight={400}
             variant={'link'}
-            href={'#'}>
+            href={'/auth/signin'}>
             Sign In
           </Button>
           <Button
@@ -86,7 +89,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'black'}
             bg={'white'}
-            href={'#'}
+            href={'/auth/signup'}
             _hover={{
               bg: 'white.200',
             }}>
@@ -250,37 +253,41 @@ const MobileNavItem = ({ label, children, href }) => {
 
 const NAV_ITEMS = [
   {
+    label: 'Home',
+    href: '/',
+  },
+  {
     label: 'Pricing',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
+    // children: [
+    //   {
+    //     label: 'Explore Design Work',
+    //     subLabel: 'Trending Design to inspire you',
+    //     href: '#',
+    //   },
+    //   {
+    //     label: 'New & Noteworthy',
+    //     subLabel: 'Up-and-coming Designers',
+    //     href: '#',
+    //   },
+    // ],
   },
   {
     label: 'Demo',
-    children: [
-      {
-        label: 'Job Board',
-        subLabel: 'Find your dream design job',
-        href: '#',
-      },
-      {
-        label: 'Freelance Projects',
-        subLabel: 'An exclusive list for contract work',
-        href: '#',
-      },
-    ],
+    // children: [
+    //   {
+    //     label: 'Job Board',
+    //     subLabel: 'Find your dream design job',
+    //     href: '#',
+    //   },
+    //   {
+    //     label: 'Freelance Projects',
+    //     subLabel: 'An exclusive list for contract work',
+    //     href: '#',
+    //   },
+    // ],
   },
   {
-    label: 'Affiliates',
+    label: 'Customer Support',
     href: '#',
   },
   {

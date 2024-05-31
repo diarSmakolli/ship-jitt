@@ -13,6 +13,7 @@ import {
 
 // import CheckIcon from chakra ui icons
 import { CheckIcon } from '@chakra-ui/icons';
+import hero from '../images/hero.svg';
 
 
 
@@ -32,6 +33,7 @@ export default function Hero() {
             // alignItems={'center'}
             borderBottomRadius={'5%'}
             zIndex={1}
+            pb={14}
         >
             <Container maxW='6xl'>
             <Stack
@@ -157,7 +159,7 @@ export default function Hero() {
                                         w={{base: 'auto', md: '100%'}}
                                         h={{base: 'auto', md: '100%'}} 
                                         src={
-                                            'https://shipfa.st/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdemo.a9a3174c.png&w=3840&q=75'
+                                            hero
                                         }
                                     />
                                 </Box>
