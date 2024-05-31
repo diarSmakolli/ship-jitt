@@ -9,11 +9,15 @@ import {
     Link,
     Stack,
     Image,
+    useToast,
+    Spinner,
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import axios from 'axios';
   
   export default function SplitScreen() {
+
+    const toast = useToast();
 
     const [formData, setFormData] = useState({
       first_name: '',
@@ -22,6 +26,8 @@ import {
       password: '',
       timeZone: ''
     });
+
+    const [isLoading, setIsLoading] = useState(false); 
   
     const [message, setMessage] = useState('');
   
@@ -42,12 +48,40 @@ import {
         });
         console.log(response.data);
         console.log(response.data);
+
+        toast({
+          title: 'Account created.',
+          description: response.data.message,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+
         setMessage(response.data.message);
       } catch (error) {
         if (error.response) {
           setMessage(error.response.data.message);
+          console.log(error.response.data.message);
+
+          toast({
+            title: 'An error occurred.',
+            description: error.response.data.message,
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+
         } else {
-          setMessage("An error occurred. Please try again later.");
+          setMessage("An Error has occurred and we're working to fix the problem!");
+          console.log("An Error has occurred and we're working to fix the problem!");
+
+          toast({
+            title: 'Error',
+            description: "An Error has occurred and we're working to fix the problem!",
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
         }
       }
     };

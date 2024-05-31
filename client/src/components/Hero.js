@@ -127,7 +127,7 @@ export default function Hero() {
                                         bg={'white'}
                                         _hover={{ bg: 'gray.100' }}
                                         as='a'
-                                        href='/contact'
+                                        href='/auth/signup'
                                         fontFamily={'Bricolage Grotesque'}
                                         width={{base: 'full', sm: 'auto'}}
                                     >
