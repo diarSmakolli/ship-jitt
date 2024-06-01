@@ -133,9 +133,6 @@ export default function Hero() {
                                     >
                                         Get started with Ship jitt
                                     </Button>
-
-
-
                                 </Stack>
                             </Stack>
                             <Flex

@@ -9,7 +9,8 @@ import {
     Link,
     Stack,
     Image,
-    useToast
+    useToast,
+    Spinner
   } from '@chakra-ui/react';
   import { useState } from 'react';
   import axios from 'axios';
@@ -46,6 +47,9 @@ import {
         });
         console.log('Response:', response);
         console.log('Response Data:', response.data);
+
+        localStorage.setItem('token', response.data.token);
+
         toast({
           title: 'Success',
           description: response.data.message,
@@ -53,6 +57,11 @@ import {
           duration: 3000,
           isClosable: true,
         });
+
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+
       } catch (error) {
         console.error('Error Response:', error.response);
         if (error.response) {
@@ -115,8 +124,8 @@ import {
                 justify={'space-between'}>
                 <Link color='gray.200'>Forgot password?</Link>
               </Stack>
-              <Button type="submit">
-                Sign in
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? <Spinner /> : 'Sign in'}
               </Button>
             </Stack>
             </form>
