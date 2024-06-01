@@ -16,6 +16,7 @@ const moment = require('moment-timezone');
 const { time } = require('console');
 const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
+const fs = require('fs');
 
 
 // mailgun config
@@ -33,10 +34,26 @@ const storage = multer.diskStorage({
 })
 
 // initialize multer upload 
-const upload = multer({
+const upload = multer({ 
     storage: storage,
     limits: { fileSize: 2000000 }
 }).single('profile_picture');
+
+router.get('/profile-picture/uploads/:filename', (req, res) => {
+    try {
+        const filename = req.params.filename;
+        const filePath = path.join(__dirname, '..', 'uploads', filename); // Adjusted path to go up one directory level
+
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).send({ message: 'File not found.' });
+        }
+
+        return res.sendFile(filePath);
+    } catch (error) {
+        console.error('Error fetching file', error);
+        return res.status(500).send({ message: 'Server error while fetching file.' });
+    }
+});
 
 // update the user profile picture - unchecked  ✅
 router.post('/update-profile-picture/:id', async(req, res) => {
@@ -113,13 +130,6 @@ router.post('/register', async (req, res) => {
             });
         }
 
-        // detect timeZone - Europe/Belgrade
-
-        // const detectTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-        // console.log(detectTimeZone);
-        
-
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
@@ -139,7 +149,7 @@ router.post('/register', async (req, res) => {
             createdAt: createdAtTimeZone
         });
 
-        await sendWelcomeEmail(email);
+        // await sendWelcomeEmail(email);
 
         res.status(201).json({
             status: 'success',
@@ -219,9 +229,31 @@ router.post('/login', async (req, res) => {
         res.status(200).json({
             status: 'success',
             statusCode: 200,
-            token: token
+            token: token,
+            message: 'User logged in successfully.',
         });
     } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// log out
+router.post('/logout', async(req, res) => {
+    try {
+        res.clearCookie('token');
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'User logged out successfully.'
+        });
+    } catch(error) {
         console.error("An Error has occurred and we're working to fix the problem!");
         console.error(error);
         res.status(500).json({

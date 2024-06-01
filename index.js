@@ -6,18 +6,25 @@ const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 const authRoute = require('./routes/authRoutes');
 const stripeRoute = require('./routes/stripe');
+const path = require('path');
 
 const app = express();
 dotenv.config();
 
 // middlewares
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000', // Replace with your frontend URL
+    credentials: true
+  }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/users', authRoute);
 app.use('/api/stripe', stripeRoute);
+// const uploadsPath = path.join(__dirname, 'uploads');
+// app.use('/uploads', express.static(uploadsPath));
+
 
 
 const sequelize = new Sequelize({
