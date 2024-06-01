@@ -22,9 +22,11 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import {useAuth} from '../auth/authContext';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const { user, loading, logout } = useAuth();
 
   return (
     <Box py={2}>
@@ -73,6 +75,8 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
+          {/* { !user ? (
+          <>
           <Button
             as={'a'}
             fontSize={'sm'}
@@ -95,6 +99,64 @@ export default function WithSubnavigation() {
             }}>
             Get started
           </Button>
+          </>
+          ) : (
+          <>
+            <Button
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'black'}
+            bg={'white'}
+            onClick={logout}
+            _hover={{
+              bg: 'white.200',
+            }}
+          >
+            Log Out
+          </Button>
+          </>
+          )} */}
+          {loading ? null : !user ? (
+              <>
+                <Button
+                  as={'a'}
+                  fontSize={'sm'}
+                  color='white'
+                  fontWeight={400}
+                  variant={'link'}
+                  href={'/auth/signin'}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  as={'a'}
+                  display={{ base: 'none', md: 'inline-flex' }}
+                  fontSize={'sm'}
+                  fontWeight={600}
+                  color={'black'}
+                  bg={'white'}
+                  href={'/auth/signup'}
+                  _hover={{
+                    bg: 'white.200',
+                  }}
+                >
+                  Get started
+                </Button>
+              </>
+            ) : (
+              <Button
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'black'}
+                bg={'white'}
+                onClick={logout}
+                _hover={{
+                  bg: 'white.200',
+                }}
+              >
+                Log Out
+              </Button>
+            )}
         </Stack>
       </Flex>
 
