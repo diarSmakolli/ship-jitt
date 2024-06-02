@@ -24,8 +24,16 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     
+    let defaultProfilePicture = "https://www.gravatar.com/avatar/938610872fd268285c3d4024cfa46360.png?d=retro&r=g";
     let profilePictureUrl = `http://localhost:6099/api/users/profile-picture/${user.profile_picture}`;
+
+    if(user.profile_picture == null) {
+        profilePictureUrl = defaultProfilePicture;
+    }
     
     useEffect(() => {
         if (user) {
@@ -69,6 +77,26 @@ function Profile() {
             console.error('Error updating profile', error);
         }
     };
+
+    const handleChangePassword = async () => {
+        try {
+            await axios.put(`http://localhost:6099/api/users/change-password/${user.id}`, {
+                current_password: currentPassword,
+                new_password: newPassword,
+                confirm_password: confirmPassword,
+                updatedAt: new Date().toISOString(),
+                updatedBy: user.id,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            });
+
+            alert('Password changed successfully');
+            setCurrentPassword('');
+            setNewPassword('');
+            setConfirmPassword('');
+        } catch(error) {
+            console.error('Error changing password', error);
+        }
+    }
 
     return (
         <Box background={'#0d1117'}>
@@ -147,43 +175,34 @@ function Profile() {
                 <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' mt={10}>
 
                     <FormLabel mt={10} color='gray.200'>
-                        First name
+                        Current password
                     </FormLabel>
-                    <Input type='text' width='40%' color='gray.200' />
+                    <Input type='password' 
+                    value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}
+                    width='40%' color='gray.200' required />
 
                     <FormLabel mt={10} color='gray.200'>
-                        Last name
+                        New password
                     </FormLabel>
-                    <Input type='text' width='40%' color='gray.200' />
+                    <Input type='password' 
+                        value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
+                    width='40%' color='gray.200' required />
 
                     <FormLabel mt={10} color='gray.200'>
-                        Email
+                        Confirm new password
                     </FormLabel>
-                    <Input type='text' width='40%' color='gray.200' />
+                    <Input type='password' 
+                    value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+                    width='40%' color='gray.200' required />
 
 
                     <HStack>
-                        <Button bg='white' color='black' mt={5}>
-                            Save
+                        <Button bg='white' color='black' mt={5} onClick={handleChangePassword}>
+                            Change password
                         </Button>
                     </HStack>
 
                 </Box>
-
-
-                <Text color='white' fontFamily={'Bricolage Grotesque'} fontSize={'4xl'} mt={10}>
-                    Delete my account permamently
-                </Text>
-
-                <Text color='gray.200' fontFamily={'Bricolage Grotesque'} fontSize={'md'}>
-                    Do you really want to delete permamently your account? This action cannot be undone.
-                </Text>
-
-                <Button bg='red.500' color='white' mt={5}>
-                    Delete my account
-                </Button>
-
-
                 
                 <Box py={10}>
                     <Footer />

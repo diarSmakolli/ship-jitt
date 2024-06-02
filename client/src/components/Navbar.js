@@ -15,6 +15,11 @@ import {
   useBreakpointValue,
   useDisclosure,
   Container,
+  Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -144,18 +149,21 @@ export default function WithSubnavigation() {
                 </Button>
               </>
             ) : (
-              <Button
-                fontSize={'sm'}
-                fontWeight={600}
-                color={'black'}
-                bg={'white'}
-                onClick={logout}
-                _hover={{
-                  bg: 'white.200',
-                }}
-              >
-                Log Out
-              </Button>
+              <>
+                  <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100px'} height={'50px'} rounded='3xl'>
+                    <Image src={`http://localhost:6099/api/users/profile-picture/${user.profile_picture}`}
+                      width={'40px'} height={'40px'} rounded={'full'} />
+                    </MenuButton>
+                    <MenuList zIndex={10}>
+                      <MenuItem color='black' fontFamily={'Bricolage Grotesque'} fontWeight={600}>{user.first_name} {user.last_name}</MenuItem>
+                      <MenuItem as='a' href='/profile'>Profile</MenuItem>
+                      <MenuItem>Customer support</MenuItem>
+                      <MenuItem>Docs</MenuItem>
+                      <MenuItem onClick={logout}>Log out</MenuItem>
+                    </MenuList>
+                  </Menu>
+              </>
             )}
         </Stack>
       </Flex>
