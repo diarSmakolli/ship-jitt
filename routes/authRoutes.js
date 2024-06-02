@@ -17,6 +17,7 @@ const { time } = require('console');
 const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 const fs = require('fs');
+const { userValidationRules, validate } = require('../validators/validators');
 
 
 // mailgun config
@@ -173,6 +174,15 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password, verification_token, createdBy, timeZone, updatedAt } = req.body;
     try {
+
+        if(!email || !password) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Email and password are required.'
+            });
+        }
+    
         const user = await User.findOne({ where: { email: email } });
 
         if (!user) {

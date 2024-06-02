@@ -16,19 +16,46 @@ const User = sequelize.define('users', {
     },
     first_name: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'First name is required'
+            }
+        }
     },
     last_name: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Last name is required'
+            }
+        }
     },
     email: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Email is required'
+            },
+            isEmail: {
+                msg: 'A valid email is required.'
+            }
+        }
     },
     password: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Password is required'
+            },
+            len: {
+                args: [6, 100],
+                msg: 'Password must be at least 6 characters long'
+            }
+        }
     },
     profile_picture: {
         type: Sequelize.DataTypes.STRING,
