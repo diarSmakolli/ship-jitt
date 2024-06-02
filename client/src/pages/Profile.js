@@ -27,9 +27,12 @@ function Profile() {
     
     let profilePictureUrl = `http://localhost:6099/api/users/profile-picture/${user.profile_picture}`;
     
-
-    
-
+    useEffect(() => {
+        if (user) {
+            setFirstName(user.first_name);
+            setLastName(user.last_name);
+        }
+    }, [user]);
 
     const handleProfilePictureChange = (e) => {
         setProfilePicture(e.target.files[0]);
@@ -50,7 +53,8 @@ function Profile() {
                     }
                 });
             }
-
+            
+            if(firstName != '' || lastName != '') {
             await axios.put(`http://localhost:6099/api/users/${user.id}`, {
                 first_name: firstName,
                 last_name: lastName,
@@ -58,6 +62,7 @@ function Profile() {
                 updatedBy: user.id,
                 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
             });
+        }
 
             alert('Profile updated successfully');
         } catch (error) {
