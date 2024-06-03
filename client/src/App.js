@@ -16,6 +16,7 @@ import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthProvider, useAuth } from './auth/authContext';
 import Profile from './pages/Profile';
+import Pricing from './components/Pricing';
 
 const App = () => {
   return (
@@ -29,7 +30,7 @@ const App = () => {
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/docs" element={<Docs />} />
             <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
-            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            <Route path="/dashboard" element={<PaidRoute><Pricing /><Dashboard /></PaidRoute>} />
             <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
           </Routes>
         </Router>

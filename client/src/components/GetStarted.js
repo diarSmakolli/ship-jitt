@@ -22,8 +22,8 @@ const GetStarted = () => {
                 
             </Center>
             <Center>
-                <Button bg="white" color='black'>
-                    Get Ship jitt
+                <Button bg="white" color='black' as='a' href='/auth/signup'>
+                    Get Started
                 </Button>
             </Center>
         </Box>

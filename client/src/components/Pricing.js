@@ -10,15 +10,16 @@ import {
     HStack,
 } from '@chakra-ui/react';
 import { CheckIcon, SmallCloseIcon, CloseIcon } from '@chakra-ui/icons';
+import {useAuth} from '../auth/authContext';
+import axios from 'axios';
+
+const starterPlan = 'price_1PIcjiP1jRGQyMPG1shY69it';
+const allInPlan = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
  
 const PricingCard = ({ title, description, price, pricePeriod, features, ctaText }) => {
     return (
         <Box
-            // bg="rgba(0,0,0,.5)"
             bg='transparent'
-            // borderRadius="1.5rem"
-            p={9}
-            // border="1.5px solid rgba(255,255,255,.12)"
             borderLeft={'1px'}
             borderColor={'1.5px solid rgba(255,255,255,.12)'}
             textAlign="left"
@@ -54,46 +55,21 @@ const PricingCard = ({ title, description, price, pricePeriod, features, ctaText
 };
  
 const Pricing = () => {
- 
-    const pricingPlans = [
-        {
-            title: 'Copilot Individual',
-            description: 'For individual developers, freelancers, students, and educators that want to code faster and happier.',
-            price: 10,
-            pricePeriod: 'per month / $100 USD per year',
-            features: [
-                'Unlimited messages and interactions',
-                'Access to all integrations',
-                '24/7 support',
-            ],
-            ctaText: 'Start a free trial'
-        },
-        {
-            title: 'Copilot Business',
-            description: 'For organizations ready to improve engineering velocity, code quality, and developer experience.',
-            price: 19,
-            pricePeriod: 'per user / month',
-            features: [
-                'Unlimited messages and interactions',
-                'Access to all integrations',
-                'Priority support',
-            ],
-            ctaText: 'Buy now'
-        },
-        {
-            title: 'Copilot Enterprise',
-            description: 'For companies looking to customize GitHub Copilot to their organization and infuse AI across the developer workflow.',
-            price: 39,
-            pricePeriod: 'per user / month',
-            features: [
-                'Unlimited messages and interactions',
-                'Dedicated account manager',
-                'Custom integrations',
-            ],
-            ctaText: 'Contact sales'
+    const { user, loading } = useAuth();
+
+    const handleStarterPlan = async () => {
+        try {
+            const response = await axios.post('http://localhost:6099/api/stripe/create-checkout-session', {
+                priceId: starterPlan,
+                userId: user.id,
+                email: user.email,
+            });
+            window.location.href = response.data.url;
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
         }
-    ];
- 
+    };
+        
     return (
         <Box py={20}>
  
@@ -105,7 +81,6 @@ const Pricing = () => {
                 rounded='3xl'
                 fontFamily={'Montserrat'}
                 fontWeight={500}
- 
             >
                 Pricing
             </Button>
@@ -152,7 +127,7 @@ const Pricing = () => {
                                 For individual developers, freelancers, students, and educators that want to build and ship faster.
                             </Text>
                             <HStack align="baseline" mt={4}>
-                                <Text fontSize="3xl" color="white" fontWeight="bold">$99</Text>
+                                <Text fontSize="3xl" color="white" fontWeight="bold">$149</Text>
                                 <Text fontSize="md" color="#8b949e">Pay once, access forever</Text>
                             </HStack>
                             <Button
@@ -161,6 +136,7 @@ const Pricing = () => {
                                 w="full"
                                 mt={4}
                                 _hover={{ bg: "gray.300" }}
+                                onClick={handleStarterPlan}
                             >
                                 Get ShipJitt
                             </Button>
@@ -357,3 +333,6 @@ const Pricing = () => {
 };
  
 export default Pricing;
+
+
+
