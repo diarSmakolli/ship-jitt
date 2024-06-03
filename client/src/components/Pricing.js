@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import {
     Box,
     Center,
@@ -13,8 +13,8 @@ import { CheckIcon, SmallCloseIcon, CloseIcon } from '@chakra-ui/icons';
 import {useAuth} from '../auth/authContext';
 import axios from 'axios';
 
-const starterPlan = 'price_1PIcjiP1jRGQyMPG1shY69it';
-const allInPlan = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
+const starterPriceId = 'price_1PIcjiP1jRGQyMPG1shY69it';
+const allinPriceId = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
  
 const PricingCard = ({ title, description, price, pricePeriod, features, ctaText }) => {
     return (
@@ -56,15 +56,44 @@ const PricingCard = ({ title, description, price, pricePeriod, features, ctaText
  
 const Pricing = () => {
     const { user, loading } = useAuth();
+    const [starterPlanUrl, setStarterPlanUrl] = useState('');
+    const [allInPlanUrl, setAllInPlanUrl] = useState('');
 
     const handleStarterPlan = async () => {
+
+        if(!user) {
+            window.location.href = '/auth/signin';
+        }
+
         try {
             const response = await axios.post('http://localhost:6099/api/stripe/create-checkout-session', {
-                priceId: starterPlan,
+                priceId: starterPriceId,
                 userId: user.id,
                 email: user.email,
             });
-            window.location.href = response.data.url;
+            setStarterPlanUrl(response.data.url);
+            console.log(starterPlanUrl);
+            window.open(response.data.url, '_blank');
+        } catch (error) {
+            console.error('Error creating checkout session:', error);
+        }
+    };
+
+    const handleAllinPlan = async () => {
+        if(!user) {
+            window.location.href = '/auth/signin';
+        }
+
+        try {
+            const response = await axios.post('http://localhost:6099/api/stripe/create-checkout-session', {
+                priceId: allinPriceId,
+                userId: user.id,
+                email: user.email,
+            });
+            // window.location.href = response.data.url;
+            setAllInPlanUrl(response.data.url);
+            console.log(allInPlanUrl);
+            window.open(response.data.url, '_blank');
         } catch (error) {
             console.error('Error creating checkout session:', error);
         }
@@ -127,8 +156,8 @@ const Pricing = () => {
                                 For individual developers, freelancers, students, and educators that want to build and ship faster.
                             </Text>
                             <HStack align="baseline" mt={4}>
-                                <Text fontSize="3xl" color="white" fontWeight="bold">$149</Text>
-                                <Text fontSize="md" color="#8b949e">Pay once, access forever</Text>
+                                <Text fontSize="3xl" color="white" fontWeight="bold" fontFamily="Bricolage Grotesque">$149</Text>
+                                <Text fontSize="md" color="#8b949e" fontFamily="Bricolage Grotesque">Pay once, access forever</Text>
                             </HStack>
                             <Button
                                 bg="white"
@@ -234,8 +263,8 @@ const Pricing = () => {
                                 For individual developers, freelancers, students, and educators that want to build and ship faster.
                             </Text>
                             <HStack align="baseline" mt={4}>
-                                <Text fontSize="3xl" color="white" fontWeight="bold">$200</Text>
-                                <Text fontSize="md" color="#8b949e">Pay once, access forever</Text>
+                                <Text fontSize="3xl" color="white" fontWeight="bold" fontFamily="Bricolage Grotesque">$200</Text>
+                                <Text fontSize="md" color="#8b949e" fontFamily="Bricolage Grotesque">Pay once, access forever</Text>
                             </HStack>
                             <Button
                                 bg="white"
@@ -243,6 +272,7 @@ const Pricing = () => {
                                 w="full"
                                 mt={4}
                                 _hover={{ bg: "gray.300" }}
+                                onClick={handleAllinPlan}
                             >
                                 Get ShipJitt
                             </Button>
