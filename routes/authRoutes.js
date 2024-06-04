@@ -131,6 +131,14 @@ router.post('/register', async (req, res) => {
             });
         }
 
+        if(existingUser.deletedAt) {
+            return res.status(401).json({
+                status: 'error',
+                statusCode: 401,
+                message: 'This user has been deleted.'
+            })
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
@@ -219,7 +227,7 @@ router.post('/login', async (req, res) => {
             // Resend verification email
             const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
             await User.update({ verification_token: verificationToken, updatedAt: updatedAtTimeZone }, { where: { email: email } });
-            // await sendVerificationEmail(email, verificationToken);
+
             await sendVerificationEmail(email, verificationToken);
 
             return res.status(403).json({
@@ -228,9 +236,7 @@ router.post('/login', async (req, res) => {
                 message: 'Email not verified. Verification email sent.'
             });
         }
-
-        // await User.create({ createdBy: createdBy })
-
+        
        
         const token = jwt.sign({ id: user.id }, process.env.SECRETJWT, { expiresIn: '1h' });
 
@@ -253,6 +259,91 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// send email verification link  ✅
+router.post('/send-verification-email', async(req, res) => {
+    const { email, timeZone } = req.body;
+    try {
+        const user = await User.findOne({ where: { email: email } });
+        if (!user) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'User not found.'
+            });
+        }
+        if (user.isVerify) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'User is already verified.'
+            });
+        }
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+        const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
+        await sendVerificationEmail(email, verificationToken);
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Verification email sent successfully.'
+        });
+
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+})
+
+// verify email  ✅
+router.get('/verify-email', async(req, res) => {
+    const { token } = req.query;
+    const { timeZone } = req.body;
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRETJWT);
+        const { email } = decodedToken;
+
+        // find the user by email
+        const userByEmail = await User.findOne({ where: { email: email } });
+
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+        const updatedAtTimeZone = moment().tz(selectedTimeZone);
+
+        if(userByEmail.isVerify) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Email already verified.'
+            });
+        }
+
+        
+
+        await User.update({ isVerify: true, updatedAt: updatedAtTimeZone }, { where: { email: email } });
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Email verification successful.',
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+
+        
+
 // log out
 router.post('/logout', async(req, res) => {
     try {
@@ -274,35 +365,6 @@ router.post('/logout', async(req, res) => {
     }
 });
 
-// verify email  ✅
-router.get('/verify-email', async(req, res) => {
-    const { token } = req.query;
-    const { timeZone } = req.body;
-    try {
-        const decodedToken = jwt.verify(token, process.env.SECRETJWT);
-        const { email } = decodedToken;
-
-        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
-
-        const updatedAtTimeZone = moment().tz(selectedTimeZone);
-
-        await User.update({ isVerify: true, updatedAt: updatedAtTimeZone }, { where: { email: email } });
-    
-
-        res.status(200).json({
-            status: 'success',
-            message: 'Email verification successful.',
-        });
-    } catch (error) {
-        console.error("An Error has occurred and we're working to fix the problem!");
-        console.error(error);
-        res.status(500).json({
-            status: 'error',
-            statusCode: 500,
-            message: "An Error has occurred and we're working to fix the problem!"
-        });
-    }
-});
 
 // update all the fiedls - Admin ✅
 router.put('/update-user/:id', async(req, res) => {
