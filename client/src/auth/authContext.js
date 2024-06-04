@@ -59,8 +59,12 @@ export const AuthProvider = ({ children }) => {
     return user && user.hasAccess;
   };
 
+  const isVerify = () => {
+    return user && user.isVerify;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAdmin, hasAccess, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, isAdmin, hasAccess, isVerify, loading }}>
       {children}
     </AuthContext.Provider>
   );
