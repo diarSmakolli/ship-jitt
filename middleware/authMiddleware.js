@@ -10,8 +10,9 @@ const verifyToken = async(req, res, next) => {
                 status: 'error', 
                 statusCode: 401,
                 message: 'Token missing.'
-            })
+            });
         }
+
 
         const decoded = jwt.verify(token, process.env.SECRETJWT);
 
@@ -84,7 +85,7 @@ const isAdmin = (req, res, next) => {
     }
 
     next();
-}
+};
 
 const isPaid = (req, res,next) => {
     const user = req.user;

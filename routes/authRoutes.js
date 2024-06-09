@@ -17,8 +17,6 @@ const { time } = require('console');
 const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 const fs = require('fs');
-const { userValidationRules, validate } = require('../validators/validators');
-
 
 // mailgun config
 const mg = mailgun({
@@ -57,7 +55,7 @@ router.get('/profile-picture/uploads/:filename', (req, res) => {
 });
 
 // update the user profile picture - unchecked  ✅
-router.post('/update-profile-picture/:id', async(req, res) => {
+router.post('/update-profile-picture/:id', verifyToken, async(req, res) => {
     const userId = req.params.id;
     const { updatedAt, updatedBy, timeZone } = req.body;
     try {
@@ -124,6 +122,13 @@ router.post('/register', async (req, res) => {
         const existingUser = await User.findOne({ where: { email: email } });
 
         if (existingUser) {
+            if(existingUser.deletedAt) {
+                return res.status(401).json({
+                    status: 'error',
+                    statusCode: 401,
+                    message: 'This user has been deleted.'
+                })
+            }
             return res.status(400).json({
                 status: 'error',
                 statusCode: 400,
@@ -131,13 +136,7 @@ router.post('/register', async (req, res) => {
             });
         }
 
-        if(existingUser.deletedAt) {
-            return res.status(401).json({
-                status: 'error',
-                statusCode: 401,
-                message: 'This user has been deleted.'
-            })
-        }
+
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -154,11 +153,9 @@ router.post('/register', async (req, res) => {
             last_name,
             email: email,
             password: hashedPassword,
-            // verification_token: verificationToken,
             createdAt: createdAtTimeZone
         });
 
-        // await sendWelcomeEmail(email);
 
         res.status(201).json({
             status: 'success',
@@ -342,10 +339,8 @@ router.get('/verify-email', async(req, res) => {
 });
 
 
-        
-
 // log out
-router.post('/logout', async(req, res) => {
+router.post('/logout', verifyToken, async(req, res) => {
     try {
         res.clearCookie('token');
 
@@ -367,7 +362,7 @@ router.post('/logout', async(req, res) => {
 
 
 // update all the fiedls - Admin ✅
-router.put('/update-user/:id', async(req, res) => {
+router.put('/update-user/:id', verifyToken, async(req, res) => {
     const userId = req.params.id;
     const { timeZone, updatedAt, updatedBy, ...userData } = req.body;
     try {
@@ -426,8 +421,76 @@ router.put('/update-user/:id', async(req, res) => {
     }
 });
 
+// change password ✅
+router.put('/change-password/:id', verifyToken, async(req, res) => {
+    const userId = req.params.id;
+    const { current_password, new_password, confirm_password, updatedAt, updatedBy, timeZone } = req.body;
+    try {
+        const user = await User.findByPk(userId);
+
+        if(!user) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'User not found'
+            });
+        }
+
+        if(user.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This user has been deleted.'
+            })
+        }
+
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+        const updatedAtTimeZone = moment().tz(selectedTimeZone).format();
+
+        console.log(updatedAtTimeZone);
+
+        const isPasswordValid = await bcrypt.compare(current_password, user.password);
+        if(!isPasswordValid) {
+            return res.status(401).json({
+                status: 'error',
+                statusCode: 401,
+                message: 'Current password is incorrect.'
+            });
+        }
+
+        if(new_password != confirm_password) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'New password and confirm password does not match.'
+            })
+        }
+
+        const hashedNewPassword = await bcrypt.hash(new_password, 10);
+
+        await user.update({ password: hashedNewPassword, updatedAt: updatedAtTimeZone, updatedBy });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Password updated successfully',
+            user,
+            updatedAt: updatedAtTimeZone
+        })
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+})
+
 // get all users with the pagination - admin  ✅
-router.get('/getall', async(req, res) => {
+router.get('/getall', verifyToken, async(req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 5;
     const { timeZone } = req.body;
@@ -477,7 +540,7 @@ router.get('/getall', async(req, res) => {
 })
 
 // get all deleted inactive users with the pagination - admin  ✅
-router.get('/getdeletedusers', async(req, res) => {
+router.get('/getdeletedusers', verifyToken, async(req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 5;
     const { timeZone } = req.body; 
@@ -526,7 +589,7 @@ router.get('/getdeletedusers', async(req, res) => {
             message: "An Error has occurred and we're working to fix the problem!"
         });
     }
-})
+});
 
 // forgot password  ✅
 router.post('/forgot-password', async(req, res) => {
@@ -684,76 +747,8 @@ router.post('/reset-password/:token', async(req, res) => {
     }
 })
 
-// change password ✅
-router.put('/change-password/:id', async(req, res) => {
-    const userId = req.params.id;
-    const { current_password, new_password, confirm_password, updatedAt, updatedBy, timeZone } = req.body;
-    try {
-        const user = await User.findByPk(userId);
-
-        if(!user) {
-            return res.status(404).json({
-                status: 'error',
-                statusCode: 404,
-                message: 'User not found'
-            });
-        }
-
-        if(user.deletedAt) {
-            return res.status(404).json({
-                status: 'error',
-                statusCode: 404,
-                message: 'This user has been deleted.'
-            })
-        }
-
-        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
-
-        const updatedAtTimeZone = moment().tz(selectedTimeZone).format();
-
-        console.log(updatedAtTimeZone);
-
-        const isPasswordValid = await bcrypt.compare(current_password, user.password);
-        if(!isPasswordValid) {
-            return res.status(401).json({
-                status: 'error',
-                statusCode: 401,
-                message: 'Current password is incorrect.'
-            });
-        }
-
-        if(new_password != confirm_password) {
-            return res.status(400).json({
-                status: 'error',
-                statusCode: 400,
-                message: 'New password and confirm password does not match.'
-            })
-        }
-
-        const hashedNewPassword = await bcrypt.hash(new_password, 10);
-
-        await user.update({ password: hashedNewPassword, updatedAt: updatedAtTimeZone, updatedBy });
-
-        return res.status(200).json({
-            status: 'success',
-            statusCode: 200,
-            message: 'Password updated successfully',
-            user,
-            updatedAt: updatedAtTimeZone
-        })
-    } catch (error) {
-        console.error("An Error has occurred and we're working to fix the problem!");
-        console.error(error);
-        res.status(500).json({
-            status: 'error',
-            statusCode: 500,
-            message: "An Error has occurred and we're working to fix the problem!"
-        });
-    }
-})
-
 // get the user by id - timezone ✅
-router.get('/:id', async(req, res) => {
+router.get('/:id', verifyToken, async(req, res) => {
     const userId = req.params.id;
     let { timeZone } = req.body;
     try {
@@ -815,7 +810,7 @@ router.get('/:id', async(req, res) => {
 });
 
 // update firstname, lastname ✅
-router.put('/:id', async(req, res) => {
+router.put('/:id', verifyToken, async(req, res) => {
     const { first_name, last_name, updatedAt, updatedBy, timeZone } = req.body;
     const userId = req.params.id;
     try {
@@ -868,7 +863,7 @@ router.put('/:id', async(req, res) => {
 })
 
 // delete the user - soft deletion - deletedAt, deletedBy - timezone ✅
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', verifyToken, async(req, res) => {
     const userId = req.params.id;
     const { deletedAt, deletedBy, timeZone } = req.body;
     try {
