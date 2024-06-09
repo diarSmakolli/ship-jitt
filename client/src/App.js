@@ -19,6 +19,7 @@ import Profile from './pages/Profile';
 import Pricing from './components/Pricing';
 import VerifyEmail from './pages/verifyAccount';
 import Success from './pages/Success';
+import SupportCenter from './pages/SupportCenter';
 
 const App = () => {
   return (
@@ -27,10 +28,11 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/auth/signin" element={<Signin />} />
-            <Route path="/auth/signup" element={<Signup />} />
+            <Route path="/auth/signin" element={<IsAuthenticated><Signin /></IsAuthenticated>} />
+            <Route path="/auth/signup" element={<IsAuthenticated><Signup /></IsAuthenticated>} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/docs" element={<Docs />} />
+            <Route path='/contact-us' element={<SupportCenter />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
@@ -43,7 +45,6 @@ const App = () => {
     </div>
   );
 };
-
 
 const PrivateRoute = ({ children }) => {
   const { user, loading, isVerify, logout } = useAuth();
@@ -59,6 +60,18 @@ const PrivateRoute = ({ children }) => {
 
   return user && isVerify() ? children : <Navigate to="/auth/signin" />;
 };
+
+const IsAuthenticated = ({children}) => {
+  const { user, loading } = useAuth();
+  
+  if(loading) return null;
+
+  console.log(user);
+
+  return !user ? children : <Navigate to="/" />;
+};
+
+
 
 const AdminRoute = ({ children }) => {
   const { user, isAdmin, loading } = useAuth();

@@ -28,10 +28,17 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import {useAuth} from '../auth/authContext';
+import { useState } from 'react';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { user, loading, logout } = useAuth();
+
+  console.log('Navbar user: ', user);
+
+  let defaultProfilePicture = "https://www.gravatar.com/avatar/938610872fd268285c3d4024cfa46360.png?d=retro&r=g";
+  
+
 
   return (
     <Box py={2}>
@@ -152,7 +159,7 @@ export default function WithSubnavigation() {
               <>
                   <Menu>
                     <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100px'} height={'50px'} rounded='3xl'>
-                    <Image src={`http://localhost:6099/api/users/profile-picture/${user.profile_picture}`}
+                    <Image src={user.profile_picture == null ? defaultProfilePicture : user.profile_picture}
                       width={'40px'} height={'40px'} rounded={'full'} />
                     </MenuButton>
                     <MenuList zIndex={10}>
@@ -358,7 +365,7 @@ const NAV_ITEMS = [
   },
   {
     label: 'Customer Support',
-    href: '#',
+    href: '/contact-us',
   },
   {
     label: 'Docs',

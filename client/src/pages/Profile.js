@@ -11,7 +11,8 @@ import {
     Image,
     Button,
     FormLabel,
-    Input
+    Input,
+    useToast
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
@@ -20,6 +21,8 @@ import {useAuth} from '../auth/authContext';
 import axios from 'axios';
 
 function Profile() {
+const toast = useToast();
+
     const { user, loading } = useAuth();
     const [profilePicture, setProfilePicture] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -27,6 +30,14 @@ function Profile() {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const [firstNameError, setFirstNameError] = useState('');
+    const [lastNameError, setLastNameError] = useState('');
+    const [currentPasswordError, setCurrentPasswordError] = useState('');
+    const [newPasswordError, setNewPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     
     let defaultProfilePicture = "https://www.gravatar.com/avatar/938610872fd268285c3d4024cfa46360.png?d=retro&r=g";
     let profilePictureUrl = `http://localhost:6099/api/users/profile-picture/${user.profile_picture}`;
@@ -34,7 +45,8 @@ function Profile() {
     if(user.profile_picture == null) {
         profilePictureUrl = defaultProfilePicture;
     }
-    
+
+
     useEffect(() => {
         if (user) {
             setFirstName(user.first_name);
@@ -79,22 +91,111 @@ function Profile() {
     };
 
     const handleChangePassword = async () => {
+        let hasError = false;
+
+        if(!currentPassword) {
+            setCurrentPasswordError('Current password is required');
+            hasError = true;
+        }
+
+        if(!newPassword) {
+            setNewPasswordError('New password is required');
+            hasError = true;
+        }
+
+        if(!confirmPassword) {
+            setConfirmPasswordError('Confirm password is required');
+            hasError = true;
+        }
+
+        if(newPassword !== confirmPassword) {
+            setConfirmPasswordError('Passwords do not match');
+            hasError = true;
+        }
+
+        if(hasError) {
+            return;
+        }
+    
+
+        setIsLoading(true);
         try {
-            await axios.put(`http://localhost:6099/api/users/change-password/${user.id}`, {
+            const response = await axios.put(`http://localhost:6099/api/users/change-password/${user.id}`, {
                 current_password: currentPassword,
                 new_password: newPassword,
                 confirm_password: confirmPassword,
                 updatedAt: new Date().toISOString(),
                 updatedBy: user.id,
                 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            }, {
+                withCredentials: true
             });
 
-            alert('Password changed successfully');
+            toast({
+                title: 'Success',
+                description: response.data.message,
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            });
+
             setCurrentPassword('');
             setNewPassword('');
             setConfirmPassword('');
         } catch(error) {
             console.error('Error changing password', error);
+            const { response } = error;
+
+            switch (response.data.statusCode) {
+                case 403:
+                  toast({
+                    title: 'Forbidden',
+                    description: response.data.message,
+                    status: 'warning',
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  break;
+                case 400:
+                  toast({
+                    title: 'Bad request',
+                    description: response.data.message,
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  break;
+                case 401:
+                  toast({
+                    title: 'Unauthorized',
+                    description: response.data.message,
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  break;
+                case 404:
+                  toast({
+                    title: 'Not found',
+                    description: response.data.message,
+                    status: 'warning',
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  break;
+                default:
+                  toast({
+                    title: 'Internal Server Error',
+                    description:
+                      "An Error has occurred and we're working to fix the problem!",
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  break;
+              }
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -180,6 +281,12 @@ function Profile() {
                     <Input type='password' 
                     value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}
                     width='40%' color='gray.200' required />
+                    
+                    {currentPasswordError && (
+                        <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            {currentPasswordError}
+                        </Text>
+                    )}
 
                     <FormLabel mt={10} color='gray.200'>
                         New password
@@ -188,12 +295,24 @@ function Profile() {
                         value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
                     width='40%' color='gray.200' required />
 
+                    {newPasswordError && (
+                        <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            {newPasswordError}
+                        </Text>
+                    )}
+
                     <FormLabel mt={10} color='gray.200'>
                         Confirm new password
                     </FormLabel>
                     <Input type='password' 
                     value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
                     width='40%' color='gray.200' required />
+
+                    {confirmPasswordError && (
+                        <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            {confirmPasswordError}
+                        </Text>
+                    )}
 
 
                     <HStack>
