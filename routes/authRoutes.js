@@ -628,7 +628,7 @@ router.post('/forgot-password', async(req, res) => {
         await user.save();
 
         // send email to the user with the reset link
-        const resetLink = `http://localhost:6099/api/users/reset-password/${token}`;
+        const resetLink = `http://localhost:3000/reset-password/${token}`;
         const mailOptions = {
             to: email,
             subject: 'Reset your password',
@@ -698,6 +698,9 @@ router.post('/reset-password/:token', async(req, res) => {
             })
         }
 
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+
         const resetTokenTimeZone = moment(user.resetTokenExpiry).tz(selectedTimeZone).format();
 
         const currentTime = moment().tz(selectedTimeZone); 
@@ -705,26 +708,10 @@ router.post('/reset-password/:token', async(req, res) => {
         console.log(resetTokenTimeZone);
         console.log('current: ', currentTime);
 
-        // if(resetTokenTimeZone.isBefore(currentTime)) {
-        //     return res.status(400).json({
-        //         status: 'error',
-        //         statusCode: 400,
-        //         message: 'Token expired, try again!'
-        //     })
-        // }
 
-        // manually
-        // if(resetTokenTimeZone.getTime() < currentTime.getTime()) {
-        //     return res.status(400).json({
-        //         status: 'error',
-        //         statusCode: 400,
-        //         message: 'Token expired, try again!'
-        //     })
-        // }
-
-        user.password = newPassword;
-        // user.resetToken = null;
-        // user.resetTokenExpiry = null;
+        user.password = hashedPassword;
+        user.resetToken = null;
+        user.resetTokenExpiry = null;
         await user.save();
 
         // response the success result
@@ -745,7 +732,7 @@ router.post('/reset-password/:token', async(req, res) => {
             message: "An Error has occurred and we're working to fix the problem!"
         });
     }
-})
+});
 
 // get the user by id - timezone ✅
 router.get('/:id', verifyToken, async(req, res) => {

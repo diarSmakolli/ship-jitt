@@ -20,6 +20,8 @@ import Pricing from './components/Pricing';
 import VerifyEmail from './pages/verifyAccount';
 import Success from './pages/Success';
 import SupportCenter from './pages/SupportCenter';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const App = () => {
   return (
@@ -34,6 +36,8 @@ const App = () => {
             <Route path="/docs" element={<Docs />} />
             <Route path='/contact-us' element={<SupportCenter />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path='/forgot-password' element={<ForgotPassword />} />
+            <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
             <Route path="/dashboard" element={<PaidRoute><Pricing /><Dashboard />
