@@ -8,6 +8,7 @@ import {
     Button,
     VStack,
     HStack,
+    useToast,
 } from '@chakra-ui/react';
 import { CheckIcon, SmallCloseIcon, CloseIcon } from '@chakra-ui/icons';
 import {useAuth} from '../auth/authContext';
@@ -55,6 +56,7 @@ const PricingCard = ({ title, description, price, pricePeriod, features, ctaText
 };
  
 const Pricing = () => {
+    const toast = useToast();
     const { user, loading } = useAuth();
     const [starterPlanUrl, setStarterPlanUrl] = useState('');
     const [allInPlanUrl, setAllInPlanUrl] = useState('');
@@ -63,6 +65,27 @@ const Pricing = () => {
 
         if(!user) {
             window.location.href = '/auth/signin';
+        }
+
+        if(user.priceId === starterPriceId) {
+            toast({
+                title: 'You already have access to this plan',
+                status: 'info',
+                duration: 3000,
+                isClosable: true,
+            });
+            return;
+        }
+
+        // implement the logic if the user have the all in plan and need to buy the starter plan disallow because already have the all in plan
+        if(user.priceId === allinPriceId) {
+            toast({
+                title: 'You already have access to the all in plan',
+                status: 'info',
+                duration: 3000,
+                isClosable: true,
+            });
+            return;
         }
 
         try {
@@ -83,6 +106,22 @@ const Pricing = () => {
         if(!user) {
             window.location.href = '/auth/signin';
         }
+        
+        // i need to implement if user have access to the allinpriceid or allin plan to disallow to buy the plan again and also check if the user have the allin plan and want to buy the starter plan he dont need right because have the allin plan
+
+
+
+
+        if(user.priceId === allinPriceId) {
+            toast({
+                title: 'You already have access to this plan',
+                status: 'info',
+                duration: 3000,
+                isClosable: true,
+            });
+            return;
+        }
+
 
         try {
             const response = await axios.post('http://localhost:6099/api/stripe/create-checkout-session', {
@@ -258,7 +297,7 @@ const Pricing = () => {
                         textAlign="left"
                     >
                         <VStack align="start">
-                            <Text fontSize="2xl" color="white" fontFamily="Syne" fontWeight={600}>Shipjitt starter</Text>
+                            <Text fontSize="2xl" color="white" fontFamily="Syne" fontWeight={600}>Shipjitt VIP</Text>
                             <Text mt={2} color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
                                 For individual developers, freelancers, students, and educators that want to build and ship faster.
                             </Text>
