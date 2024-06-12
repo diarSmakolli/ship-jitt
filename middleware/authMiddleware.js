@@ -14,7 +14,26 @@ const verifyToken = async(req, res, next) => {
         }
 
 
-        const decoded = jwt.verify(token, process.env.SECRETJWT);
+        // const decoded = jwt.verify(token, process.env.SECRETJWT);
+
+        let decoded;
+        try {
+            decoded = jwt.verify(token, process.env.SECRETJWT);
+        } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                return res.status(401).json({
+                    status: 'error',
+                    statusCode: 401,
+                    message: 'Token has expired.'
+                });
+            } else {
+                return res.status(401).json({
+                    status: 'error',
+                    statusCode: 401,
+                    message: 'Token is invalid.'
+                });
+            }
+        }
 
         if(!decoded) {
             return res.status(401).json({
