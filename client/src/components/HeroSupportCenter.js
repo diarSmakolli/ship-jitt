@@ -1,20 +1,11 @@
 import React from 'react';
 import {
     Box,
-    Heading,
     Text,
     Stack,
-    Button,
-    Image,
-    Flex,
     useColorModeValue,
     Container
 } from '@chakra-ui/react';
-
-// import CheckIcon from chakra ui icons
-import { CheckIcon } from '@chakra-ui/icons';
-import hero from '../images/hero.svg';
-
 
 
 export default function HeroSupportCenter() {

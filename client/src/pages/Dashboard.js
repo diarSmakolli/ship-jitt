@@ -1,9 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import {
-    Box, Container, Heading, Text, Image,
-    Button, Stack, Flex, useColorModeValue,
-
+    Box, Container, Text, 
 } from '@chakra-ui/react';
 import Hero from '../components/Hero';
 import Companies from '../components/Companies';

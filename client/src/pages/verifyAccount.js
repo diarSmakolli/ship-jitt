@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { Box, Center, Container, Heading, Text, Button} from '@chakra-ui/react';
+import { Box, Center, Container, Heading, Button} from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
 
 

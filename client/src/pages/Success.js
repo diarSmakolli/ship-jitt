@@ -1,21 +1,26 @@
-import { Box, Center, Container, Heading } from '@chakra-ui/react'
-import React from 'react'
+
+import React from 'react';
+import { Box, Heading, Text, Button} from '@chakra-ui/react';
+import { CheckCircleIcon } from '@chakra-ui/icons';
 
 function Success() {
   return (
-    <Box>
-        <Container>
-            <Center>
-            <Heading>
-                Thank your for your purchase!
+    <Box textAlign="center" py={60} px={6} minH='100vh' bg='#0d1117'>
+      <CheckCircleIcon boxSize={'50px'} color={'green.500'} />
+      <Heading as="h2" size="xl" mt={6} mb={2} fontFamily={'Bricolage Grotesque'} color='gray.200'>
+        Thank you for your purchase!
+      </Heading>
+      <Text color={'gray.500'}>
+        Go back to dashboard and refresh it to unlock the new features.
+      </Text>
 
-            </Heading>
-            <Heading>
-                Go back to your dashboard and refresh the page to unlock your new features.
-                Thanks for using our app!
-            </Heading>
-            </Center>
-        </Container>
+      <Text color={'gray.500'} mt={5}>
+        Thank you for your trust in our services.
+      </Text>
+
+      <Button as='a' href='/' colorScheme='teal' mt={5}>
+        Go to Home
+      </Button>
     </Box>
   )
 }

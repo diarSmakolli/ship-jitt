@@ -1,7 +1,6 @@
 import {
     Box,
     Image,
-    Stack,
     VStack,
     HStack,
     Text,

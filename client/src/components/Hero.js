@@ -12,10 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 // import CheckIcon from chakra ui icons
-import { CheckIcon } from '@chakra-ui/icons';
 import hero from '../images/hero.svg';
-
-
 
 export default function Hero() {
     return (

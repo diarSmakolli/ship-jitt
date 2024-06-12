@@ -1,59 +1,20 @@
 import { React, useState } from 'react';
 import {
     Box,
-    Center,
     Text,
     SimpleGrid,
-    Image,
     Button,
     VStack,
     HStack,
     useToast,
 } from '@chakra-ui/react';
-import { CheckIcon, SmallCloseIcon, CloseIcon } from '@chakra-ui/icons';
+import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {useAuth} from '../auth/authContext';
 import axios from 'axios';
 
 const starterPriceId = 'price_1PIcjiP1jRGQyMPG1shY69it';
 const allinPriceId = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
  
-const PricingCard = ({ title, description, price, pricePeriod, features, ctaText }) => {
-    return (
-        <Box
-            bg='transparent'
-            borderLeft={'1px'}
-            borderColor={'1.5px solid rgba(255,255,255,.12)'}
-            textAlign="left"
-        >
-            <VStack align="start">
-                <Text fontSize="2xl" color="white" fontFamily="Syne" fontWeight={600}>{title}</Text>
-                <Text mt={2} color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>{description}</Text>
-                <HStack align="baseline" mt={4}>
-                    <Text fontSize="3xl" color="white" fontWeight="bold">${price}</Text>
-                    <Text fontSize="md" color="#8b949e">{pricePeriod}</Text>
-                </HStack>
-                <Button
-                    bg="white"
-                    color="black"
-                    w="full"
-                    mt={4}
-                    _hover={{ bg: "gray.300" }}
-                >
-                    {ctaText}
-                </Button>
-                <Text mt={6} color="#8b949e" fontWeight={500} fontFamily="Poppins" fontSize="sm">What's included</Text>
-                <VStack align="start" spacing={2} mt={2}>
-                    {features.map((feature, index) => (
-                        <HStack key={index}>
-                            <CheckIcon color="green.500" />
-                            <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>{feature}</Text>
-                        </HStack>
-                    ))}
-                </VStack>
-            </VStack>
-        </Box>
-    );
-};
  
 const Pricing = () => {
     const toast = useToast();
@@ -389,14 +350,8 @@ const Pricing = () => {
                             </VStack>
                         </VStack>
                     </Box>
- 
- 
- 
                 </SimpleGrid>
             </Box>
- 
- 
- 
         </Box>
     );
 };

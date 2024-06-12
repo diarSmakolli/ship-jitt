@@ -68,6 +68,7 @@ const toast = useToast();
                 formData.append('timeZone', Intl.DateTimeFormat().resolvedOptions().timeZone);
 
                 await axios.post(`http://localhost:6099/api/users/update-profile-picture/${user.id}`, formData, {
+                    withCredentials: true,
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -81,12 +82,21 @@ const toast = useToast();
                 updatedAt: new Date().toISOString(),
                 updatedBy: user.id,
                 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            }, {
+                withCredentials: true
             });
         }
 
-            alert('Profile updated successfully');
+            toast({
+                title: 'Success',
+                description: 'Profile updated successfully',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            })
         } catch (error) {
             console.error('Error updating profile', error);
+            console.log('Error updating profile', error);
         }
     };
 
@@ -128,7 +138,7 @@ const toast = useToast();
                 updatedBy: user.id,
                 timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
             }, {
-                withCredentials: true
+                withCredentials: true 
             });
 
             toast({

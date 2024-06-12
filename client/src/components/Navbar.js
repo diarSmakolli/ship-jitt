@@ -28,7 +28,6 @@ import {
   ChevronRightIcon,
 } from '@chakra-ui/icons';
 import {useAuth} from '../auth/authContext';
-import { useState } from 'react';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -37,8 +36,10 @@ export default function WithSubnavigation() {
   console.log('Navbar user: ', user);
 
   let defaultProfilePicture = "https://www.gravatar.com/avatar/938610872fd268285c3d4024cfa46360.png?d=retro&r=g";
-  
-
+  let profilePicture;
+  if(user && user.profile_picture) {
+    profilePicture = `http://localhost:6099/api/users/profile-picture/${user.profile_picture}`;
+  }
 
   return (
     <Box py={2}>
@@ -87,47 +88,6 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          {/* { !user ? (
-          <>
-          <Button
-            as={'a'}
-            fontSize={'sm'}
-            color='white'
-            fontWeight={400}
-            variant={'link'}
-            href={'/auth/signin'}>
-            Sign In
-          </Button>
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'black'}
-            bg={'white'}
-            href={'/auth/signup'}
-            _hover={{
-              bg: 'white.200',
-            }}>
-            Get started
-          </Button>
-          </>
-          ) : (
-          <>
-            <Button
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'black'}
-            bg={'white'}
-            onClick={logout}
-            _hover={{
-              bg: 'white.200',
-            }}
-          >
-            Log Out
-          </Button>
-          </>
-          )} */}
           {loading ? null : !user ? (
               <>
                 <Button
@@ -159,7 +119,7 @@ export default function WithSubnavigation() {
               <>
                   <Menu>
                     <MenuButton as={Button} rightIcon={<ChevronDownIcon />} width={'100px'} height={'50px'} rounded='3xl'>
-                    <Image src={user.profile_picture == null ? defaultProfilePicture : user.profile_picture}
+                    <Image src={user.profile_picture == null ? defaultProfilePicture : profilePicture}
                       width={'40px'} height={'40px'} rounded={'full'} />
                     </MenuButton>
                     <MenuList zIndex={10}>

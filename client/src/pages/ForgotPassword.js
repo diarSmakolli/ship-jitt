@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, FormLabel, Input, Text, useToast, Container, Flex, Stack, useColorModeValue, Heading, FormControl } from '@chakra-ui/react';
+import { Button, Input, Text, useToast, Flex, Stack, useColorModeValue, Heading, FormControl } from '@chakra-ui/react';
 import axios from 'axios';
 
 const ForgotPassword = () => {
@@ -37,32 +37,6 @@ const ForgotPassword = () => {
     };
 
     return (
-        // <Box bg='#0d1117' minH='100vh'>
-        // <Container>
-        //     <Box py={48}>
-        //     <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border="1.5px solid rgba(255,255,255,.12)" >
-        //         <Text color="white" fontSize="2xl">Forgot Password</Text>
-        //         <FormLabel mt={5} color="gray.200">Email</FormLabel>
-        //         <Input
-        //             type="email"
-        //             color="gray.200"
-        //             value={email}
-        //             onChange={(e) => setEmail(e.target.value)}
-        //             required
-        //         />
-        //         <Button
-        //             mt={5}
-        //             bg="white"
-        //             color="black"
-        //             onClick={handleForgotPassword}
-        //             isLoading={loading}
-        //         >
-        //             Submit
-        //         </Button>
-        //     </Box>
-        //     </Box>
-        // </Container>
-        // </Box>
         <Flex
             minH={'100vh'}
             align={'center'}
