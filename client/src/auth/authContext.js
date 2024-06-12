@@ -2,12 +2,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { useToast } from '@chakra-ui/react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  let toast = useToast();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -17,7 +19,22 @@ export const AuthProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
+
   }, []);
+
+  const handleTokenExpired = () => {
+    toast({
+      title: 'Session Expired',
+      description: 'Your session has expired. Please login again.',
+      status: 'info',
+      duration: 3000,
+      isClosable: true,
+    });
+    setTimeout(() => {
+      logout();
+    }, 3000);
+  };
+
 
   const login = (token) => {
     localStorage.setItem('token', token);
@@ -45,7 +62,12 @@ export const AuthProvider = ({ children }) => {
       });
       setUser(response.data.user);
     } catch (error) {
-      console.error('Error fetching user:', error);
+      if (error.response && error.response.status === 401 && error.response.data.message === 'Token has expired.') {
+        handleTokenExpired();
+        console.log(error);
+      } else {
+        console.error('Error fetching user:', error);
+      }
     } finally {
       setLoading(false);
     }

@@ -12,7 +12,6 @@ import Unauthorized from './pages/Unauthorized';
 import Docs from './pages/Docs';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
-import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthProvider, useAuth } from './auth/authContext';
 import Profile from './pages/Profile';
@@ -22,6 +21,10 @@ import Success from './pages/Success';
 import SupportCenter from './pages/SupportCenter';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import { Navigate } from 'react-router-dom';
+
+
+
 
 const App = () => {
   return (
@@ -62,7 +65,7 @@ const PrivateRoute = ({ children }) => {
     return null; // Optionally display a message or redirect to a different page
   }
 
-  return user && isVerify() ? children : <Navigate to="/auth/signin" />;
+  return user && isVerify() ? children : <Navigate to="/" />;
 };
 
 const IsAuthenticated = ({children}) => {

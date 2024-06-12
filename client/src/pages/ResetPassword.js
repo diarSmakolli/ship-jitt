@@ -54,7 +54,9 @@ const ResetPassword = () => {
     };
 
     return (
+        <Box bg='#0d1117' minH='100vh'>
         <Container>
+            <Box py={48}>
             <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border="1.5px solid rgba(255,255,255,.12)">
                 <Text color="white" fontSize="2xl">Reset Password</Text>
                 <FormLabel mt={5} color="gray.200">New Password</FormLabel>
@@ -83,7 +85,9 @@ const ResetPassword = () => {
                     Submit
                 </Button>
             </Box>
+            </Box>
         </Container>
+        </Box>
     );
 };
 
