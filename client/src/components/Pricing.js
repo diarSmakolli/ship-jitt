@@ -108,7 +108,7 @@ const Pricing = () => {
                 color='white'
                 border='1.5px solid rgba(255,255,255,.12)'
                 rounded='3xl'
-                fontFamily={'Montserrat'}
+                fontFamily={'Geist Sans'}
                 fontWeight={500}
             >
                 Pricing
@@ -118,8 +118,8 @@ const Pricing = () => {
             <Text
                 // textAlign={'center'}
                 color='white'
-                fontFamily={'Bricolage Grotesque'}
-                fontSize={{ base: 'xl', md: '6xl' }}
+                fontFamily={'Geist Sans'}
+                fontSize={{ base: 'xl', md: '5xl' }}
                 fontWeight={'600'}
             >
                 Take flight with Ship Jitt
@@ -128,16 +128,16 @@ const Pricing = () => {
             <Text
                 color='#8b949e'
                 fontWeight={500}
-                fontFamily={'Poppins'}
+                fontFamily={'Geist Sans'}
                 mt={2}
-                fontSize={'xl'}
+                fontSize={'lg'}
             >
                 Developers all over the world use ShipJitt to build faster,  drive impact <br />
                 and focus on doing what matters most: building great software
             </Text>
  
             <Box bg='#000' borderRadius={'20px'}>
-                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={0} mt={20}>
+                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={0} mt={20} borderRadius={'1rem'} border='1px solid hsl(240 3.7% 15.9%)'>
  
                 <Box
                         // bg="rgba(0,0,0,.5)"
@@ -147,7 +147,7 @@ const Pricing = () => {
                         // border="1.5px solid rgba(255,255,255,.12)"
                         // borderRight={'1px'}
                         borderRight='1px'
-                        borderColor={'1.5px solid rgba(255,255,255,.12)'}
+                        borderColor={'hsl(240 3.7% 15.9%)'}
                         textAlign="left"
                     >
                         <VStack align="start">

@@ -19,6 +19,9 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import { Navigate } from 'react-router-dom';
 import Cancel from './pages/Cancel';
+import DocsTutorialsAPICall from './pages/DocsTutorialsAPI-Call';
+import DocsTutorialsUserAuthentication from './pages/DocsTutorialsUserAuthentication';
+
 
 
 
@@ -34,7 +37,9 @@ const App = () => {
             <Route path="/auth/signup" element={<IsAuthenticated><Signup /></IsAuthenticated>} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/docs" element={<Docs />} />
-            <Route path='/contact-us' element={<SupportCenter />} />
+            <Route path='/docs/tutorials/api-call' element={<DocsTutorialsAPICall />} />
+            <Route path='/docs/tutorials/authentication' element={<DocsTutorialsUserAuthentication />} />
+            <Route path='/contact-us' element={<SupportCenter />} />  
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password/:token' element={<ResetPassword />} />

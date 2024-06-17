@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@300;400;500;600&display=swap');
@@ -14,8 +14,34 @@
 
 
 
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('./fonts/GeistVF.woff2') format('woff2'),
+        url('./fonts/GeistVF.woff') format('woff');
+  font-weight: 300 400 500 600 700;
+  font-style: normal;
+
+}
+
+::-webkit-scrollbar  {
+  background: hsl(240 10% 3.9%);
+  width: 8px;
+}
+
+::-webkit-scrollbar-track  {
+  background:  hsl(240 10% 3.9%); /* Background color of the scrollbar track */
+}
+
+/* Scrollbar thumb (draggable part) */
+::-webkit-scrollbar-thumb  {
+  background-color: hsl(240 3.7% 15.9%);    /* Background color of the scrollbar thumb */
+  border-radius: 8px;        /* Roundness of the thumb */ /* Space around the thumb */
+}
 
 
+
+
+/* 240 3.7% 15.9% */
 
 
 
@@ -60,7 +86,13 @@
 
 body{
 	background-color: #fff;
+  font-family: 'Geist Sans', sans-serif;
 }
+
+.geist-sans {
+  font-family: 'Geist Sans', Arial, Helvetica, sans-serif;
+}
+
 .container{
 	background-color: #fff;
 	width: auto; 
@@ -88,5 +120,5 @@ body{
 }
 
 body{
-  background-color: #3b0ead !important;
+  background-color: #0d1117 !important;
 }

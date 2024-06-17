@@ -17,55 +17,40 @@ import hero from '../images/hero.svg';
 export default function Hero() {
     return (
         <Box
-            // i need to pass this bg image but in the mobile this bg image gradient is not under image of hero but under it can u fix it please
-            bgImage='https://cdn.auth0.com/website/cic-homepage/hero/gradient-bg'
-            bgPosition='center'
-            bgSize='cover'
-            bgRepeat='no-repeat'
-            position={'relative'}
             height={{ base: 'auto', md: 'auto' }}
             width={'full'}
-            // display={'flex'}
-            // justifyContent={'center'}
-            // alignItems={'center'}
-            borderBottomRadius={'5%'}
             zIndex={1}
             pb={14}
         >
             <Container maxW='6xl'>
             <Stack
                             align={'center'}
-                            spacing={{ base: 8, md: 10 }}
+                            spacing={{ base: 8, md: 0 }}
                             py={{ base: 20, md: 0 }} // for medium was 24 py
-                            pt={{base: 0, md: 12}}
+                            pt={{base: 0, md: 24}}
                             direction={{ base: 'column', md: 'row' }}>
-                            <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+                            <Stack flex={1} spacing={{ base: 5, md: 10 }} alignItems={'center'}>
                                 <Heading
-                                    display={{base: 'none', md: 'block'}}
+                                    display={{base: 'none', md: 'flex'}}
                                     lineHeight={1.1}
                                     fontWeight={600}
                                     fontSize={{ base: '4xl', lg: '6xl' }}
+                                    textAlign={'center'}
                                     >
 
                                     <Text
                                         as={'span'}
                                         position={'relative'}
-                                        fontFamily={'Bricolage Grotesque'}
                                         lineHeight={'1.5'}
-                                        fontWeight={700}
+                                        fontWeight={'600'}
                                         className='text-select'
-                                        color={useColorModeValue('#fff', 'black')}
+                                        color='#fff'
+                                        fontFamily={'Geist Sans'}
+                                        textAlign={'center'}
                                         
                                     >
 
-                                       Supercharge your projects with <br />
-                                        {/* <Box ml={2} display='inline'> */}
-                                            <Text as='span' className='text-gradient' 
-                                            // border='1px solid rgb(150, 152, 157)' 
-                                            rounded={{base: '2xl', md: '3xl'}} pr={4}> 
-                                                Ship jitt
-                                            </Text>
-                                        {/* </Box> */}
+                                        Build and launch your product <br />10X faster with us.
                                         
                                     </Text>
 
@@ -76,6 +61,7 @@ export default function Hero() {
                                     display={{base: 'block', md: 'none'}}
                                     lineHeight={1.1}
                                     fontWeight={600}
+                                    mt={10}
                                     fontSize={{ base: '4xl', lg: '6xl' }}
                                     textAlign={'center'}
                                     >
@@ -83,41 +69,36 @@ export default function Hero() {
                                     <Text
                                         as={'span'}
                                         position={'relative'}
-                                        fontFamily={'Poppins'}
                                         lineHeight={'1.5'}
-                                        fontWeight={700}
+                                        fontWeight={'600'}
                                         className='text-select'
-                                        color={useColorModeValue('#fff', 'black')}
+                                        color='#fff'
+                                        fontFamily={'Geist Sans'}
+                                        textAlign={'center'}
                                         
                                     >
 
-                                       Supercharge your projects with <br />
-                                        <Box ml={2} display='inline'>
-                                            <Text as='span' className='text-gradient' 
-                                            border='1px solid rgb(150, 152, 157)' 
-                                            rounded={{base: '2xl', md: '3xl'}} pr={3} pl={2}>
-                                                {' '} Ship jitt
-                                            </Text>
-                                        </Box>
+                                        Build and launch your product <br />10X faster with us.
                                         
                                     </Text>
 
 
                                 </Heading>
 
-                                <Text color={useColorModeValue('#CFCFCF', 'gray.700')}
+                                <Text 
+                                    color='hsl(240 5% 64.9%)'
                                     opacity={'0.8'}
                                     fontSize={'lg'} fontWeight={500}
                                     fontFamily={'Epilogue'}
                                     textAlign={{base: 'center', md: 'left'}}
                                 >
-                                    The NodeJS boilerplate with all you need to build your SaaS
+                                    The NodeJS boilerplate with all you need to build your SaaS <br />
                                     or any other web app and make your first $ online fast.
                                 </Text>
                                 <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'row', sm: 'row' }}>
                                     <Button
                                         rounded={'5px'}
-                                        size={'lg'}
+                                        size={'md'}
                                         fontWeight={'500'}
                                         px={6}
                                         color="black"
@@ -125,14 +106,14 @@ export default function Hero() {
                                         _hover={{ bg: 'gray.100' }}
                                         as='a'
                                         href='/auth/signup'
-                                        fontFamily={'Bricolage Grotesque'}
+                                        fontFamily={'Geist Sans'}
                                         width={{base: 'full', sm: 'auto'}}
                                     >
-                                        Get started with Ship jitt
+                                        Get started
                                     </Button>
                                 </Stack>
                             </Stack>
-                            <Flex
+                            {/* <Flex
                                 flex={1}
                                 justify={'center'}
                                 align={'center'}
@@ -157,7 +138,7 @@ export default function Hero() {
                                         }
                                     />
                                 </Box>
-                            </Flex>
+                            </Flex> */}
                         </Stack>
                         </Container>
         </Box>

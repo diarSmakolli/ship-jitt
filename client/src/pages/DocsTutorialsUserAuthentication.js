@@ -61,7 +61,7 @@ const CodeBlock = ({ code }) => {
 
     return (
         <Box position="relative" color="white" p="4" borderRadius="md" boxShadow="md" maxW="container.md">
-            <Code display="block" whiteSpace="pre" overflowX="auto" p="6" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+            <Code display="block" whiteSpace="pre" overflowX="auto" p="6" bg="gray.900" borderRadius="md" lang='javascript'>
                 {code}
             </Code>
             <IconButton
@@ -71,13 +71,11 @@ const CodeBlock = ({ code }) => {
                 position="absolute"
                 top="8"
                 right="8"
-                size="xs"
-                color='white'
-                bg="transparent"
-                _hover={{bg: 'hsl(240 3.7% 15.9%)'}}
+                size="sm"
+                colorScheme="green"
             />
             {hasCopied && (
-                <Text position="absolute" top="20" right="4" fontSize="sm" color="green.300" fontFamily={'Geist Sans'}>
+                <Text position="absolute" top="20" right="4" fontSize="sm" color="green.300" fontFamily={'Bricolage Grotesque'}>
                     Copied!
                 </Text>
             )}
@@ -86,7 +84,7 @@ const CodeBlock = ({ code }) => {
 };
 
 
-function Docs() {
+function DocsTutorialsUserAuthentication() {
     const [isOpen, setIsOpen] = useState(false);
 
     const code = `git clone https://github.com/dijarsmakolli/ship-jitt.git [YOUR_APP_NAME]
@@ -113,14 +111,144 @@ MAILGUN_DOMAIN=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=`;
 
+const authRoutes = `
+// login function using sequelize ORM iclude the verification email
+router.post('/login', async (req, res) => {
+    const { ... } = req.body;
+    try {
+
+        if(!email || !password) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Email and password are required.'
+            });
+        }
+    
+        const user = await User.findOne({ where: { email: email } });
+
+        if (!user) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'User not found.'
+            });
+        }
+
+        if(user.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This user has been deleted.'
+            })  
+        }
+
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+        const updatedAtTimeZone = moment().tz(selectedTimeZone).format();
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                status: 'error',
+                statusCode: 401,
+                message: 'Invalid password.'
+            });
+        }
+
+        if (!user.isVerify) {
+            // Resend verification email
+            const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
+            await User.update({ verification_token: verificationToken, updatedAt: updatedAtTimeZone }, { where: { email: email } });
+
+            await sendVerificationEmail(email, verificationToken);
+
+            return res.status(403).json({
+                status: 'error',
+                statusCode: 403,
+                message: 'Email not verified. Verification email sent.'
+            });
+        }
+        
+       
+        const token = jwt.sign({ id: user.id }, process.env.SECRETJWT, { expiresIn: '1h' });
+
+        res.cookie('token', token, {httpOnly: true, secure: false });
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            token: token,
+            message: 'User logged in successfully.',
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+`
+
+const authfront = `
+const PrivateRoute = ({ children }) => {
+    const { user, loading, isVerify, logout } = useAuth();
+  
+    if (loading) return null; // Optionally add a loading spinner here
+  
+    console.log(user);
+  
+    if (user && !isVerify()) {
+      logout(); // Automatically log out if user is not verified
+      return null; // Optionally display a message or redirect to a different page
+    }
+  
+    return user && isVerify() ? children : <Navigate to="/" />;
+  };
+  
+  const IsAuthenticated = ({children}) => {
+    const { user, loading } = useAuth();
+    
+    if(loading) return null;
+  
+    console.log(user);
+  
+    return !user ? children : <Navigate to="/" />;
+  };
+  
+  
+  
+  const AdminRoute = ({ children }) => {
+    const { user, isAdmin, loading } = useAuth();
+  
+    if (loading) return null; // Optionally add a loading spinner here
+  
+    return user && isAdmin() ? children : <Navigate to="/unauthorized" />;
+  };
+  
+  const PaidRoute = ({ children }) => {
+    const { user, hasAccess, loading } = useAuth();
+  
+    if (loading) return null; // Optionally add a loading spinner here
+  
+    console.log(user, hasAccess);
+  
+    return user && hasAccess() ? children : <Navigate to="/unauthorized" />;
+  };
+`
+
     return (
-        <Flex direction="column" bg="hsl(240 10% 3.9%)">
+        <Flex direction="column" bg="#0d1117">
             <Flex flex="1">
-                <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
+                <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='white' pos={'fixed'} overflow={'scroll'} zIndex={'10'}>
                     <HStack spacing="4" align="start">
                         <Text
                             fontFamily={'Bricolage Grotesque'}
-                            color="gray.200"
+                            color="gray.900"
                             fontSize={'3xl'}
                             fontWeight={'500'}
                         >
@@ -137,181 +265,181 @@ STRIPE_WEBHOOK_SECRET=`;
                     </HStack>
 
                     <Box display={{ base: 'none', md: 'block' }} py={10}>
-                        <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                            Getting started
+                            Introduction
                         </Heading>
 
                         <Box rounded='xl' mt={2}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                Tutorials
+                                TUTORIALS
                             </Heading>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/api-call'>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 API calls
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 Authentication
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 AWS Setup
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 Pages
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 Protected routes
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 Quick launch
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Stripe integration
+                            </Text>
+                        </Box>
+
+                        <Box rounded='xl' mt={2}>
+                            <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
+                                FEATURES
+                            </Heading>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                API calls
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Authentication
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                AWS Setup
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Pages
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Protected routes
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Quick launch
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Stripe integration
+                            </Text>
+                        </Box>
+
+                        <Box rounded='xl' mt={2}>
+                            <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
+                                COMPONENTS
+                            </Heading>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                API calls
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Authentication
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                AWS Setup
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Pages
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Protected routes
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Quick launch
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Stripe integration
+                            </Text>
+                        </Box>
+
+                        <Box rounded='xl' mt={2}>
+                            <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
+                                CHAKRA COMPONENTS
+                            </Heading>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                API calls
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Authentication
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                AWS Setup
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Pages
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Protected routes
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                Quick launch
+                            </Text>
+
+                            <Text fontFamily={'Poppins'} color='gray.800'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
                                 Stripe integration
                             </Text>
                         </Box>
 
                         <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                Features
-                            </Heading>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
-                            </Text>
-                        </Box>
-
-                        <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                Components
-                            </Heading>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
-                            </Text>
-                        </Box>
-
-                        <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                Chakra UI components
-                            </Heading>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
-                            </Text>
-                        </Box>
-
-                        <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                 Deployment
                             </Heading>
@@ -379,7 +507,7 @@ STRIPE_WEBHOOK_SECRET=`;
                                     </Box>
 
                                     <Box rounded='xl' mt={2}>
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.200'
+                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
                                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                             FEATURES
                                         </Heading>
@@ -694,180 +822,81 @@ STRIPE_WEBHOOK_SECRET=`;
                     </Container>
                 </Box>
 
-                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} pl={80}>
-                    <Box bg='hsl(240 10% 3.9%)' height={'full'}>
-                        <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
-                            <Box bg="hsl(240 10% 3.9%)" pb={10}>
-
-                                <Text
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={400}
-                                    fontSize={'sm'}
-                                    mt={24}
-                                >
-                                    Docs {' > '}
-                                </Text>
+                <Box display={{ base: 'none', md: 'flex' }} bg='white' width={'100%'} pl={80}>
+                    <Box bg='white' height={'full'}>
+                        <Box rounded='xl' bg='white'>
+                            <Box bg="white" pb={10}>
 
 
                                 <Text
-                                    fontFamily={'Geist Sans'}
-                                    color='#fff'
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.900'
                                     fontSize={'4xl'}
-                                    fontWeight={700}
-                                    mt='2'
-                                >
-                                    Introduction
-                                </Text>
-
-
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.50'
                                     fontWeight={600}
-                                    fontSize={'xl'}
+                                    mt={10}
                                 >
-                                    Hey maker, welcome to Ship-jitt 👋
+                                    User authentication
                                 </Text>
 
-                                <Text
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                    mt={5}
-                                >
-                                    Here's a quick overview of the boilerplate. Follow along to get your app up and running.
-                                </Text>
-
-                                <Text
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.200'
-                                    fontWeight={400}
-                                    maxW={'700px'}
-                                    fontSize={'md'}
-                                    mt={5}
-                                >
-                                    Get started with Ship jitt Boilerplate, the trendiest boilerplate for React JS, Node.js, Sequelize, Stripe & ChatGPT API.
-                                    ShipJitt comes with over 100+ fully coded & designed frontend components and more than 20+ section & web app page examples
-                                    giving you the freedom of choosing and combining.
-                                </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={500}
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.700'
+                                    fontWeight={600}
                                     fontSize={'lg'}
                                 >
-                                    React.js & Node.js project structure
+                                    We use the manually functions to authenticate users. You can configure it in the <br /> <Code>/routes/authRoutes.js file.</Code>
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.700'
+                                    fontWeight={600}
+                                    fontSize={'lg'}
                                 >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/auth</Code> - Authentication routes
+                                    There are build-in ways to authenticate uesrs with Ship-jitt. You can use the <br /> <Code>authRoutes.js</Code> file to configure the authentication routes.
                                 </Text>
+
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.700'
+                                    fontWeight={600}
+                                    fontSize={'lg'}
                                 >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/components</Code> - React components
+                                    Once you've completed the setup, you can start the server and see the app live.
                                 </Text>
+
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.800'
+                                    fontWeight={600}
+                                    fontSize={'lg'}
                                 >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/images</Code> - Images for the project
+                                    1. Login function using sequelize ORM include the verification email in Node.js
                                 </Text>
+
+
+                                <CodeBlock code={authRoutes} />
+
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.800'
+                                    fontWeight={600}
+                                    fontSize={'lg'}
                                 >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/models</Code> - Database models
-                                </Text>
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
-                                >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/middleware</Code> - Middleware functions
-                                </Text>
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
-                                >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/routes</Code> - API routes
-                                </Text>
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={500}
-                                    fontSize={'md'}
-                                >
-                                    <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/service</Code> - Application services for the project
+                                    2. Configure protected routes in the frontend too, handles in the backend through /middleware/auth.js
                                 </Text>
 
+                                <CodeBlock code={authfront} />
 
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={500}
-                                    fontSize={'xl'}
-                                >
-                                    Start a local server
-                                </Text>
+
 
 
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    1. In your terminal, run the following commands one-by-one.
-                                </Text>
-
-                                <CodeBlock code={code} />
-
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    2. Configure your environment variables .env file.
-                                </Text>
-
-                                <CodeBlock code={envconf} />
-
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    3. Open http://localhost:3000 to see your site. And voila!
-                                </Text>
-
-
-
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={500}
+                                    fontFamily={'Bricolage Grotesque'}
+                                    color='gray.800'
+                                    fontWeight={600}
                                     fontSize={'md'}
                                 >
                                     Now go ahead to the Tutorials section to get the app live within 5 minutes.
@@ -890,4 +919,4 @@ STRIPE_WEBHOOK_SECRET=`;
 
 
 
-export default Docs;
+export default DocsTutorialsUserAuthentication;

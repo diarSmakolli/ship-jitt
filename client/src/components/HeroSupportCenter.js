@@ -11,17 +11,13 @@ import {
 export default function HeroSupportCenter() {
     return (
         <Box
-            // i need to pass this bg image but in the mobile this bg image gradient is not under image of hero but under it can u fix it please
-            bgImage='https://cdn.auth0.com/website/cic-homepage/hero/gradient-bg'
-            bgPosition='center'
-            bgSize='cover'
-            bgRepeat='no-repeat'
-            position={'relative'}
+            // bgImage='https://cdn.auth0.com/website/cic-homepage/hero/gradient-bg'
+            // bgPosition='center'
+            // bgSize='cover'
+            // bgRepeat='no-repeat'
+            // position={'relative'}
             height={{ base: 'auto', md: 'auto' }}
             width={'full'}
-            // display={'flex'}
-            // justifyContent={'center'}
-            // alignItems={'center'}
             borderBottomRadius={'5%'}
             zIndex={1}
             pb={14}
@@ -39,7 +35,7 @@ export default function HeroSupportCenter() {
                         <Text
                             as={'span'}
                             position={'relative'}
-                            fontFamily={'Bricolage Grotesque'}
+                            fontFamily={'Geist Sans'}
                             lineHeight={'1.5'}
                             textAlign={'center'}
                             fontWeight={700}
@@ -53,8 +49,8 @@ export default function HeroSupportCenter() {
 
                         </Text>
 
-                        <Text color={useColorModeValue('#CFCFCF', 'gray.700')}
-                            opacity={'0.8'}
+                        <Text 
+                            color='hsl(240 5% 64.9%)'
                             fontSize={'lg'} fontWeight={500}
                             fontFamily={'Epilogue'}
                             textAlign={{ base: 'center', md: 'center' }}

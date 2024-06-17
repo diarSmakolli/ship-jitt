@@ -15,7 +15,7 @@ export default function Testimonials() {
                 textAlign={'center'}
                 fontSize={'5xl'}
                 color='white'
-                fontFamily={'Bricolage Grotesque'}
+                fontFamily={'Poppins'}
                 fontWeight={500}
             >
                 Trusted by the world's best.
@@ -26,7 +26,7 @@ export default function Testimonials() {
             <HStack width='100%' rounded='2xl' mt={10}>
                 <VStack width='33.33%' height={'auto'}>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -44,7 +44,7 @@ export default function Testimonials() {
                         </Text>
                     </Box>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -62,7 +62,7 @@ export default function Testimonials() {
                         </Text>
                     </Box>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} bborderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -84,7 +84,7 @@ export default function Testimonials() {
 
                 <VStack width='33.33%' height={'auto'} mt={20}>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -102,7 +102,7 @@ export default function Testimonials() {
                         </Text>
                     </Box>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -120,7 +120,7 @@ export default function Testimonials() {
                         </Text>
                     </Box>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -142,7 +142,7 @@ export default function Testimonials() {
 
                 <VStack width='33.33%' height={'auto'}>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -160,7 +160,7 @@ export default function Testimonials() {
                         </Text>
                     </Box>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'
@@ -178,7 +178,7 @@ export default function Testimonials() {
                         </Text>
                     </Box>
 
-                    <Box p={10} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                    <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
                         <HStack>
                             <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
                                 rounded={'full'} width='40px' height='40px'

@@ -329,6 +329,6 @@ const NAV_ITEMS = [
   },
   {
     label: 'Docs',
-    href: '#',
+    href: '/docs',
   },
 ];
