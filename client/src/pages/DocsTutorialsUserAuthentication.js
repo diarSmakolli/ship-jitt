@@ -51,14 +51,13 @@ import {
 
 } from '@chakra-ui/react';
 
-import { FaDiscord, FaClipboard, FaBars } from 'react-icons/fa';
+import { FaDiscord, FaClipboard, FaBars, FaRegCheckCircle } from 'react-icons/fa';
 import { HamburgerIcon } from '@chakra-ui/icons';
 const { useState } = require('react');
 
 
 const CodeBlock = ({ code }) => {
     const { hasCopied, onCopy } = useClipboard(code);
-
     return (
         <Box position="relative" color="white" p="4" borderRadius="md" boxShadow="md" maxW="container.md">
             <Code display="block" whiteSpace="pre" overflowX="auto" p="6" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
@@ -77,9 +76,16 @@ const CodeBlock = ({ code }) => {
                 _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
             />
             {hasCopied && (
-                <Text position="absolute" top="20" right="4" fontSize="sm" color="green.300" fontFamily={'Geist Sans'}>
-                    Copied!
-                </Text>
+                <IconButton
+                    icon={<FaRegCheckCircle />}
+                    position="absolute"
+                    top="8"
+                    right="8"
+                    size="xs"
+                    color='white'
+                    bg="transparent"
+                    _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+                />
             )}
         </Box>
     );
@@ -112,6 +118,178 @@ MAILGUN_DOMAIN=
 
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=`;
+
+    const authcontext = `
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    let toast = useToast();
+  
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        getUser(decodedToken.id);
+      } else {
+        setLoading(false);
+      }
+  
+    }, []);
+  
+    const handleTokenExpired = () => {
+      toast({
+        title: 'Session Expired',
+        description: 'Your session has expired. Please login again.',
+        status: 'info',
+        duration: 3000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        logout();
+      }, 3000);
+    };
+  
+  
+    const login = (token) => {
+      localStorage.setItem('token', token);
+      const decodedToken = jwtDecode(token);
+      getUser(decodedToken.id);
+    };
+  
+    const logout = async () => {
+      try {
+        await axios.post('http://localhost:6099/api/users/logout', {}, {
+          withCredentials: true
+        });
+      } catch (error) {
+        console.error('Error logging out:', error);
+      } finally {
+        localStorage.removeItem('token');
+        setUser(null);
+      }
+    };
+  
+    const getUser = async (userId, token) => {
+      try {
+        const response = await axios.get('http://localhost:6099/api/users/userId', { // userid is an variable which determianted in each component from this authcontext
+          withCredentials: true,
+        });
+        setUser(response.data.user);
+      } catch (error) {
+        if (error.response && error.response.status === 401 && error.response.data.message === 'Token has expired.') {
+          handleTokenExpired();
+          console.log(error);
+        } else {
+          console.error('Error fetching user:', error);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    const isAdmin = () => {
+      return user && user.isAdmin;
+    };
+  
+    const hasAccess = () => {
+      return user && user.hasAccess;
+    };
+  
+    const isVerify = () => {
+      return user && user.isVerify;
+    }
+  
+    return (
+      <AuthContext.Provider value={{ user, login, logout, isAdmin, hasAccess, isVerify, loading }}>
+        {children}
+      </AuthContext.Provider>
+    );
+  };`;
+
+    const authRoutes = `
+// login user if isVerified is true if not send email verify account  ✅
+router.post('/login', async (req, res) => {
+    const { email, password, verification_token, createdBy, timeZone, updatedAt } = req.body;
+    try {
+
+        if(!email || !password) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Email and password are required.'
+            });
+        }
+    
+        const user = await User.findOne({ where: { email: email } });
+
+        if (!user) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'User not found.'
+            });
+        }
+
+        if(user.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This user has been deleted.'
+            })  
+        }
+
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+        const updatedAtTimeZone = moment().tz(selectedTimeZone).format();
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                status: 'error',
+                statusCode: 401,
+                message: 'Invalid password.'
+            });
+        }
+
+        if (!user.isVerify) {
+            // Resend verification email
+            const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
+            await User.update({ verification_token: verificationToken, updatedAt: updatedAtTimeZone }, { where: { email: email } });
+
+            await sendVerificationEmail(email, verificationToken);
+
+            return res.status(403).json({
+                status: 'error',
+                statusCode: 403,
+                message: 'Email not verified. Verification email sent.'
+            });
+        }
+        
+       
+        const token = jwt.sign({ id: user.id }, process.env.SECRETJWT, { expiresIn: '1h' });
+
+        res.cookie('token', token, {httpOnly: true, secure: false });
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            token: token,
+            message: 'User logged in successfully.',
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+`;
+
+
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
@@ -148,10 +326,6 @@ STRIPE_WEBHOOK_SECRET=`;
                                 Tutorials
                             </Heading>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/api-call'>
-                                API calls
-                            </Text>
 
                             <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
@@ -760,7 +934,7 @@ STRIPE_WEBHOOK_SECRET=`;
                                     1. Login function using sequelize ORM include the verification email in Node.js
                                 </Text>
 
-                                <CodeBlock code={code} />
+                                <CodeBlock code={authRoutes} />
 
                                 <Text mt={5}
                                     fontFamily={'Geist Sans'}
@@ -772,7 +946,7 @@ STRIPE_WEBHOOK_SECRET=`;
                                     {' '} <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/middleware/auth.js</Code>
                                 </Text>
 
-                                <CodeBlock code={envconf} />
+                                <CodeBlock code={authcontext} />
 
                                 <Text mt={5}
                                     fontFamily={'Geist Sans'}
