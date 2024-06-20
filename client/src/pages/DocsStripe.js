@@ -92,7 +92,7 @@ const CodeBlock = ({ code }) => {
 };
 
 
-function DocsPrivatePage() {
+function DocsStripe() {
     const [isOpen, setIsOpen] = useState(false);
 
     const code = `git clone https://github.com/dijarsmakolli/ship-jitt.git [YOUR_APP_NAME]
@@ -963,7 +963,7 @@ const PrivateRoute = ({ children }) => {
                                     fontSize={'sm'}
                                     mt={24}
                                 >
-                                    Docs {' > '} Tutorials {' > '} Private Page
+                                    Docs {' > '} Tutorials {' > '} Stripe Integration
                                 </Text>
 
 
@@ -974,7 +974,7 @@ const PrivateRoute = ({ children }) => {
                                     fontWeight={700}
                                     mt='2'
                                 >
-                                    Private Page
+                                    Stripe Integration
                                 </Text>
 
 
@@ -984,7 +984,8 @@ const PrivateRoute = ({ children }) => {
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    Once user is authentified, you can build the private routes like a user dashboard, account, etc.
+                                    Let's create a Stripe Checkout to set up a stripe payment gateway in your app.
+                                    Let our webhook handle the logic to privision access to the user.
                                 </Text>
 
                                 <Text
@@ -994,18 +995,18 @@ const PrivateRoute = ({ children }) => {
                                     fontSize={'md'}
                                     mt={5}
                                 >
-                                    We use the 2 methods for the protection routes, we handle this in the backend and in the frontend too.
+                                    You need to have Stripe and Database set up before you can start with the integration.
                                 </Text>
 
                                 <Text
                                     fontFamily={'Geist Sans'}
                                     color='gray.200'
-                                    fontWeight={400}
+                                    fontWeight={600}
                                     maxW={'700px'}
-                                    fontSize={'md'}
+                                    fontSize={'xl'}
                                     mt={5}
                                 >
-                                    Here's an example of a simple user dashboard page that is protected by the authentication middleware.
+                                    Setup
                                 </Text>
 
                                 <Text mt={5}
@@ -1014,7 +1015,20 @@ const PrivateRoute = ({ children }) => {
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    1. Protected route by middleware in the backend as example:
+                                    1. In your stripe dashboard, Click + {' > '} Product Catalog{' > '} Add a product. <br />
+                                    Set a name and price for the product, then Click Save. <br /><br />
+
+                                    <Text as='span' fontWeight={600}>Remind: If you want to set up the Subscription, it's the same flow.</Text>
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily={'Geist Sans'}
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    In the Pricing Section , copy the product Price ID starts with price_ and add to the first plan in the 
+                                    {' '} <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>Pricing.js</Code>
                                 </Text>
 
                                 <CodeBlock code={protectedRouteByMiddleware} />
@@ -1059,4 +1073,4 @@ const PrivateRoute = ({ children }) => {
 
 
 
-export default DocsPrivatePage;
+export default DocsStripe;

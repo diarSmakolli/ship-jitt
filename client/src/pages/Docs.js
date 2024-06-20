@@ -154,27 +154,12 @@ STRIPE_WEBHOOK_SECRET=`;
                             </Text>
 
                             <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'}
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/authentication'>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'}
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/authentication'>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'}
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/authentication'>
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/private-page'>
                                 Protected routes
                             </Text>
 
                             <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'}
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/authentication'>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'}
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} >
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/stripe'>
                                 Stripe integration
                             </Text>
                         </Box>

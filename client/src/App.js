@@ -21,6 +21,8 @@ import { Navigate } from 'react-router-dom';
 import Cancel from './pages/Cancel';
 import DocsTutorialsAPICall from './pages/DocsTutorialsAPI-Call';
 import DocsTutorialsUserAuthentication from './pages/DocsTutorialsUserAuthentication';
+import DocsPrivatePage from './pages/DocsPrivatePage';
+import DocsStripe from './pages/DocsStripe';
 
 
 
@@ -39,6 +41,8 @@ const App = () => {
             <Route path="/docs" element={<Docs />} />
             <Route path='/docs/tutorials/api-call' element={<DocsTutorialsAPICall />} />
             <Route path='/docs/tutorials/authentication' element={<DocsTutorialsUserAuthentication />} />
+            <Route path='/docs/tutorials/private-page' element={<DocsPrivatePage />} />
+            <Route path='/docs/tutorials/stripe' element={<DocsStripe />} />
             <Route path='/contact-us' element={<SupportCenter />} />  
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
