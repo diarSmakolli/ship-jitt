@@ -25,7 +25,7 @@ app.use('/api/stripe', stripeRoute);
 // const uploadsPath = path.join(__dirname, 'uploads');
 // app.use('/uploads', express.static(uploadsPath));
 
-
+// hint
 
 const sequelize = new Sequelize({
     dialect: process.env.DIALECT,
