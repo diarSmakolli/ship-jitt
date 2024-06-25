@@ -14,6 +14,7 @@ import axios from 'axios';
 
 const starterPriceId = 'price_1PIcjiP1jRGQyMPG1shY69it';
 const allinPriceId = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
+let al;
  
  
 const Pricing = () => {
