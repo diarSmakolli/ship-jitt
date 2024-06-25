@@ -67,11 +67,6 @@ const Pricing = () => {
         if(!user) {
             window.location.href = '/auth/signin';
         }
-        
-        // i need to implement if user have access to the allinpriceid or allin plan to disallow to buy the plan again and also check if the user have the allin plan and want to buy the starter plan he dont need right because have the allin plan
-
-
-
 
         if(user.priceId === allinPriceId) {
             toast({

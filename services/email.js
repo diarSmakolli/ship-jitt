@@ -63,6 +63,26 @@ const sendWelcomeEmail = async(email) => {
 
 }
 
+const sendCoupon = async(email, plan, amount, total, transactionId, date) => {
+    const data = {
+        from: 'dijarsmakolli99@gmail.com',
+        to: email,
+        // bcc: 'dijarsmakolli99@gmail.com',
+        subject: 'Thank you for your purchase!',
+        html: 
+        `
+        <p>Thank you for your purchase. Here is a coupon code for your next purchase:</p>
+        <ul>
+                <li>Plan: ${plan}</li>
+                <li>Amount: ${amount}</li>
+                <li>Total: ${total}</li>
+                <li>Transaction ID: ${transactionId}</li>
+                <li>Date: ${date}</li>
+            </ul>
+        `
+    }
+}
+
 const sendPasswordResetEmail = async (email, resetLink) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
@@ -92,4 +112,34 @@ const sendPasswordResetEmail = async (email, resetLink) => {
 
 };
 
-module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail };
+const sendPaymentDetailsEmail = async (email, paymentDetails) => {
+    const { plan, amount, total, transactionId, date } = paymentDetails;
+    const data = {
+        from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
+        to: email,
+        bcc: 'dijarsmakolli99@gmail.com',
+        subject: 'Your Payment Details',
+        html: `
+            <p>Thank you for your payment. Here are your payment details:</p>
+            <ul>
+                <li>Plan: ${plan}</li>
+                <li>Amount: ${amount}</li>
+                <li>Total: ${total}</li>
+                <li>Transaction ID: ${transactionId}</li>
+                <li>Date: ${date}</li>
+            </ul>
+        `
+    };
+
+    return new Promise((resolve, reject) => {
+        mg.messages().send(data, (error, body) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(body);
+            }
+        });
+    });
+};
+
+module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendPaymentDetailsEmail, sendCoupon};

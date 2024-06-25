@@ -23,6 +23,10 @@ import DocsTutorialsAPICall from './pages/DocsTutorialsAPI-Call';
 import DocsTutorialsUserAuthentication from './pages/DocsTutorialsUserAuthentication';
 import DocsPrivatePage from './pages/DocsPrivatePage';
 import DocsStripe from './pages/DocsStripe';
+import DocsDatabase from './pages/DocsDatabase';
+import DocsEmails from './pages/DocsEmails';
+import DocsPayments from './pages/DocsPayments';
+import DocsNavbar from './pages/DocsNavbar';
 
 
 
@@ -43,6 +47,10 @@ const App = () => {
             <Route path='/docs/tutorials/authentication' element={<DocsTutorialsUserAuthentication />} />
             <Route path='/docs/tutorials/private-page' element={<DocsPrivatePage />} />
             <Route path='/docs/tutorials/stripe' element={<DocsStripe />} />
+            <Route path='/docs/features/database' element={<DocsDatabase />} />
+            <Route path='/docs/features/emails' element={<DocsEmails />} /> 
+            <Route path='/docs/features/payments' element={<DocsPayments />} />
+            <Route path='/docs/components/navbar' element={<DocsNavbar />} />
             <Route path='/contact-us' element={<SupportCenter />} />  
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />

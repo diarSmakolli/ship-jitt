@@ -170,124 +170,34 @@ STRIPE_WEBHOOK_SECRET=`;
                                 Features
                             </Heading>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
+                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'}
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/features/database'>
+                                Database
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' as='a' href='/docs/features/emails' display={'flex'}
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
+                                Emails
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/features/payments'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
+                                Payments
                             </Text>
                         </Box>
 
                         <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200' display={'flex'}
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                 Components
                             </Heading>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/navbar'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
+                                Navbar
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
-                            </Text>
-                        </Box>
-
-                        <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                Chakra UI components
-                            </Heading>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
-                            </Text>
+                            
                         </Box>
 
                         <Box rounded='xl' mt={5}>

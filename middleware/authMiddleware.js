@@ -34,7 +34,7 @@ const verifyToken = async(req, res, next) => {
                 });
             }
         }
-
+        
         if(!decoded) {
             return res.status(401).json({
                 status: 'error',

@@ -373,6 +373,54 @@ const PrivateRoute = ({ children }) => {
   };
 `;
 
+const pricingComponent = `
+const [starterPlanUrl, setStarterPlanUrl] = useState('');
+const [allInPlanUrl, setAllInPlanUrl] = useState('');
+
+const handleStarterPlan = async () => {
+
+    if(!user) {
+        window.location.href = '/auth/signin';
+    }
+
+    if(user.priceId === starterPriceId) {
+        toast({
+            title: 'You already have access to this plan',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+        });
+        return;
+    }
+
+    // implement the logic if the user have the all in plan and need to buy the starter plan disallow because already have the all in plan
+    if(user.priceId === allinPriceId) {
+        toast({
+            title: 'You already have access to the all in plan',
+            status: 'info',
+            duration: 3000,
+            isClosable: true,
+        });
+        return;
+    }
+
+    try {
+        const response = await axios.post('http://localhost:6099/api/stripe/create-checkout-session', {
+            priceId: starterPriceId,
+            userId: user.id,
+            email: user.email,
+        });
+        setStarterPlanUrl(response.data.url);
+        console.log(starterPlanUrl);
+        window.open(response.data.url, '_blank');
+    } catch (error) {
+        console.error('Error creating checkout session:', error);
+    }
+};
+
+... then the logic frontend return( ) to handle the links which route in the link of the stripe to pay the plan.
+`;
+
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
@@ -1031,7 +1079,7 @@ const PrivateRoute = ({ children }) => {
                                     {' '} <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>Pricing.js</Code>
                                 </Text>
 
-                                <CodeBlock code={protectedRouteByMiddleware} />
+                                <CodeBlock code={pricingComponent} />
 
                                 <Text mt={5}
                                     fontFamily={'Geist Sans'}
@@ -1039,11 +1087,31 @@ const PrivateRoute = ({ children }) => {
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    2. Protected route by frontend in the <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>App.js</Code> file through the 
-                                    {' '} <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>/auth/authContext.js</Code>
+                                    2. Open http://localhost:3000/ in your browser, log-in and click the button to make a <br />
+                                    payment with the credit card number 4242 4242 4242 4242.
                                 </Text>
 
-                                <CodeBlock code={privateRouteReactJs} />
+                                <Text mt={5}
+                                    fontFamily={'Geist Sans'}
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    3. Our webhook /api/stripe listens to Stripe events and will handle
+                                     the logic to provision <br /> access (or not) to 
+                                    the user—See the boolean hasAccess in the User.js schema.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily={'Geist Sans'}
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    4. You can add your own logic in /api/stripe like sending abandoned cart emails etc.
+                                </Text>
+
+
 
                             
 
