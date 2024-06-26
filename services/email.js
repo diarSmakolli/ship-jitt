@@ -80,8 +80,19 @@ const sendCoupon = async(email, plan, amount, total, transactionId, date) => {
                 <li>Date: ${date}</li>
             </ul>
         `
-    }
-}
+    };
+
+    return new Promise((resolve, reject) => {
+        mg.messages().send(data, (error, body) => {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(body);
+            }
+        })
+    })
+    
+};
 
 const sendPasswordResetEmail = async (email, resetLink) => {
     const data = {
