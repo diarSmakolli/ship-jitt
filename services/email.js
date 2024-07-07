@@ -122,15 +122,15 @@ const sendInvoice = async (email, amount, priceId, transactionId, date, status, 
         html: `
             <p>Here's you have the inforamtion.</p>
 
-            <p>${email}</p>
-            <p>${amount}</p>
-            <p>${priceId}</p>
-            <p>${transactionId}</p>
-            <p>${date}</p>
-            <p>${status}</p>
-            <p>${currency}</p>
-            <p>${paymentMethod}</p>
-            <p>${paymentStatus}</p>
+            <p>Email: ${email}</p>
+            <p>Amount: ${amount}</p>
+            <p>Plan: ${priceId}</p>
+            <p>Transaction ID: ${transactionId}</p>
+            <p>Date: ${date}</p>
+            <p>Status: ${status}</p>
+            <p>Currency: ${currency}</p>
+            <p>Payment method: ${paymentMethod}</p>
+            <p>$Payment method: ${paymentStatus}</p>
         `
     };
 

@@ -25,7 +25,7 @@ const Invoice = sequelize.define('invoices', {
         type: Sequelize.DataTypes.STRING,
     },
     date: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.DATE,
     },
     status: {
         type: Sequelize.DataTypes.STRING,
@@ -40,25 +40,25 @@ const Invoice = sequelize.define('invoices', {
         type: Sequelize.DataTypes.STRING,
     },
     createdAt: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.DATE,
     },
     createdBy: {
         type: Sequelize.DataTypes.STRING,
     },
     updatedAt: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.DATE,
     },
     updatedBy: {
         type: Sequelize.DataTypes.STRING,
     },
     deletedAt: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.DATE,
     },
     deletedBy: {
         type: Sequelize.DataTypes.STRING,
     },
     userId: {
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.INTEGER,
     },
     priceId: {
         type: Sequelize.DataTypes.STRING,

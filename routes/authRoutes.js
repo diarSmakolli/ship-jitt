@@ -801,6 +801,117 @@ router.get('/:id', verifyToken, async(req, res) => {
     }
 });
 
+
+// get user invoices
+router.get('/:id/invoices', verifyToken, async(req, res) => {
+    const userId = req.params.id;
+    let { timeZone } = req.body;
+    try {
+
+        let user = await User.findByPk(userId, {
+            include: [Invoice],
+        });
+
+        if(!user) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'User not found'
+            })
+        }
+
+        if(user.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This user has been deleted.'
+            })
+        }
+
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+        const createdAtTimeZone = moment(user.invoices.createdAt).tz(selectedTimeZone).format();
+        const updatedAtTimeZone = moment(user.invoices.updatedAt).tz(selectedTimeZone).format();
+        const deletedAtTimeZone = moment(user.invoices.deletedAt).tz(selectedTimeZone).format();
+        
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            createdAt: createdAtTimeZone,
+            updatedAt: updatedAtTimeZone,
+            deletedAt: deletedAtTimeZone,
+            invoices: user.invoices
+        })
+
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!",
+        });
+    }
+});
+
+// get invoice by id
+router.get('/:id/invoices/:invoiceId', verifyToken, async(req, res) => {
+    const userId = req.params.id;
+    const invoiceId = req.params.invoiceId;
+    try {
+
+        const user = await User.findByPk(userId);
+        const invoice = await Invoice.findByPk(invoiceId);
+
+        if(!invoice) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Invoice not found'
+            });
+        }
+
+        if(userId != invoice.userId) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Invoice not found'
+            })
+        }
+
+        if(user.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This user has been deleted.'
+            })
+        }
+
+        if(invoice.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This invoice has been deleted.'
+            })
+        }
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Invoice found successfully.',
+            invoice
+        })
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!",
+        });
+    }
+});
+
 // update firstname, lastname ✅
 router.put('/:id', verifyToken, async(req, res) => {
     const { first_name, last_name, updatedAt, updatedBy, timeZone } = req.body;

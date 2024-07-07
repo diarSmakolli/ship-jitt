@@ -91,8 +91,6 @@ const handleWebhook = async (req, res) => {
                 //     paymentDetails.paymentStatus
                 // );
 
-                const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
-
                 await Invoice.create({
                     amount: (amount / 100).toFixed(2),
                     transactionId: transactionId,
@@ -101,12 +99,14 @@ const handleWebhook = async (req, res) => {
                     currency: currency,
                     paymentMethod: paymentMethod,
                     paymentStatus: paymentStatus,
-                    createdAt:  moment().tz(selectedTimeZone).format(),
+                    createdAt: moment().tz(process.env.DEFAULT_TIMEZONE).format(),
                     createdBy: userId,
                     userId: userId,
                     priceId: priceId,
                     planName: priceId == starterplan ? 'Starter Plan' : 'All-in Plan',
                 });
+                
+                console.log('INVOICE CREATED!!!!');
 
                 await sendInvoice(
                     email,
