@@ -1,6 +1,6 @@
 const stripe = require('stripe')('sk_test_51PIUwIP1jRGQyMPGjV1eabWoEV50AcPDqY6vWUQh0I18zMjMaaJC8q2AJ5RApYeeNvawp20ukQkflGRwB4qB88st00tObSSLDc');
 const User = require('../models/User');
-const { sendWelcomeEmail, sendPaymentDetailsEmail, sendCoupon} = require('./email');
+const { sendWelcomeEmail, sendPaymentDetailsEmail, sendCoupon } = require('./email');
 
 const createCheckoutSession = async (req, res) => {
     try {
@@ -35,8 +35,6 @@ const createCheckoutSession = async (req, res) => {
 
 // Now, let's update the webhook handler to listen for the checkout.session.completed event and update the user in the database:
 
-// paymentController.js
-
 const handleWebhook = async (req, res) => {
     let event;
     let starterplan = 'price_1PIcjiP1jRGQyMPG1shY69it';
@@ -51,11 +49,18 @@ const handleWebhook = async (req, res) => {
             const amount = session.amount_total;
             const transactionId = session.id;
             const date = new Date(session.created * 1000).toLocaleString();
+            const status = session.status; // complete
+            const currency = session.currency; // usd
+            const paymentMethod = session.payment_method_types[0];
+            const paymentStatus = session.payment_status; // paid
+
+
+
 
             const user = await User.findOne({ where: { id: userId } });
             if (user) {
                 user.hasAccess = true;
-                user.priceId = priceId; 
+                user.priceId = priceId;
                 await user.save();
                 console.log(`User ${user.email} has been granted access.`);
 
@@ -64,10 +69,25 @@ const handleWebhook = async (req, res) => {
                     amount: (amount / 100).toFixed(2),
                     total: (amount / 100).toFixed(2),
                     transactionId: transactionId,
-                    date: date
+                    date: date,
+                    status: status,
+                    currency: currency,
+                    paymentMethod: paymentMethod,
+                    paymentStatus: paymentStatus
                 };
 
-                await sendCoupon(email, paymentDetails.plan, paymentDetails.amount, paymentDetails.total, paymentDetails.transactionId, paymentDetails.date);
+                await sendCoupon(
+                    email,
+                    paymentDetails.plan, 
+                    paymentDetails.amount, 
+                    paymentDetails.total, 
+                    paymentDetails.transactionId, 
+                    paymentDetails.date, 
+                    paymentDetails.status, 
+                    paymentDetails.currency, 
+                    paymentDetails.paymentMethod, 
+                    paymentDetails.paymentStatus
+                );
                 console.log(`Payment details email sent to ${email}`);
             }
         }

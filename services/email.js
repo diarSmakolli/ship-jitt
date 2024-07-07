@@ -63,7 +63,7 @@ const sendWelcomeEmail = async(email) => {
 
 }
 
-const sendCoupon = async(email, plan, amount, total, transactionId, date) => {
+const sendCoupon = async(email, plan, amount, total, transactionId, date, status, currency, paymentMethod, paymentStatus) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com',
         to: email,
@@ -78,6 +78,10 @@ const sendCoupon = async(email, plan, amount, total, transactionId, date) => {
                 <li>Total: ${total}</li>
                 <li>Transaction ID: ${transactionId}</li>
                 <li>Date: ${date}</li>
+                <li>Date: ${status}</li>
+                <li>Date: ${currency}</li>
+                <li>Date: ${paymentMethod}</li>
+                <li>Date: ${paymentStatus}</li>
             </ul>
         `
     };
@@ -91,7 +95,7 @@ const sendCoupon = async(email, plan, amount, total, transactionId, date) => {
             }
         })
     })
-    
+
 };
 
 const sendPasswordResetEmail = async (email, resetLink) => {
