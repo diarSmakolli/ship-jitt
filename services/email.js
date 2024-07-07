@@ -64,28 +64,77 @@ const sendWelcomeEmail = async(email) => {
 }
 
 const sendCoupon = async(email, plan, amount, total, transactionId, date, status, currency, paymentMethod, paymentStatus) => {
+    const starterPriceId = 'price_1PIcjiP1jRGQyMPG1shY69it';
+    const allinPriceId = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
+
+    let planName;
+
+    if(plan === starterPriceId) {
+        planName = 'Starter plan';
+    }
+
+    if(plan === allinPriceId) {
+        planName = 'All-in plan';
+    }
+
     const data = {
         from: 'dijarsmakolli99@gmail.com',
         to: email,
-        // bcc: 'dijarsmakolli99@gmail.com',
-        subject: 'Thank you for your purchase!',
+        subject: 'Your order details in Ship Jitt',
         html: 
+        // `
+        // <p>Thank you for your purchase, here you have your order details</p>
+        // <ul>
+        //         <li>Plan: ${plan}</li>
+        //         <li>Amount: ${amount}</li>
+        //         <li>Total: ${total}</li>
+        //         <li>Transaction ID: ${transactionId}</li>
+        //         <li>Date: ${date}</li>
+        //         <li>Status: ${status}</li>
+        //         <li>Currency: ${currency}</li>
+        //         <li>Payment method: ${paymentMethod}</li>
+        //         <li>Payment status: ${paymentStatus}</li>
+        //     </ul>
+        // `
         `
-        <p>Thank you for your purchase. Here is a coupon code for your next purchase:</p>
-        <ul>
-                <li>Plan: ${plan}</li>
-                <li>Amount: ${amount}</li>
-                <li>Total: ${total}</li>
-                <li>Transaction ID: ${transactionId}</li>
-                <li>Date: ${date}</li>
-                <li>Date: ${status}</li>
-                <li>Date: ${currency}</li>
-                <li>Date: ${paymentMethod}</li>
-                <li>Date: ${paymentStatus}</li>
-            </ul>
+            <p>Thanks</p>
         `
     };
 
+    return new Promise((resolve, reject) => {
+        mg.messages().send(data, (error, body) => {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(body);
+            }
+        })
+    })
+
+};
+
+const sendInvoice = async (email, amount, priceId, transactionId, date, status, currency, paymentMethod, paymentStatus) => {
+    const data = {
+        from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
+        to: email,
+        bcc: 'dijarsmakolli99@gmail.com',
+        subject: 'View your invoice',
+        html: `
+            <p>Here's you have the inforamtion.</p>
+
+            <p>${email}</p>
+            <p>${amount}</p>
+            <p>${priceId}</p>
+            <p>${transactionId}</p>
+            <p>${date}</p>
+            <p>${status}</p>
+            <p>${currency}</p>
+            <p>${paymentMethod}</p>
+            <p>${paymentStatus}</p>
+        `
+    };
+
+    // lets build an promise
     return new Promise((resolve, reject) => {
         mg.messages().send(data, (error, body) => {
             if(error) {
@@ -157,4 +206,4 @@ const sendPaymentDetailsEmail = async (email, paymentDetails) => {
     });
 };
 
-module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendPaymentDetailsEmail, sendCoupon};
+module.exports = { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail, sendPaymentDetailsEmail, sendCoupon, sendInvoice};

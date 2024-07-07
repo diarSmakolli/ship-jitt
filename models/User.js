@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
+const Invoice = require('./Invoice');
 
 dotenv.config();
 
@@ -125,5 +126,6 @@ const User = sequelize.define('users', {
     tableName: 'users',
     timestamps: false
 });
+
 
 module.exports = User;

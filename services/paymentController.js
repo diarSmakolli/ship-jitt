@@ -1,6 +1,8 @@
 const stripe = require('stripe')('sk_test_51PIUwIP1jRGQyMPGjV1eabWoEV50AcPDqY6vWUQh0I18zMjMaaJC8q2AJ5RApYeeNvawp20ukQkflGRwB4qB88st00tObSSLDc');
+const { Invoice } = require('../models');
 const User = require('../models/User');
-const { sendWelcomeEmail, sendPaymentDetailsEmail, sendCoupon } = require('./email');
+const moment = require('moment-timezone');
+const { sendWelcomeEmail, sendPaymentDetailsEmail, sendCoupon, sendInvoice } = require('./email');
 
 const createCheckoutSession = async (req, res) => {
     try {
@@ -64,30 +66,61 @@ const handleWebhook = async (req, res) => {
                 await user.save();
                 console.log(`User ${user.email} has been granted access.`);
 
-                const paymentDetails = {
-                    plan: priceId,
+                // const paymentDetails = {
+                //     plan: priceId,
+                //     amount: (amount / 100).toFixed(2),
+                //     total: (amount / 100).toFixed(2),
+                //     transactionId: transactionId,
+                //     date: date,
+                //     status: status,
+                //     currency: currency,
+                //     paymentMethod: paymentMethod,
+                //     paymentStatus: paymentStatus
+                // };
+
+                // await sendCoupon(
+                //     email,
+                //     paymentDetails.plan, 
+                //     paymentDetails.amount, 
+                //     paymentDetails.total, 
+                //     paymentDetails.transactionId, 
+                //     paymentDetails.date, 
+                //     paymentDetails.status, 
+                //     paymentDetails.currency, 
+                //     paymentDetails.paymentMethod, 
+                //     paymentDetails.paymentStatus
+                // );
+
+                const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+                await Invoice.create({
                     amount: (amount / 100).toFixed(2),
-                    total: (amount / 100).toFixed(2),
                     transactionId: transactionId,
                     date: date,
                     status: status,
                     currency: currency,
                     paymentMethod: paymentMethod,
-                    paymentStatus: paymentStatus
-                };
+                    paymentStatus: paymentStatus,
+                    createdAt:  moment().tz(selectedTimeZone).format(),
+                    createdBy: userId,
+                    userId: userId,
+                    priceId: priceId,
+                    planName: priceId == starterplan ? 'Starter Plan' : 'All-in Plan',
+                });
 
-                await sendCoupon(
+                await sendInvoice(
                     email,
-                    paymentDetails.plan, 
-                    paymentDetails.amount, 
-                    paymentDetails.total, 
-                    paymentDetails.transactionId, 
-                    paymentDetails.date, 
-                    paymentDetails.status, 
-                    paymentDetails.currency, 
-                    paymentDetails.paymentMethod, 
-                    paymentDetails.paymentStatus
+                    amount,
+                    priceId == starterplan ? 'Starter Plan' : 'All-in Plan',
+                    transactionId,
+                    date,
+                    status,
+                    currency,
+                    paymentMethod,
+                    paymentStatus,
                 );
+
+                console.log('EMAIL SEND!!!!');
                 console.log(`Payment details email sent to ${email}`);
             }
         }

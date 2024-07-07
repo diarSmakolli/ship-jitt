@@ -17,6 +17,7 @@ const { time } = require('console');
 const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 const fs = require('fs');
+const { Invoice } = require('../models');
 
 // mailgun config
 const mg = mailgun({
@@ -739,7 +740,11 @@ router.get('/:id', verifyToken, async(req, res) => {
     const userId = req.params.id;
     let { timeZone } = req.body;
     try {
-        let user = await User.findOne({ where: { id: userId }});
+        // let user = await User.findOne({ where: { id: userId }});
+
+        let user = await User.findByPk(userId, {
+            include: [Invoice],
+        })
         
         if(!user) {
             return res.status(404).json({
