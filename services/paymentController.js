@@ -36,7 +36,6 @@ const createCheckoutSession = async (req, res) => {
 // After updating the createCheckoutSession function, you can now pass the user ID and email as metadata when creating the checkout session.
 
 // Now, let's update the webhook handler to listen for the checkout.session.completed event and update the user in the database:
-
 const handleWebhook = async (req, res) => {
     let event;
     let starterplan = 'price_1PIcjiP1jRGQyMPG1shY69it';
@@ -66,32 +65,12 @@ const handleWebhook = async (req, res) => {
                 await user.save();
                 console.log(`User ${user.email} has been granted access.`);
 
-                // const paymentDetails = {
-                //     plan: priceId,
-                //     amount: (amount / 100).toFixed(2),
-                //     total: (amount / 100).toFixed(2),
-                //     transactionId: transactionId,
-                //     date: date,
-                //     status: status,
-                //     currency: currency,
-                //     paymentMethod: paymentMethod,
-                //     paymentStatus: paymentStatus
-                // };
+                const prefix = 'No.AF';
+                const randomString = Math.random().toString(36).substring(2, 8).toUpperCase();
+                const sequentialNumber = (await Invoice.count()) + 1;
+                const invoiceNumber = `${prefix}${randomString}-${sequentialNumber.toString().padStart(4, '0')}`;
 
-                // await sendCoupon(
-                //     email,
-                //     paymentDetails.plan, 
-                //     paymentDetails.amount, 
-                //     paymentDetails.total, 
-                //     paymentDetails.transactionId, 
-                //     paymentDetails.date, 
-                //     paymentDetails.status, 
-                //     paymentDetails.currency, 
-                //     paymentDetails.paymentMethod, 
-                //     paymentDetails.paymentStatus
-                // );
-
-                await Invoice.create({
+                const invoice = await Invoice.create({
                     amount: (amount / 100).toFixed(2),
                     transactionId: transactionId,
                     date: date,
@@ -104,24 +83,14 @@ const handleWebhook = async (req, res) => {
                     userId: userId,
                     priceId: priceId,
                     planName: priceId == starterplan ? 'Starter Plan' : 'All-in Plan',
+                    invoiceNumber: invoiceNumber,
                 });
                 
                 console.log('INVOICE CREATED!!!!');
 
-                await sendInvoice(
+                await sendInvoice({
                     email,
-                    amount,
-                    priceId == starterplan ? 'Starter Plan' : 'All-in Plan',
-                    transactionId,
-                    date,
-                    status,
-                    currency,
-                    paymentMethod,
-                    paymentStatus,
-                );
-
-                console.log('EMAIL SEND!!!!');
-                console.log(`Payment details email sent to ${email}`);
+                });
             }
         }
 

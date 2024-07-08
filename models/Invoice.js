@@ -66,6 +66,10 @@ const Invoice = sequelize.define('invoices', {
     planName: {
         type: Sequelize.DataTypes.STRING,
     },
+    invoiceNumber: {
+        type: Sequelize.DataTypes.STRING,
+        unique: true,
+    }
     
 }, {
     tableName: 'invoices',

@@ -33,8 +33,10 @@ const sendVerificationEmail = async (email, token) => {
         mg.messages().send(data, (error, body) => {
             if(error) {
                 reject(error);
+                console.log('error');
             } else {
                 resolve(body);
+                console.log('Verification email sent successfully.');
             }
         })
     })
@@ -113,24 +115,16 @@ const sendCoupon = async(email, plan, amount, total, transactionId, date, status
 
 };
 
-const sendInvoice = async (email, amount, priceId, transactionId, date, status, currency, paymentMethod, paymentStatus) => {
+const sendInvoice = async ({
+    email
+}) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
         to: email,
         bcc: 'dijarsmakolli99@gmail.com',
         subject: 'View your invoice',
-        html: `
-            <p>Here's you have the inforamtion.</p>
-
-            <p>Email: ${email}</p>
-            <p>Amount: ${amount}</p>
-            <p>Plan: ${priceId}</p>
-            <p>Transaction ID: ${transactionId}</p>
-            <p>Date: ${date}</p>
-            <p>Status: ${status}</p>
-            <p>Currency: ${currency}</p>
-            <p>Payment method: ${paymentMethod}</p>
-            <p>$Payment method: ${paymentStatus}</p>
+        text: `Invoice Details:\n
+            Email: ${email}\n
         `
     };
 
