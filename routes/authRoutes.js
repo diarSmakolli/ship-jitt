@@ -18,6 +18,9 @@ const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 const fs = require('fs');
 const { Invoice } = require('../models');
+const PDFDocument = require('pdfkit');
+// const { generateInvoicePDF } = require('../services/generateInvoicePdf');
+const { generateInvoicePDF } = require('../services/generateInvoicePdf');
 
 // mailgun config
 const mg = mailgun({
@@ -801,7 +804,6 @@ router.get('/:id', verifyToken, async(req, res) => {
     }
 });
 
-
 // get user invoices
 router.get('/:id/invoices', verifyToken, async(req, res) => {
     const userId = req.params.id;
@@ -855,62 +857,123 @@ router.get('/:id/invoices', verifyToken, async(req, res) => {
 });
 
 // get invoice by id
-router.get('/:id/invoices/:invoiceId', verifyToken, async(req, res) => {
-    const userId = req.params.id;
-    const invoiceId = req.params.invoiceId;
-    try {
+// router.get('/:id/invoices/:invoiceId/download', async (req, res) => {
+//     const userId = req.params.id;
+//     const invoiceId = req.params.invoiceId;
 
-        const user = await User.findByPk(userId);
-        const invoice = await Invoice.findByPk(invoiceId);
+//     try {
+//         const user = await User.findByPk(userId);
+//         const invoice = await Invoice.findByPk(invoiceId);
 
-        if(!invoice) {
-            return res.status(404).json({
-                status: 'error',
-                statusCode: 404,
-                message: 'Invoice not found'
-            });
-        }
+//         if (!user || !invoice || user.id !== invoice.userId) {
+//             return res.status(404).json({
+//                 status: 'error',
+//                 statusCode: 404,
+//                 message: 'User or Invoice not found'
+//             });
+//         }
 
-        if(userId != invoice.userId) {
-            return res.status(404).json({
-                status: 'error',
-                statusCode: 404,
-                message: 'Invoice not found'
-            })
-        }
+//         const filePath = generateInvoicePDF(invoice, user);
+//         res.download(filePath, (err) => {
+//             if (err) {
+//                 console.error(`Error downloading the file: ${err}`);
+//                 res.status(500).json({
+//                     status: 'error',
+//                     statusCode: 500,
+//                     message: 'Error downloading the file'
+//                 });
+//             } else {
+//                 // Delete the file after download to save space
+//                 fs.unlink(filePath, (err) => {
+//                     if (err) console.error(`Error deleting the file: ${err}`);
+//                 });
+//             }
+//         });
+//     } catch (error) {
+//         console.error("An Error has occurred and we're working to fix the problem!");
+//         console.error(error);
+//         res.status(500).json({
+//             status: 'error',
+//             statusCode: 500,
+//             message: "An Error has occurred and we're working to fix the problem!",
+//         });
+//     }
+// });
 
-        if(user.deletedAt) {
-            return res.status(404).json({
-                status: 'error',
-                statusCode: 404,
-                message: 'This user has been deleted.'
-            })
-        }
+// router.get('/:id/invoices/:invoiceId/download', async (req, res) => {
+//     const userId = req.params.id;
+//     const invoiceId = req.params.invoiceId;
 
-        if(invoice.deletedAt) {
-            return res.status(404).json({
-                status: 'error',
-                statusCode: 404,
-                message: 'This invoice has been deleted.'
-            })
-        }
+//     try {
+//         const user = await User.findByPk(userId);
+//         const invoice = await Invoice.findByPk(invoiceId);
 
-        res.status(200).json({
-            status: 'success',
-            statusCode: 200,
-            message: 'Invoice found successfully.',
-            invoice
-        })
-    } catch (error) {
-        console.error("An Error has occurred and we're working to fix the problem!");
-        console.error(error);
-        res.status(500).json({
-            status: 'error',
-            statusCode: 500,
-            message: "An Error has occurred and we're working to fix the problem!",
-        });
-    }
-});
+//         if (!user || !invoice || user.id !== invoice.userId) {
+//             return res.status(404).json({
+//                 status: 'error',
+//                 statusCode: 404,
+//                 message: 'User or Invoice not found'
+//             });
+//         }
+
+//         const filePath = generateInvoicePDF(invoice, user);
+//         res.download(filePath, (err) => {
+//             if (err) {
+//                 console.error(`Error downloading the file: ${err}`);
+//                 res.status(500).json({
+//                     status: 'error',
+//                     statusCode: 500,
+//                     message: 'Error downloading the file'
+//                 });
+//             } else {
+//                 // Delete the file after download to save space
+//                 fs.unlink(filePath, (err) => {
+//                     if (err) console.error(`Error deleting the file: ${err}`);
+//                 });
+//             }
+//         });
+//     } catch (error) {
+//         console.error("An Error has occurred and we're working to fix the problem!");
+//         console.error(error);
+//         res.status(500).json({
+//             status: 'error',
+//             statusCode: 500,
+//             message: "An Error has occurred and we're working to fix the problem!",
+//         });
+//     }
+// });
+
+// const generateInvoicePDF = (invoice, user) => {
+//     const doc = new PDFDocument();
+//     const fileName = `Invoice_${invoice.invoiceNumber}.pdf`;
+//     const filePath = path.join(__dirname, 'invoices', fileName);
+//     doc.pipe(fs.createWriteStream(filePath));
+
+//     // Header
+//     doc.fontSize(25).text('Invoice', { align: 'center' });
+
+//     // User details
+//     doc.fontSize(12).text(`User: ${user.email}`);
+//     doc.text(`Date: ${invoice.date}`);
+//     doc.text(`Invoice Number: ${invoice.invoiceNumber}`);
+//     doc.text(`Plan: ${invoice.planName}`);
+
+//     // Invoice details
+//     doc.moveDown();
+//     doc.text('Invoice Details:');
+//     doc.text(`Amount: $${invoice.amount}`);
+//     doc.text(`Transaction ID: ${invoice.transactionId}`);
+//     doc.text(`Status: ${invoice.status}`);
+//     doc.text(`Currency: ${invoice.currency}`);
+//     doc.text(`Payment Method: ${invoice.paymentMethod}`);
+//     doc.text(`Payment Status: ${invoice.paymentStatus}`);
+
+//     doc.end();
+
+//     return filePath;
+// };
+
+
 
 // update firstname, lastname ✅
 router.put('/:id', verifyToken, async(req, res) => {

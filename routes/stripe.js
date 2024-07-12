@@ -9,7 +9,7 @@ const { createCheckoutSession, handleWebhook } = require('../services/paymentCon
 // Sure! Here's a sample code for the paymentController.js file:
 
 router.post('/create-checkout-session', createCheckoutSession);
-router.post('/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+router.post('/webhook', express.json({ type: 'application/json' }), handleWebhook);
 
 
 

@@ -4,12 +4,26 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const moment = require('moment-timezone');
 const mailgun = require('mailgun-js');
+const nodemailer = require('nodemailer');
+const path = require('path');
 
 // Initialize Mailgun
 const mg = mailgun({
     apiKey: process.env.MAILGUN_API_KEY,
     domain: process.env.MAILGUN_DOMAIN
 });
+
+// Initialize Nodemailer
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.USEREMAIL,
+        pass: process.env.PASSEMAIL
+    },
+    debug: true,
+});
+
+
 
 const sendVerificationEmail = async (email, token) => {
     const data = {
@@ -115,31 +129,167 @@ const sendCoupon = async(email, plan, amount, total, transactionId, date, status
 
 };
 
-const sendInvoice = async ({
-    email
-}) => {
-    const data = {
-        from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
-        to: email,
-        bcc: 'dijarsmakolli99@gmail.com',
-        subject: 'View your invoice',
-        text: `Invoice Details:\n
-            Email: ${email}\n
-        `
-    };
+// const sendInvoice = async ({
+//     email, invoice, pdfFilePath
+// }) => {
+//     const data = {
+//         from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
+//         to: email,
+//         bcc: 'dijarsmakolli99@gmail.com',
+//         subject: 'Your invoice',
+//         text: `Please find your invoice attached`,
+//         attachment: pdfFilePath
+        
+//     };
 
-    // lets build an promise
-    return new Promise((resolve, reject) => {
-        mg.messages().send(data, (error, body) => {
-            if(error) {
-                reject(error);
-            } else {
-                resolve(body);
-            }
-        })
-    })
+//     // lets build an promise
+//     return new Promise((resolve, reject) => {
+//         mg.messages().send(data, (error, body) => {
+//             if(error) {
+//                 reject(error);
+//                 console.log(error);
+//             } else {
+//                 resolve(body);
+//                 console.log('SUCCESFULLY SENT INVOICE');
+//             }
+//         })
+//     })
 
+// };
+
+// const sendInvoice = async ({email}) => {
+//     const mailOptions = {
+//         from: 'dijarsmakolli99@gmail.com',
+//         to: email,
+//         subject: 'Your Invoice',
+//         text: `Please find your invoice attached`
+//     };
+
+//     // lets build an promise
+//     return new Promise((resolve, reject) => {
+//         transporter.sendMail(mailOptions, (error, info) => {
+//             if (error) {
+//                 reject(error);
+//                 console.log('ERRORRRRR!!!!!', error);
+//             } else {
+//                 resolve(info);
+//                 console.log('SUCCESSS', info);
+//             }
+//         });
+//     });
+
+// };
+
+// const sendInvoice = async (invoiceData) => {
+//     const email = invoiceData.email;
+//     const pdfPath = path.join(__dirname, '..', 'tmp', `${invoiceData.invoiceNumber}.pdf`);
+
+//     // Generate PDF
+//     await generateInvoicePDF(invoiceData, pdfPath);
+
+//     const mailOptions = {
+//         from: 'dijarsmakolli99@gmail.com',
+//         to: email,
+//         subject: 'Your Invoice',
+//         text: `Please find your invoice attached.`,
+//         attachments: [
+//             {
+//                 filename: `${invoiceData.invoiceNumber}.pdf`,
+//                 path: pdfPath,
+//                 contentType: 'application/pdf',
+//             },
+//         ],
+//     };
+
+//     return new Promise((resolve, reject) => {
+//         transporter.sendMail(mailOptions, (error, info) => {
+//             fs.unlinkSync(pdfPath); // Clean up the PDF file after sending the email
+//             if (error) {
+//                 reject(error);
+//                 console.log('ERRORRRRR!!!!!', error);
+//             } else {
+//                 resolve(info);
+//                 console.log('SUCCESSS', info);
+//             }
+//         });
+//     });
+// };
+
+// const sendInvoice = async ({email, pdfPath}) => {
+
+//     if (!fs.existsSync(pdfPath)) {
+//         throw new Error(`PDF file not found at path: ${pdfPath}`);
+//     }
+
+//     const mailOptions = {
+//         from: 'dijarsmakolli99@gmail.com',
+//         to: email,
+//         subject: 'Your Invoice',
+//         text: 'Please find your invoice.',
+//         attachments: [
+//             {
+//                 filename: path.basename(pdfPath),
+//                 path: pdfPath
+//             }
+//         ]
+//     };
+
+//     console.log('Mail options:', mailOptions);
+
+
+//     return new Promise((resolve, reject) => {
+//         transporter.sendMail(mailOptions, (error, info) => {
+//             if (error) {
+//                 reject(error);
+//                 console.log('Error: ', error);
+//             } else {
+//                 resolve(info);
+//                 console.log('Success: ', info);
+//             }
+//         });
+//     });
+// };
+
+
+const sendInvoice = async () => {
+    try {
+        // Check if the PDF file exists
+        
+        
+
+        const mailOptions = {
+            from: 'dijarsmakolli99@gmail.com',
+            to: 'dijarsmakolli99@gmail.com',
+            subject: 'Your Invoice',
+            text: 'Please find your invoice attached.',
+            attachments: [
+                {
+                    filename: 'invoice_No.AFLY14IV-0004.pdf',
+                    path: path.join(__dirname, 'invoices', 'invoice_No.AFLY14IV-0004.pdf'), 
+                    contentType: 'application/pdf'
+                }
+            ]
+        };
+
+        console.log('Mail options:', mailOptions);
+
+        return new Promise((resolve, reject) => {
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log('Error sending email:', error);
+                    reject(error);
+                } else {
+                    console.log('Email sent successfully:', info);
+                    resolve(info);
+                }
+            });
+        });
+    } catch (err) {
+        console.error('Error in sendInvoice function:', err.message);
+        throw err;
+    }
 };
+
 
 const sendPasswordResetEmail = async (email, resetLink) => {
     const data = {

@@ -7,6 +7,7 @@ const { Sequelize } = require('sequelize');
 const authRoute = require('./routes/authRoutes');
 const stripeRoute = require('./routes/stripe');
 const path = require('path');
+const { sendInvoice } = require('./services/email');
 
 const app = express();
 dotenv.config();
@@ -25,7 +26,7 @@ app.use('/api/stripe', stripeRoute);
 // const uploadsPath = path.join(__dirname, 'uploads');
 // app.use('/uploads', express.static(uploadsPath));
 
-// hint
+// sendInvoice();
 
 const sequelize = new Sequelize({
     dialect: process.env.DIALECT,
