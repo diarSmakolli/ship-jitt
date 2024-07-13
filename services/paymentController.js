@@ -4,7 +4,7 @@
     const User = require('../models/User');
     const nodemailer = require('nodemailer');
     const moment = require('moment-timezone');
-    const { sendWelcomeEmail, sendPaymentDetailsEmail, sendCoupon, sendInvoice } = require('./email');
+    const { sendInvoice } = require('./email');
     const { generateInvoicePDF } = require('./generateInvoicePdf');
 
     const createCheckoutSession = async (req, res) => {
@@ -87,6 +87,10 @@
                         invoiceNumber: invoiceNumber,
                     };
 
+                    // await generateInvoicePDF(invoiceDetails);
+
+                    generateInvoicePDF(invoiceDetails);
+
                     // await Invoice.create({
                     //     amount: (amount / 100).toFixed(2),
                     //     transactionId: transactionId,
@@ -105,16 +109,9 @@
 
                     await Invoice.create(invoiceDetails);
 
-                    console.log('INVOICE CREATED');
+                    sendInvoice(email, invoiceNumber, invoiceDetails);
 
-                    const pdfPath = await generateInvoicePDF(invoiceDetails);
-                    console.log('PDF generated at:', pdfPath);
-
-
-                    await sendInvoice({email, pdfPath});
-
-                    console.log('EMAIL SENT');
-                   
+                    console.log(`Invoice ${invoiceNumber} has been sent to ${email}.`);
                 }
             }   
 
@@ -126,5 +123,4 @@
     }
 
     
-
     module.exports = { createCheckoutSession, handleWebhook };

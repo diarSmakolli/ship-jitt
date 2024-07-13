@@ -26,7 +26,7 @@ app.use('/api/stripe', stripeRoute);
 // const uploadsPath = path.join(__dirname, 'uploads');
 // app.use('/uploads', express.static(uploadsPath));
 
-// sendInvoice();
+// sendInvoice('dijarsmakolli99@gmail.com', 'No.AF4ZHFCV-0005');
 
 const sequelize = new Sequelize({
     dialect: process.env.DIALECT,
