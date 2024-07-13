@@ -916,10 +916,6 @@ router.get('/:id/invoices/:invoiceId', async(req, res) => {
     }
 })
 
-
-
-
-
 // update firstname, lastname ✅
 router.put('/:id', verifyToken, async(req, res) => {
     const { first_name, last_name, updatedAt, updatedBy, timeZone } = req.body;

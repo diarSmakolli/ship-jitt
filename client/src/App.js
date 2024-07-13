@@ -27,6 +27,7 @@ import DocsDatabase from './pages/DocsDatabase';
 import DocsEmails from './pages/DocsEmails';
 import DocsPayments from './pages/DocsPayments';
 import DocsNavbar from './pages/DocsNavbar';
+import Invoices from './pages/Invoices';
 
 
 
@@ -56,6 +57,7 @@ const App = () => {
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path='/invoices' element={<PrivateRoute><Invoices /></PrivateRoute>} />
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
             <Route path='/cancel' element={<PrivateRoute><Cancel /></PrivateRoute>} />
             <Route path="/dashboard" element={<PaidRoute><Pricing /><Dashboard />
@@ -92,8 +94,6 @@ const IsAuthenticated = ({children}) => {
 
   return !user ? children : <Navigate to="/" />;
 };
-
-
 
 const AdminRoute = ({ children }) => {
   const { user, isAdmin, loading } = useAuth();
