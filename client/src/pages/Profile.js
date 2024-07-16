@@ -210,7 +210,7 @@ function Profile() {
     }
 
     return (
-        <Box background={'#0d1117'}>
+        <Box background={'#000'}>
 
 
             <Box>

@@ -28,6 +28,7 @@ import DocsEmails from './pages/DocsEmails';
 import DocsPayments from './pages/DocsPayments';
 import DocsNavbar from './pages/DocsNavbar';
 import Invoices from './pages/Invoices';
+import InvoiceDetails from './pages/InvoiceDetails';
 
 
 
@@ -58,6 +59,7 @@ const App = () => {
             <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path='/invoices' element={<PrivateRoute><Invoices /></PrivateRoute>} />
+            <Route path='/invoices/:id' element={<PrivateRoute><InvoiceDetails /></PrivateRoute>} />
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
             <Route path='/cancel' element={<PrivateRoute><Cancel /></PrivateRoute>} />
             <Route path="/dashboard" element={<PaidRoute><Pricing /><Dashboard />

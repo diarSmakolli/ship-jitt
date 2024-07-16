@@ -45,7 +45,7 @@ function Invoices() {
 
                     <Box width='50%'>
 
-                        <Text color='white' fontFamily={'Poppins'} fontSize={'2xl'} mt={10} fontWeight={600}>
+                        <Text color='white' fontFamily={'Geist Sans'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Invoices Information
                         </Text>
 
@@ -90,7 +90,7 @@ function Invoices() {
 
                             </Text>
 
-                            <Button as='a' size='sm' mt={5} width='full'>View Details</Button>
+                            <Button as='a' size='sm' mt={5} width='full' href={`/invoices/${invoice.id}`}>View Details</Button>
 
                     </Box>
                     ))}
