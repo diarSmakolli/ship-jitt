@@ -18,8 +18,8 @@ const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 const fs = require('fs');
 const { Invoice } = require('../models');
+const GithubRequest = require('../models/GithubRequest');
 const PDFDocument = require('pdfkit');
-// const { generateInvoicePDF } = require('../services/generateInvoicePdf');
 const { generateInvoicePDF } = require('../services/generateInvoicePdf');
 
 // mailgun config
@@ -342,7 +342,6 @@ router.get('/verify-email', async(req, res) => {
     }
 });
 
-
 // log out
 router.post('/logout', verifyToken, async(req, res) => {
     try {
@@ -363,7 +362,6 @@ router.post('/logout', verifyToken, async(req, res) => {
         });
     }
 });
-
 
 // update all the fiedls - Admin ✅
 router.put('/update-user/:id', verifyToken, async(req, res) => {
@@ -591,6 +589,52 @@ router.get('/getdeletedusers', verifyToken, async(req, res) => {
             status: 'error',
             statusCode: 500,
             message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// Get all GitHub requests with optional userId filter and pagination
+router.get('/github-requests', async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 5;
+    const userId = req.query.userId;
+
+    try {
+        const whereClause = { deletedAt: null };
+
+        if (userId) {
+            whereClause.userId = userId;
+        }
+
+        const githubRequests = await GithubRequest.findAll({
+            where: whereClause,
+            order: [['createdAt', 'DESC']],
+            limit: pageSize,
+            offset: (page - 1) * pageSize
+        });
+
+        if (githubRequests.length === 0) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'GitHub requests not found'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'GitHub requests retrieved successfully.',
+            githubRequests
+        });
+
+    } catch (error) {
+        console.error("An error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An error has occurred and we're working to fix the problem!"
         });
     }
 });
@@ -1010,5 +1054,310 @@ router.delete('/:id', verifyToken, async(req, res) => {
         });
     }
 })
+
+// request github access
+router.post('/github-request', async(req, res) => {
+    const { userId, timeZone, email } = req.body; 
+    try {
+        
+        const user = await User.findByPk(userId);
+
+        if(!user) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'User not found'
+            })
+        }
+
+        if(user.deletedAt) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This user has been deleted.'
+            })
+        }
+
+        if(!user.hasAccess) {
+            return res.status(403).json({
+                status: 'error',
+                statusCode: 403,
+                message: 'User does not have access to this feature.'
+            })
+        }
+
+        const existingRequest = await GithubRequest.findOne({
+            where: {
+                userId: userId,
+                status: ['pending', 'accepted'],
+                deletedAt: null
+            }
+        });
+
+        if(existingRequest) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'You have already made a request before. Please wait for the current request to be processed.'
+            })
+        }
+
+        const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+        const createdAtTimeZone = moment().tz(selectedTimeZone).format();
+
+        const githubRequest = await GithubRequest.create({
+            email,
+            status: 'pending',
+            createdAt: createdAtTimeZone,
+            userId: userId
+        });
+
+        return res.status(201).json({
+            status: 'success',
+            statusCode: 201,
+            message: 'Github request sent successfully.',
+            githubRequest,
+            createdAt: createdAtTimeZone
+        });
+        
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        console.log("ERROR: ", error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// get github request by id
+router.get('/github-request/:id', async(req, res) => {
+    const { id } = req.params.id;
+    try {
+
+        const githubRequest = await GithubRequest.findByPk(id);
+
+        if(!githubRequest) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Github request not found'
+            })
+        }
+
+        if(githubRequest.deletedAt){
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This github request has been deleted.'
+            })
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Github request found successfully.',
+            githubRequest
+        })
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        console.log("ERROR: ", error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// update github request by id
+router.put('/github-request/:id', async(req, res) => {
+    const { id } = req.params.id;
+    const { email, status, createdAt, createdBy, updatedAt, updatedBy, deletedAt, deletedBy, userId } = req.body;
+    try {
+
+        const githubRequest = await GithubRequest.findByPk(id);
+
+        if(!githubRequest) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Github request not found'
+            })
+        }
+
+        if(githubRequest.deletedAt){
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This github request has been deleted.'
+            })
+        }
+
+        const updatedGithubRequest = await githubRequest.update({
+            email,
+            status,
+            createdAt,
+            createdBy,
+            updatedAt,
+            updatedBy,
+            deletedAt,
+            deletedBy,
+            userId
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Github request updated successfully.',
+            updatedGithubRequest
+        })
+
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        console.log("ERROR: ", error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// delete github request by id
+router.delete('/github-request/:id', async(req, res) => {
+    const { id } = req.params.id;
+    const { userId } = req.body;
+    try {
+        const githubRequest = await GithubRequest.findByPk(id);
+
+        if(!githubRequest) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Github request not found'
+            })
+        }
+
+        if(githubRequest.deletedAt){
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'This github request has been deleted.'
+            })
+        }
+
+        const deletedGithubRequest = await githubRequest.update({
+            deletedAt: new Date(),
+            deletedBy: userId
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Github request deleted successfully.',
+            deletedGithubRequest
+        })
+
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        console.log("ERROR: ", error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+
+// get all github requests with the pagination
+// router.get('/github-requests', async(req, res) => {
+//     const page = parseInt(req.query.page) || 1;
+//     const pageSize = parseInt(req.query.pageSize) || 5;
+//     const userId = req.query.userId;
+//     try {
+//         const githubRequests = await GithubRequest.findAll({
+//             where: { deletedAt: null },
+//             order: [['createdAt', 'DESC']],
+//             limit: pageSize,
+//             offset: (page - 1) * pageSize
+//         });
+
+//         if(githubRequests.length === 0) {
+//             return res.status(404).json({
+//                 status: 'error',
+//                 statusCode: 404,
+//                 message: 'Github requests not found'
+//             });
+//         }
+
+//         return res.status(200).json({
+//             status: 'success',
+//             statusCode: 200,
+//             message: 'Github requests retrieved successfully.',
+//             githubRequests
+//         });
+
+//     } catch (error) {
+//         console.error("An Error has occurred and we're working to fix the problem!");
+//         console.error(error);
+//         console.log("ERROR: ", error);
+//         res.status(500).json({
+//             status: 'error',
+//             statusCode: 500,
+//             message: "An Error has occurred and we're working to fix the problem!"
+//         });
+//     }
+// });
+
+
+// get all deleted github requests with the pagination
+router.get('/deleted-github-requests', async(req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 5;
+    try {
+        const githubRequests = await GithubRequest.findAll({
+            where: { deletedAt: {
+                [Op.not]: null
+            } },
+            order: [['createdAt', 'DESC']],
+            limit: pageSize,
+            offset: (page - 1) * pageSize
+        });
+
+        if(githubRequests.length === 0) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Github requests not found'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Github requests retrieved successfully.',
+            githubRequests
+        });
+
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        console.log("ERROR: ", error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
 
 module.exports = router;

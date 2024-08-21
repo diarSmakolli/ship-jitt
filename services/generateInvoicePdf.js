@@ -40,18 +40,11 @@ const generateInvoicePDF = async (invoiceDetails) => {
         // doc.fontSize(10).text(`Transaction ID: ${invoiceDetails.transactionId}`);
 
         // Summary 
-        // calculate amount with tax which is 18% in my case
         let amount = parseFloat(invoiceDetails.amount);
-        let taxRate = 18;
-        let taxAmount = (amount * taxRate) / 100;
         let totalAmount = amount;
-        let taxableAmount = amount - taxAmount;
-        
+
         doc.moveDown();
-        doc.font('Helvetica-Bold').fontSize(10).text(`Total exluding tax: ${taxableAmount.toFixed(2)} `, { align: 'right' });
-        doc.font('Helvetica-Bold').fontSize(10).text(`Tax ${taxRate}%: ${taxAmount.toFixed(2)} `, { align: 'right' });
         doc.font('Helvetica-Bold').fontSize(10).text(`Total: ${totalAmount.toFixed(2)} `, { align: 'right' });
-        doc.font('Helvetica-Bold').fontSize(10).text(`Amount Due: ${totalAmount.toFixed(2)}`, { align: 'right' });
 
 
         doc.end();

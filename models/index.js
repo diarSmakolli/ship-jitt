@@ -10,14 +10,19 @@ const sequelize = new Sequelize(process.env.DATABASE, process.env.USERNAME, proc
 
 const User = require('./User');
 const Invoice = require('./Invoice');
+const GithubRequest = require('./GithubRequest');
 
 // Set up associations
 User.hasMany(Invoice, { foreignKey: 'userId' });
 Invoice.belongsTo(User, { foreignKey: 'userId' });
 
+User.hasMany(GithubRequest, { foreignKey: 'userId' });
+GithubRequest.belongsTo(User, { foreignKey: 'userId' });
+
 const models = {
     User,
     Invoice,
+    GithubRequest,
     sequelize,
 };
 
