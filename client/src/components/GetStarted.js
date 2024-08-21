@@ -1,7 +1,10 @@
 import React from 'react';
 import { Box, Button, Center, Text } from '@chakra-ui/react';
+import { useAuth } from '../auth/authContext';
+
 
 const GetStarted = () => {
+    const { user } = useAuth();
     return (
         <Box py={28}>
             <Center>
@@ -22,9 +25,11 @@ const GetStarted = () => {
                 
             </Center>
             <Center>
+                { !user &&  (
                 <Button bg="white" color='black' as='a' href='/auth/signup' fontFamily='Geist Sans'>
                     Get Started
                 </Button>
+                )}
             </Center>
         </Box>
     );

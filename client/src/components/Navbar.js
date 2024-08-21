@@ -124,10 +124,11 @@ export default function WithSubnavigation() {
                     </MenuButton>
                     <MenuList zIndex={10}>
                       <MenuItem color='black' fontFamily={'Bricolage Grotesque'} fontWeight={600}>{user.first_name} {user.last_name}</MenuItem>
+                      <MenuItem as='a' href='/dashboard'>Dashboard</MenuItem>
                       <MenuItem as='a' href='/profile'>Profile</MenuItem>
                       <MenuItem as='a' href='/invoices'>Invoices</MenuItem>
-                      <MenuItem>Customer support</MenuItem>
-                      <MenuItem>Docs</MenuItem>
+                      <MenuItem as='a' href='/contact-us'>Customer support</MenuItem>
+                      <MenuItem as='a' href='/docs'>Docs</MenuItem>
                       <MenuItem onClick={logout}>Log out</MenuItem>
                     </MenuList>
                   </Menu>

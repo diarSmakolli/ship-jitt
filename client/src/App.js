@@ -50,10 +50,10 @@ const App = () => {
             <Route path='/docs/tutorials/private-page' element={<DocsPrivatePage />} />
             <Route path='/docs/tutorials/stripe' element={<DocsStripe />} />
             <Route path='/docs/features/database' element={<DocsDatabase />} />
-            <Route path='/docs/features/emails' element={<DocsEmails />} /> 
+            <Route path='/docs/features/emails' element={<DocsEmails />} />
             <Route path='/docs/features/payments' element={<DocsPayments />} />
             <Route path='/docs/components/navbar' element={<DocsNavbar />} />
-            <Route path='/contact-us' element={<SupportCenter />} />  
+            <Route path='/contact-us' element={<SupportCenter />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password/:token' element={<ResetPassword />} />
@@ -62,8 +62,7 @@ const App = () => {
             <Route path='/invoices/:id' element={<PrivateRoute><InvoiceDetails /></PrivateRoute>} />
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
             <Route path='/cancel' element={<PrivateRoute><Cancel /></PrivateRoute>} />
-            <Route path="/dashboard" element={<PaidRoute><Pricing /><Dashboard />
-            </PaidRoute>} />
+            <Route path="/dashboard" element={<PaidRoute><Dashboard /></PaidRoute>} />
             <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
           </Routes>
         </Router>
@@ -87,10 +86,10 @@ const PrivateRoute = ({ children }) => {
   return user && isVerify() ? children : <Navigate to="/" />;
 };
 
-const IsAuthenticated = ({children}) => {
+const IsAuthenticated = ({ children }) => {
   const { user, loading } = useAuth();
-  
-  if(loading) return null;
+
+  if (loading) return null;
 
   console.log(user);
 

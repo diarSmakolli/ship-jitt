@@ -10,11 +10,13 @@ import {
     useColorModeValue,
     Container
 } from '@chakra-ui/react';
+import { useAuth } from '../auth/authContext';
 
 // import CheckIcon from chakra ui icons
 import hero from '../images/hero.svg';
 
 export default function Hero() {
+    const { user } = useAuth();
     return (
         <Box
             height={{ base: 'auto', md: 'auto' }}
@@ -96,7 +98,24 @@ export default function Hero() {
                                     or any other web app and make your first $ online fast.
                                 </Text>
                                 <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'row', sm: 'row' }}>
-                                    <Button
+                                    { user && user ? (
+                                        <Button
+                                        rounded={'5px'}
+                                        size={'md'}
+                                        fontWeight={'500'}
+                                        px={6}
+                                        color="black"
+                                        bg={'white'}
+                                        _hover={{ bg: 'gray.100' }}
+                                        as='a'
+                                        href='/dashboard'
+                                        fontFamily={'Geist Sans'}
+                                        width={{base: 'full', sm: 'auto'}}
+                                    >
+                                        Dashboard
+                                    </Button>
+                                    ) : (
+                                        <Button
                                         rounded={'5px'}
                                         size={'md'}
                                         fontWeight={'500'}
@@ -111,6 +130,7 @@ export default function Hero() {
                                     >
                                         Get started
                                     </Button>
+                                    )}
                                 </Stack>
                             </Stack>
                             {/* <Flex

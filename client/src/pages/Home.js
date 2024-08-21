@@ -18,7 +18,7 @@ export default function Home() {
         <div>
             <Box
                 height={'auto'}
-                background='hsl(240 10% 3.9%)'
+                background='#000'
             >
                     <Box>
                         <Navbar />
