@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import { useAuth } from '../auth/authContext';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 function InvoiceDetails() {
     const toast = useToast();
@@ -65,6 +66,9 @@ function InvoiceDetails() {
     return (
         <Box background={'#000'}>
 
+            <Helmet>
+                <title>Invoice Details | ShipJitt</title>
+            </Helmet>
 
             <Box>
                 <Navbar />

@@ -11,10 +11,15 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import HeroSupportCenter from '../components/HeroSupportCenter';
+import { Helmet } from 'react-helmet-async';
 
 function SupportCenter() {
     return (
         <Box bg='hsl(240 10% 3.9%)' minH='100vh'>
+
+            <Helmet>
+                <title>Support Center | ShipJitt</title>
+            </Helmet>
 
             <Box>
                 <Navbar />

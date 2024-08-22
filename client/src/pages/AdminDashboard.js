@@ -13,6 +13,7 @@ import Footer from '../components/Footer';
 import Pricing from '../components/Pricing';
 import GetStarted from '../components/GetStarted';
 import Testimonial from '../components/Testimonials';
+import { Helmet } from 'react-helmet-async';
 
 export default function Dashboard() {
     return (
@@ -21,6 +22,9 @@ export default function Dashboard() {
                 height={'auto'}
                 background={'#0d1117'}
             >
+                <Helmet>
+                    <title>Admin Dashboard | ShipJitt</title>
+                </Helmet>
 
                 <Text fontSize={'4xl'} color='gray.100' fontFamily={'Bricolage Grotesque'}>
                     Admin Dashboard

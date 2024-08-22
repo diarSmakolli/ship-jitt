@@ -2,10 +2,16 @@
 import React from 'react';
 import { Box, Heading, Text, Button, Flex} from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
+import { Helmet } from 'react-helmet-async';
 
 function Cancel() {
   return (
     <Box textAlign="center" py={60} px={6} minH='100vh' bg='#0d1117'>
+
+      <Helmet>
+        <title>Payment Canceled - ShipJitt</title>
+      </Helmet>
+
       <Box display="inline-block">
         <Flex
           flexDirection="column"

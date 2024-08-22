@@ -3,6 +3,8 @@ import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './App';
 import Style from './Style.css';
+import { HelmetProvider } from 'react-helmet-async';
+
 
 
 
@@ -11,10 +13,11 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
   <StrictMode>
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
+    <HelmetProvider>
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
+    </HelmetProvider>
   </StrictMode>
 );
 
-// Path: client/src/App.js

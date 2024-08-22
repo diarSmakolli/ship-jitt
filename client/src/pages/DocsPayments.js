@@ -54,6 +54,7 @@ import usermodel from '../images/usermodel.png';
 
 import { FaDiscord, FaClipboard, FaBars, FaRegCheckCircle } from 'react-icons/fa';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
 
 
@@ -429,6 +430,11 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
+
+            <Helmet>
+                <title>Payments | ShipJitt</title>
+            </Helmet>
+
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
                     <HStack spacing="4" align="start">

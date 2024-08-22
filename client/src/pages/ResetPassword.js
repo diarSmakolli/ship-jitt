@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, FormLabel, Input, Text, useToast, Container } from '@chakra-ui/react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const ResetPassword = () => {
     const { token } = useParams();
@@ -55,6 +56,11 @@ const ResetPassword = () => {
 
     return (
         <Box bg='#0d1117' minH='100vh'>
+        
+        <Helmet>
+            <title>Reset Password | ShipJitt</title>
+        </Helmet>
+
         <Container>
             <Box py={48}>
             <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border="1.5px solid rgba(255,255,255,.12)">

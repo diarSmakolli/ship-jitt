@@ -5,11 +5,14 @@ import {
   Text, 
   Button 
 } from '@chakra-ui/react';
-
+import { Helmet } from 'react-helmet-async';
 
 function Unauthorized() {
   return (
     <Box textAlign="center" py={64} px={6} bg='#0d1117' minH='100vh'>
+      <Helmet>
+        <title>Unauthorized | ShipJitt</title>
+      </Helmet>
       <Heading
         display="inline-block"
         as="h2"

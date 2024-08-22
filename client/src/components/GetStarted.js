@@ -13,7 +13,6 @@ const GetStarted = () => {
                 >
                     Boost your app, launch, earn 🤑
                 </Text>
-                
             </Center>
 
             <Center>

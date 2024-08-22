@@ -53,9 +53,7 @@ export default function Footer() {
           </Text>
             </Box>
  
-            <Button maxW='50%'>
-                Get Shipjitt
-            </Button>
+           
  
             <Text fontSize={'sm'}>
               © {getCurrentYear()} ShipJitt. All rights reserved
@@ -64,15 +62,14 @@ export default function Footer() {
           <Stack align={'flex-start'}>
             <ListHeader>LINKS</ListHeader>
             <Link href={'#'}>Pricing</Link>
-            <Link href={'#'}>Documentation</Link>
-            <Link href={'#'}>Support</Link>
-            <Link href={'#'}>Affiliates</Link>
+            <Link href={'/docs'}>Documentation</Link>
+            <Link href={'/contact-us'}>Customer Support</Link>
           </Stack>
           <Stack align={'flex-start'}>
-            <ListHeader>LEGAL </ListHeader>
-            <Link href={'#'}>Terms & conditions</Link>
-            <Link href={'#'}>Privacy policy</Link>
-            <Link href={'#'}>Licenses</Link>
+            <ListHeader>LEGAL</ListHeader>
+            <Link href={'/tos'}>Terms & conditions</Link>
+            <Link href={'/privacy-policy'}>Privacy policy</Link>
+            <Link href={'/license'}>Licenses</Link>
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>MORE</ListHeader>

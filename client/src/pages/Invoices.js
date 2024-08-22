@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useAuth } from '../auth/authContext';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function Invoices() {
     const toast = useToast();
@@ -33,6 +34,10 @@ function Invoices() {
     
   return (
     <Box background={'#000'}>
+
+            <Helmet>
+                <title>Invoices | ShipJitt</title>
+            </Helmet>
 
 
             <Box>

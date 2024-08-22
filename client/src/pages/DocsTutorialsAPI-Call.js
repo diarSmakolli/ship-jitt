@@ -53,8 +53,8 @@ import {
 
 import { FaDiscord, FaClipboard, FaBars } from 'react-icons/fa';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
-
 
 const CodeBlock = ({ code }) => {
     const { hasCopied, onCopy } = useClipboard(code);
@@ -113,6 +113,11 @@ STRIPE_WEBHOOK_SECRET=`;
 
     return (
         <Flex direction="column" bg="#0d1117">
+
+            <Helmet>
+                <title>API Calls | ShipJitt</title>
+            </Helmet>
+
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='white' pos={'fixed'} overflow={'scroll'} zIndex={'10'}>
                     <HStack spacing="4" align="start">

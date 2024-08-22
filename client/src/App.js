@@ -27,8 +27,12 @@ import DocsDatabase from './pages/DocsDatabase';
 import DocsEmails from './pages/DocsEmails';
 import DocsPayments from './pages/DocsPayments';
 import DocsNavbar from './pages/DocsNavbar';
+import DocsHero from './pages/DocsHero';
 import Invoices from './pages/Invoices';
 import InvoiceDetails from './pages/InvoiceDetails';
+import TOS from './pages/TOS';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import License from './pages/License';
 
 
 
@@ -53,6 +57,7 @@ const App = () => {
             <Route path='/docs/features/emails' element={<DocsEmails />} />
             <Route path='/docs/features/payments' element={<DocsPayments />} />
             <Route path='/docs/components/navbar' element={<DocsNavbar />} />
+            <Route path='/docs/components/hero' element={<DocsHero />} />
             <Route path='/contact-us' element={<SupportCenter />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -64,6 +69,9 @@ const App = () => {
             <Route path='/cancel' element={<PrivateRoute><Cancel /></PrivateRoute>} />
             <Route path="/dashboard" element={<PaidRoute><Dashboard /></PaidRoute>} />
             <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+            <Route path='/tos' element={<TOS />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} /> 
+            <Route path='/license' element={<License />} /> 
           </Routes>
         </Router>
       </AuthProvider>

@@ -15,6 +15,7 @@ Stack,
 Text,
 useToast,
 } from '@chakra-ui/react';
+import { Helmet } from 'react-helmet-async';
 
 export default function Signin() {
 const toast = useToast();
@@ -146,6 +147,12 @@ const handleSubmit = async (e) => {
 
 return (
   <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} background={'#0d1117'}>
+
+    <Helmet>
+      <title>Sign in | ShipJitt</title>
+    </Helmet>
+
+
     <Flex p={8} flex={1} align={'center'} justify={'center'}>
       <Stack spacing={4} w={'full'} maxW={'md'}>
         <form onSubmit={handleSubmit}>
@@ -189,8 +196,15 @@ return (
               align={'start'}
               justify={'space-between'}
             >
-              <Link color='gray.200'>Forgot password?</Link>
+              <Link color='gray.200' href='/forgot-password' fontFamily={'Bricolage Grotesque'}>Forgot password?</Link>
+              
             </Stack>
+
+            <Link color='gray.200' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                By signing in, you agree to our <Link href='/tos'>Terms of Service</Link> and <Link href='/privacy-policy'>Privacy policy</Link>
+            </Link>
+
+
             <Button type="submit" disabled={isLoading}>
               {isLoading ? <Spinner /> : 'Sign in'}
             </Button>

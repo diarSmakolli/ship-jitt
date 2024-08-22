@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Box, Center, Container, Heading, Button} from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons';
+import { Helmet } from 'react-helmet-async';
 
 
 function VerifyEmail() {
@@ -60,6 +61,9 @@ function VerifyEmail() {
     return (
         // write here code to display the message in center i need horizontal and vertical center
         <Center h='100vh' bg='#0d1117'>
+            <Helmet>
+                <title>Verify Email | ShipJitt</title>
+            </Helmet>
             <Box alignItems={'center'} justifyContent={'center'}>
                 <CheckCircleIcon color='green.500' boxSize={16} />
                 <Heading as='h1' size='md' textAlign='center' fontFamily={'Bricolage Grotesque'} color='gray.200' mt={5}>

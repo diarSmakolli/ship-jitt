@@ -16,6 +16,7 @@ import GetStarted from '../components/GetStarted';
 import Testimonial from '../components/Testimonials';
 import axios from 'axios';
 import { useAuth } from '../auth/authContext';
+import { Helmet } from 'react-helmet-async';
 
 export default function Dashboard() {
 
@@ -42,69 +43,66 @@ export default function Dashboard() {
 
             } catch (error) {
                 console.log(error);
-                const { response } = error;
-                if (response) {
-                    switch (response.data.statusCode) {
-                        case 403:
-                            toast({
-                                title: 'Forbidden',
-                                description: response.data.message,
-                                status: 'warning',
-                                duration: 3000,
-                                position: 'top right',
-                                isClosable: true,
-                            });
-                            break;
-                        case 400:
-                            toast({
-                                title: 'Bad request',
-                                description: response.data.message,
-                                status: 'error',
-                                duration: 3000,
-                                position: 'top right',
-                                isClosable: true,
-                            });
-                            break;
-                        case 401:
-                            toast({
-                                title: 'Unauthorized',
-                                description: response.data.message,
-                                status: 'error',
-                                duration: 3000,
-                                position: 'top right',
-                                isClosable: true,
-                            });
-                            break;
-                        case 404:
-                            toast({
-                                title: 'Not found',
-                                description: response.data.message,
-                                status: 'warning',
-                                duration: 3000,
-                                position: 'top right',
-                                isClosable: true,
-                            });
-                            break;
-                        default:
-                            toast({
-                                title: 'Internal Server Error',
-                                description: "An error has occurred and we're working to fix the problem!",
-                                status: 'error',
-                                duration: 3000,
-                                position: 'top right',
-                                isClosable: true,
-                            });
-                            break;
-                    }
-                }
+                // const { response } = error;
+                // if (response) {
+                //     switch (response.data.statusCode) {
+                //         case 403:
+                //             toast({
+                //                 title: 'Forbidden',
+                //                 description: response.data.message,
+                //                 status: 'warning',
+                //                 duration: 3000,
+                //                 position: 'top right',
+                //                 isClosable: true,
+                //             });
+                //             break;
+                //         case 400:
+                //             toast({
+                //                 title: 'Bad request',
+                //                 description: response.data.message,
+                //                 status: 'error',
+                //                 duration: 3000,
+                //                 position: 'top right',
+                //                 isClosable: true,
+                //             });
+                //             break;
+                //         case 401:
+                //             toast({
+                //                 title: 'Unauthorized',
+                //                 description: response.data.message,
+                //                 status: 'error',
+                //                 duration: 3000,
+                //                 position: 'top right',
+                //                 isClosable: true,
+                //             });
+                //             break;
+                //         case 404:
+                //             toast({
+                //                 title: 'Not found',
+                //                 description: response.data.message,
+                //                 status: 'warning',
+                //                 duration: 3000,
+                //                 position: 'top right',
+                //                 isClosable: true,
+                //             });
+                //             break;
+                //         default:
+                //             toast({
+                //                 title: 'Internal Server Error',
+                //                 description: "An error has occurred and we're working to fix the problem!",
+                //                 status: 'error',
+                //                 duration: 3000,
+                //                 position: 'top right',
+                //                 isClosable: true,
+                //             });
+                //             break;
+                //     }
+                // }
             }
         };
 
         fetchGithubRequest();
     }, [user, loading]);
-
-
-
 
     const handleRequestAccess = async () => {
         try {
@@ -197,6 +195,9 @@ export default function Dashboard() {
                 height={'auto'}
                 background={'#000'}
             >
+                <Helmet>
+                    <title>Dashboard | ShipJitt</title>
+                </Helmet>
 
 
                 <Box>

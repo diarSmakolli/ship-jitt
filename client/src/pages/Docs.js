@@ -50,7 +50,7 @@ import {
     Container,
 
 } from '@chakra-ui/react';
-
+import { Helmet } from 'react-helmet-async';
 import { FaDiscord, FaClipboard, FaBars } from 'react-icons/fa';
 import { HamburgerIcon } from '@chakra-ui/icons';
 const { useState } = require('react');
@@ -115,6 +115,9 @@ STRIPE_WEBHOOK_SECRET=`;
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
+            <Helmet>
+                <title>Docs | ShipJitt</title>
+            </Helmet>
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
                     <HStack spacing="4" align="start">
@@ -195,6 +198,11 @@ STRIPE_WEBHOOK_SECRET=`;
                             <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/navbar'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
                                 Navbar
+                            </Text>
+
+                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/hero'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                Hero
                             </Text>
 
                             

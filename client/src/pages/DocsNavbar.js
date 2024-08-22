@@ -58,9 +58,8 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import Docs from './Docs';
 import Navbar from '../components/Navbar';
 import {useAuth} from '../auth/authContext';
+import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
-
-
 
 
 
@@ -789,6 +788,11 @@ const handleStarterPlan = async () => {
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
+
+            <Helmet>
+                <title>Docs | Navbar | ShipJitt</title>
+            </Helmet>
+
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
                     <HStack spacing="4" align="start">

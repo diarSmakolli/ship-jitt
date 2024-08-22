@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react';
 import { useAuth } from '../auth/authContext';
 
-// import CheckIcon from chakra ui icons
 import hero from '../images/hero.svg';
 
 export default function Hero() {
@@ -164,3 +163,4 @@ export default function Hero() {
         </Box>
     )
 }
+

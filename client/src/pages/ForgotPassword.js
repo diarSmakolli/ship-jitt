@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, Text, useToast, Flex, Stack, useColorModeValue, Heading, FormControl } from '@chakra-ui/react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -42,6 +43,11 @@ const ForgotPassword = () => {
             align={'center'}
             justify={'center'}
             bg='#0d1117'>
+            
+            <Helmet>
+                <title>Forgot Password | ShipJitt</title>
+            </Helmet>
+            
             <Stack
                 spacing={4}
                 w={'full'}

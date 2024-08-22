@@ -19,6 +19,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useAuth } from '../auth/authContext';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 function Profile() {
     const toast = useToast();
@@ -211,6 +212,10 @@ function Profile() {
 
     return (
         <Box background={'#000'}>
+
+            <Helmet>
+                <title>Profile | ShipJitt</title>
+            </Helmet>
 
 
             <Box>
