@@ -168,7 +168,7 @@ export default function SplitScreen() {
     };
 
     return (
-        <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} background={'#0d1117'}>
+        <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} background={'#000'}>
             <Helmet>
                 <title>Sign up | ShipJitt</title>
             </Helmet>
@@ -176,7 +176,7 @@ export default function SplitScreen() {
 
             <Flex p={8} flex={1} align={'center'} justify={'center'}>
                 <Stack spacing={4} w={'full'} maxW={'md'}>
-                    <Heading fontSize={'2xl'} color='gray.200' fontFamily={'Bricolage Grotesque'}>
+                    <Heading fontSize={'2xl'} color='gray.200' fontFamily={'Epilogue'}>
                         Create an account in Ship jitt
                     </Heading>
                     <form onSubmit={handleSubmit}>
@@ -191,7 +191,7 @@ export default function SplitScreen() {
                         </FormControl>
 
                         {firstNameError && (
-                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
                                 {firstNameError}
                             </Text>
                         )}
@@ -206,7 +206,7 @@ export default function SplitScreen() {
                         </FormControl>
 
                         {lastNameError && (
-                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
                                 {lastNameError}
                             </Text>
                         )}
@@ -221,7 +221,7 @@ export default function SplitScreen() {
                         </FormControl>
 
                         {emailError && (
-                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
                                 {emailError}
                             </Text>
                         )}
@@ -236,7 +236,7 @@ export default function SplitScreen() {
                         </FormControl>
 
                         {passwordError && (
-                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
                                 {passwordError}
                             </Text>
                         )}
@@ -246,10 +246,10 @@ export default function SplitScreen() {
                                 direction={{ base: 'column', sm: 'row' }}
                                 align={'start'}
                                 justify={'space-between'}>
-                                <Link color='gray.200' href='/auth/signin' fontFamily={'Bricolage Grotesque'}>Already have an account? Sign in here</Link>
+                                <Link color='gray.200' href='/auth/signin' fontFamily={'Epilogue'}>Already have an account? Sign in here</Link>
                             </Stack>
 
-                            <Link color='gray.200' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+                            <Link color='gray.200' fontSize={'md'} textDecoration={'none'} _hover={{ textDecoration: 'none' }}>
                                 By signing up, you agree to our <Link href='/tos'>Terms of Service</Link> and <Link href='/privacy-policy'>Privacy policy</Link>
                             </Link>
 

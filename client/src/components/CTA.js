@@ -11,7 +11,7 @@ import {
   IconProps,
 } from '@chakra-ui/react'
 
-const Illustration = () => {
+const Illustration = (props) => {
   return (
     <Icon
       width="100%"

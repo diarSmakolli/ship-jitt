@@ -113,8 +113,9 @@
 
                     console.log(`Invoice ${invoiceNumber} has been sent to ${email}.`);
                 }
-            }   
+            }
 
+        
             res.json({ received: true });
         } catch (err) {
             console.error(`Error processing webhook: ${err}`);

@@ -35,7 +35,7 @@ export default function HeroSupportCenter() {
                         <Text
                             as={'span'}
                             position={'relative'}
-                            fontFamily={'Geist Sans'}
+                            fontFamily={'Epilogue'}
                             lineHeight={'1.5'}
                             textAlign={'center'}
                             fontWeight={700}

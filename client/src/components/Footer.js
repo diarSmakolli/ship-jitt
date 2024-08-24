@@ -58,6 +58,11 @@ export default function Footer() {
             <Text fontSize={'sm'}>
               © {getCurrentYear()} ShipJitt. All rights reserved
             </Text>
+
+            <Text fontSize={'sm'}>
+              Created with ❤️ by Dijar
+            </Text>
+
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>LINKS</ListHeader>
@@ -73,9 +78,9 @@ export default function Footer() {
           </Stack>
           <Stack align={'flex-start'}>
             <ListHeader>MORE</ListHeader>
-            <Link href={'#'}>Github</Link>
-            <Link href={'#'}>Linked in</Link>
-            <Link href={'#'}>X</Link>
+            <Link href={'https://github.com/diarSmakolli'}>Github</Link>
+            <Link href={'https://linkedin.com/in/dijarsmakolli'}>Linked in</Link>
+            <Link href={'https://x.com/shipjitt'}>X</Link>
           </Stack>
         </SimpleGrid>
       </Container>

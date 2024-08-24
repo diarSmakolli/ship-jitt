@@ -146,7 +146,7 @@ const handleSubmit = async (e) => {
 };
 
 return (
-  <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} background={'#0d1117'}>
+  <Stack minH={'100vh'} direction={{ base: 'column', md: 'row' }} background={'#000'}>
 
     <Helmet>
       <title>Sign in | ShipJitt</title>
@@ -156,7 +156,7 @@ return (
     <Flex p={8} flex={1} align={'center'} justify={'center'}>
       <Stack spacing={4} w={'full'} maxW={'md'}>
         <form onSubmit={handleSubmit}>
-          <Heading fontSize={'2xl'} color='gray.200' fontFamily={'Bricolage Grotesque'}>Sign in to your account</Heading>
+          <Heading fontSize={'2xl'} color='gray.100' fontFamily={'Epilogue'}>Sign in to your account</Heading>
 
           <FormControl id="email" mt={10}>
             <FormLabel color='gray.200'>Email address</FormLabel>
@@ -169,7 +169,7 @@ return (
           </FormControl>
 
           {emailError && (
-            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
               {emailError}
             </Text>
           )}
@@ -185,7 +185,7 @@ return (
           </FormControl>
 
           {passwordError && (
-            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+            <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
               {passwordError}
             </Text>
           )}
@@ -196,11 +196,11 @@ return (
               align={'start'}
               justify={'space-between'}
             >
-              <Link color='gray.200' href='/forgot-password' fontFamily={'Bricolage Grotesque'}>Forgot password?</Link>
+              <Link color='gray.200' href='/forgot-password' fontFamily={'Epilogue'}>Forgot password?</Link>
               
             </Stack>
 
-            <Link color='gray.200' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
+            <Link color='gray.200' fontSize={'md'} fontFamily={'Epilogue'} textDecoration={'none'} _hover={{ textDecoration: 'none' }}>
                 By signing in, you agree to our <Link href='/tos'>Terms of Service</Link> and <Link href='/privacy-policy'>Privacy policy</Link>
             </Link>
 

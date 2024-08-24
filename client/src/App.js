@@ -1,5 +1,3 @@
-// setup with Routes App.js
-
 import { React } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
@@ -33,9 +31,6 @@ import InvoiceDetails from './pages/InvoiceDetails';
 import TOS from './pages/TOS';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import License from './pages/License';
-
-
-
 
 
 const App = () => {

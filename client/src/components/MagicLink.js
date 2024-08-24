@@ -10,7 +10,6 @@ import {
   Heading,
   VStack,
   Text,
-  useColorModeValue
 } from '@chakra-ui/react';
 
 const MagicLinkForm = () => {
@@ -37,7 +36,7 @@ const MagicLinkForm = () => {
             pos="relative"
             spacing={8}
             p={6}
-            bg={useColorModeValue('white', 'gray.700')}
+            bg={'white'}
             rounded="lg"
             boxShadow="lg"
           >

@@ -41,6 +41,11 @@ const ResetPassword = () => {
                 duration: 3000,
                 isClosable: true,
             });
+
+            setTimeout(() => {
+                window.location.href = '/auth/signin';
+            }, 2000);
+
         } catch (error) {
             toast({
                 title: 'Error',
@@ -55,7 +60,7 @@ const ResetPassword = () => {
     };
 
     return (
-        <Box bg='#0d1117' minH='100vh'>
+        <Box bg='#000' minH='100vh'>
         
         <Helmet>
             <title>Reset Password | ShipJitt</title>
@@ -64,13 +69,14 @@ const ResetPassword = () => {
         <Container>
             <Box py={48}>
             <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border="1.5px solid rgba(255,255,255,.12)">
-                <Text color="white" fontSize="2xl">Reset Password</Text>
+                <Text color="white" fontSize="2xl" fontFamily={'Epilogue'}>Reset Password</Text>
                 <FormLabel mt={5} color="gray.200">New Password</FormLabel>
                 <Input
                     type="password"
                     color="gray.200"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
+                    _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
                     required
                 />
                 <FormLabel mt={5} color="gray.200">Confirm New Password</FormLabel>
@@ -79,6 +85,7 @@ const ResetPassword = () => {
                     color="gray.200"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
                     required
                 />
                 <Button

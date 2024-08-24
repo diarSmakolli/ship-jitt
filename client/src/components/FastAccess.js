@@ -7,7 +7,7 @@ const FastAccess = () => {
             <Text
                 textAlign={'center'}
                 color='white'
-                fontFamily={'Geist Sans'}
+                fontFamily={'Epilogue'}
                 fontSize={{ base: 'xl', md: '5xl' }}
                 fontWeight={'600'}
             >

@@ -1059,6 +1059,14 @@ router.delete('/:id', verifyToken, async(req, res) => {
 router.post('/github-request', async(req, res) => {
     const { userId, timeZone, email } = req.body; 
     try {
+
+        if(!userId || !email || userId == '' || email == '') {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Email is required'
+            })
+        }
         
         const user = await User.findByPk(userId);
 
@@ -1089,7 +1097,7 @@ router.post('/github-request', async(req, res) => {
         const existingRequest = await GithubRequest.findOne({
             where: {
                 userId: userId,
-                status: ['pending', 'accepted'],
+                status: ['pending','accepted'],
                 deletedAt: null
             }
         });

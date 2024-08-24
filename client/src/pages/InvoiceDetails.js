@@ -57,12 +57,6 @@ function InvoiceDetails() {
     }
 
 
-
-
-
-
-
-
     return (
         <Box background={'#000'}>
 
@@ -80,11 +74,11 @@ function InvoiceDetails() {
 
                     <Box width='50%'>
 
-                        <Text color='white' fontFamily={'Geist Sans'} fontSize={'2xl'} mt={10} fontWeight={600}>
+                        <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Invoice Details
                         </Text>
 
-                        <Text color='gray.200' fontFamily={'Bricolage Grotesque'} fontSize={'lg'} mt={5}>
+                        <Text color='gray.200' fontFamily={'Epilogue'} fontSize={'lg'} mt={5}>
                             This page will display all the invoice information.
                         </Text>
 
@@ -97,19 +91,19 @@ function InvoiceDetails() {
                     {invoice && (
                         <Box bg="rgba(0,0,0,.5)" p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Invoice Number: #{invoice.invoiceNumber}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Amount: {invoice.amount.toFixed(2)} {invoice.currency.toUpperCase()}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Date: {invoice.date.toLocaleString()}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Status: {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}
 
                                 {
@@ -120,11 +114,11 @@ function InvoiceDetails() {
 
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Currency: {invoice.currency.toUpperCase()}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Payment Method: {invoice.paymentMethod.charAt(0).toUpperCase() + invoice.paymentMethod.slice(1)} {' '}
 
                                 {
@@ -133,31 +127,31 @@ function InvoiceDetails() {
 
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Package: {invoice.planName}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Total amount excluding tax: {taxableAmount.toFixed(2)}$
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Tax %: {taxRate}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Tax in {invoice.currency.toUpperCase()}: {taxAmount.toFixed(2)}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Total amount including tax: {amount.toFixed(2)}$
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Created At: {invoice.createdAt}
                             </Text>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={400}>
                                 Updated At: {invoice.updatedAt ? invoice.updatedAt : invoice.createdAt}
                             </Text>
 

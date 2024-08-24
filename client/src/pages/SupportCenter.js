@@ -30,7 +30,7 @@ function SupportCenter() {
             <Container maxW='6xl'>
                 <Box mt={28}>
                     <Text fontSize='4xl' fontWeight='600' textAlign='center' mt={14} mb={14}
-                        fontFamily={'Geist Sans'} color='gray.50'>
+                        fontFamily={'Epilogue'} color='gray.50'>
                         Frequently Asked Questions
                     </Text>
 
@@ -39,11 +39,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight={500} fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight={500} fontSize={'xl'}>
                                 What do i get in this product?
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 The Node.js & React.js starter with all boilerplate code you need to run
@@ -57,11 +57,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='500' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='500' fontSize={'xl'}>
                                 Can i use PayPal?
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 Yes, you can send over USD equivalent of the plan you want to purchase
@@ -77,11 +77,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='500' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='500' fontSize={'xl'}>
                                 My tech stack is different, can i still use this product?
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 Yes, you can. The project is built with Node.js and React.js.
@@ -94,11 +94,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='500' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='500' fontSize={'xl'}>
                                 How is Ship Jitt better than other boilerplates?
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 Ship Jitt is a full-stack starter that includes everything you need to build
@@ -111,11 +111,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='500' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='500' fontSize={'xl'}>
                                 Are there any other costs besides the price of the product?
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 No, there are no other costs. You pay once and get access to the product
@@ -127,11 +127,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='500' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='500' fontSize={'xl'}>
                                 How often do you release updates?
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 We release updates regularly. You will get access to all the updates for life. <br />
@@ -152,13 +152,13 @@ function SupportCenter() {
                 <Box mt={20}>
 
                     <Text fontSize='4xl' fontWeight='500' textAlign='center' mt={14}
-                        fontFamily={'Geist Sans'} color='white'
+                        ffontFamily={'Epilogue'} color='white'
                     >
                         Contact Us
                     </Text>
 
                     <Text fontSize='lg' fontWeight='500' textAlign='center' mt={5}
-                        fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                        fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)'
                     >
                         Your issue is not related to any of the questions above?
                         <br />
@@ -170,11 +170,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='600' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='600' fontSize={'xl'}>
                                 English Message
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 Your message must be in understandable English. Any other language will be ignored. Use google translator if necessary.
@@ -184,11 +184,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Poppins'} fontWeight='600' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='600' fontSize={'xl'}>
                                 Complete description
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 Your issue must be well described, not just words like "fix it". Take screenshots or record your screen if necessary.
@@ -198,11 +198,11 @@ function SupportCenter() {
 
                         <Box p={5} bg="rgba(0,0,0,.5)" borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text color='gray.50' fontFamily={'Geist Sans'} fontWeight='600' fontSize={'xl'}>
+                            <Text color='gray.50' fontFamily={'Epilogue'} fontWeight='600' fontSize={'xl'}>
                                 Request for refund
                             </Text>
 
-                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Geist Sans'} fontSize={'md'} py={5}
+                            <Text color='hsl(240 5% 64.9%)' fontFamily={'Epilogue'} fontSize={'md'} py={5}
                                 fontWeight={400}
                             >
                                 After you've got access to the repo, ShipJitt is yours forever, so it can't be refunded.
@@ -218,19 +218,19 @@ function SupportCenter() {
 
                 <Box mt={24} mb={10}>
                     <Text fontSize='4xl' textAlign='center'
-                        fontFamily={'Geist Sans'} fontWeight='700' color='gray.50'
+                        fontFamily={'Epilogue'} fontWeight='700' color='gray.50'
                     >
                         Can't find your answer?
                     </Text>
 
                     <Text fontSize='lg' fontWeight='500' textAlign='center' mt={3}
-                        fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                        fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)'
                     >
                         Get in touch and we'll get back to you as soon as we can.
                     </Text>
 
                     <Center mt={7}>
-                        <Button bg='white' color='black' as='a' href="mailto:dijarsmakolli99@gmail.com" size='md'>
+                        <Button bg='white' fontFamily={'Epilogue'} color='black' as='a' href="mailto:dijarsmakolli99@gmail.com" size='md'>
                             Contact Support
                         </Button>
                     </Center>

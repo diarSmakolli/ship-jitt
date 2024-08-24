@@ -42,7 +42,7 @@ const ForgotPassword = () => {
             minH={'100vh'}
             align={'center'}
             justify={'center'}
-            bg='#0d1117'>
+            bg='#000'>
             
             <Helmet>
                 <title>Forgot Password | ShipJitt</title>
@@ -54,13 +54,13 @@ const ForgotPassword = () => {
                 maxW={'md'}
                 bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)'
                 my={12}>
-                <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }} color='gray.200'
-                    fontFamily={'Bricolage Grotesque'}>
+                <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '2xl' }} color='gray.200'
+                    fontFamily={'Epilogue'}>
                     Forgot your password?
                 </Heading>
                 <Text
                     fontSize={{ base: 'sm', sm: 'md' }}
-                    color={useColorModeValue('gray.400', 'gray.400')} fontFamily={'Bricolage Grotesque'}>
+                    color={useColorModeValue('gray.400', 'gray.400')} fontFamily={'Epilogue'}>
                     You&apos;ll get an email with a reset link
                 </Text>
                 <FormControl id="email">

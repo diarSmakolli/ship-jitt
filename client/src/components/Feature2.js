@@ -1,4 +1,4 @@
-import { Container, Box, Heading, Text, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Container, Box, Heading, Text, Flex } from '@chakra-ui/react';
 
 export default function Home() {
   return (
@@ -44,7 +44,7 @@ export default function Home() {
                   {feature.title}
                 </Text>
                 <Text
-                  color={useColorModeValue('gray.700', 'gray.400')}
+                  color={'white'}
                   fontSize="0.875rem"
                   fontWeight="300"
                   textAlign="left"

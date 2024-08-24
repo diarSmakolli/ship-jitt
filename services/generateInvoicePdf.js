@@ -7,13 +7,10 @@ const generateInvoicePDF = async (invoiceDetails) => {
         const doc = new PDFDocument();
         const fileName = path.join(__dirname, 'invoices', `invoice_${invoiceDetails.invoiceNumber}.pdf`);
         
-        // Ensure the invoices directory exists
         fs.mkdirSync(path.dirname(fileName), { recursive: true });
 
         doc.pipe(fs.createWriteStream(fileName));
 
-        // Add your invoice content here
-        
         // Header
         doc.font('Helvetica-Bold').fontSize(17).text('Invoice', { align: 'left' });
         doc.moveDown();
@@ -45,7 +42,6 @@ const generateInvoicePDF = async (invoiceDetails) => {
 
         doc.moveDown();
         doc.font('Helvetica-Bold').fontSize(10).text(`Total: ${totalAmount.toFixed(2)} `, { align: 'right' });
-
 
         doc.end();
 

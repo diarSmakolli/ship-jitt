@@ -1,0 +1,82 @@
+1. Betalist
+Focus: Early-stage startups and products.
+Features: Get exposure to early adopters, gather feedback, and build an initial user base.
+2. Indie Hackers
+Focus: Entrepreneurs and indie makers.
+Features: Share your product, gain feedback from a community of builders, and learn from others’ experiences.
+3. Hacker News
+Focus: Tech enthusiasts, developers, and entrepreneurs.
+Features: Share your product or startup in the "Show HN" section, which is dedicated to new projects.
+4. Reddit
+Focus: Wide range of communities and niches.
+Subreddits:
+r/Entrepreneur: Share your startup and get feedback.
+r/SaaS: Engage with the SaaS community and share your product.
+r/Startups: A place to discuss and promote your startup.
+5. GrowthHackers
+Focus: Growth and marketing professionals.
+Features: Share your product launch, growth strategies, and case studies. Engage with a community focused on growth hacking.
+6. Showcase
+Focus: SaaS products and tools.
+Features: Launch your product and get it featured in a curated list of SaaS tools.
+7. Launching Next
+Focus: Early-stage startups and apps.
+Features: Submit your startup to be featured, gaining visibility among potential early users and investors.
+8. SideProjectors
+Focus: Side projects and startups.
+Features: Showcase your project, get feedback, and connect with collaborators or co-founders.
+9. Erli Bird
+Focus: Beta testing and early adopters.
+Features: Gain feedback from a community of beta testers and early adopters, and validate your product.
+10. StartUpLift
+Focus: Startups and new products.
+Features: Submit your startup for user feedback and reviews. It’s a paid platform but can provide valuable insights.
+11. AlternativeTo
+Focus: Software alternatives.
+Features: List your product as an alternative to existing tools, helping users discover new options.
+12. Crunchbase
+Focus: Startups and investors.
+Features: Create a profile for your startup, attract attention from potential investors, and increase your visibility.
+13. SaaSHub
+Focus: SaaS products.
+Features: List your SaaS product, compare with competitors, and gain visibility within the SaaS community.
+14. AppSumo
+Focus: Software deals and early-stage products.
+Features: Launch your product with a lifetime deal to attract early adopters, often used for SaaS products.
+15. Makerlog
+Focus: Makers and indie developers.
+Features: Share your daily progress, launch your product, and connect with a community of makers.
+16. AngelList
+Focus: Startups and investors.
+Features: Create a startup profile to attract investors, talent, and early users. It's also a platform to hire and connect with potential partners.
+17. BetaPage
+Focus: Startups and beta products.
+Features: List your product to gain early adopters and feedback from a tech-savvy audience.
+18. Capterra
+Focus: Software reviews and comparisons.
+Features: List your SaaS product to attract business users looking for software solutions, and gain reviews and ratings.
+19. G2
+Focus: Business software and SaaS products.
+Features: List your product, collect user reviews, and get featured in relevant categories.
+20. Kickstarter
+Focus: Crowdfunding for creative projects.
+Features: Launch a crowdfunding campaign to raise funds and build an early user base for your SaaS product.
+These platforms can help you gain visibility, attract early adopters, gather feedback, and potentially drive the initial growth of your SaaS application.
+
+Hacker news
+Indie Hacker
+Reddit
+Product Hunt
+Twitter
+Linked in
+
+Facebook groups. This is a gold mine, but does take a few months to build up your own group and following.
+Quora spaces. Similar to Facebook, you can set up a space and just frequently post helpful content which should build up your followers list over time.
+Betalist, Product Hunt, etc... All the free SaaS marketplaces.
+Linkedin. Painfully slow, it's hard to get traction here but when you do convert - it's great leads nonetheless.
+Write blog articles on popular platforms like Medium, substack, hashnode. Much easier to Rank high on Google here first. Just make sure you set the "canonical URL" to point to your domain.
+
+
+
+
+

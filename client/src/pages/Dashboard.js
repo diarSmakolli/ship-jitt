@@ -214,7 +214,7 @@ export default function Dashboard() {
                             <Text
                                 textAlign={'left'}
                                 color='white'
-                                fontFamily={'Geist Sans'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: '4xl' }}
                                 fontWeight={'600'}
                             >
@@ -225,7 +225,7 @@ export default function Dashboard() {
                                 <Text
                                     textAlign={'left'}
                                     color='gray.300'
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily={'Epilogue'}
                                     fontSize={{ base: 'xl', md: 'lg' }}
                                     fontWeight={'400'}
                                 >
@@ -257,6 +257,7 @@ export default function Dashboard() {
                                     mt={4}
                                     _hover={{ bg: "gray.300" }}
                                     onClick={handleRequestAccess}
+                                    fontFamily={'Epilogue'}
                                 >
                                     Request Access
                                 </Button>
@@ -266,7 +267,7 @@ export default function Dashboard() {
                                 <Text
                                 textAlign={'left'}
                                 color='gray.300'
-                                fontFamily={'Geist Sans'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: 'lg' }}
                                 fontWeight={'400'}
                             >
@@ -281,7 +282,7 @@ export default function Dashboard() {
                                 py={3}
                                 textAlign={'left'}
                                 color='gray.300'
-                                fontFamily={'Geist Sans'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: 'lg' }}
                                 fontWeight={'400'}
                             >
@@ -293,7 +294,7 @@ export default function Dashboard() {
                             <Text
                                 textAlign={'left'}
                                 color='gray.300'
-                                fontFamily={'Geist Sans'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: 'md' }}
                                 fontWeight={'400'}
                                 mt={5}
@@ -320,7 +321,7 @@ export default function Dashboard() {
                                 <Text
                                     textAlign={'left'}
                                     color='gray.300'
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily={'Epilogue'}
                                     fontSize={{ base: 'xl', md: 'sm' }}
                                     fontWeight={'600'}
                                     as='a'
@@ -337,7 +338,7 @@ export default function Dashboard() {
                                 <Text
                                     textAlign={'left'}
                                     color='gray.300'
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily={'Epilogue'}
                                     fontSize={{ base: 'xl', md: 'sm' }}
                                     fontWeight={'600'}
                                     as='a'
@@ -354,7 +355,7 @@ export default function Dashboard() {
                                 mt={2}
                                 textAlign={'left'}
                                 color='white'
-                                fontFamily={'Geist Sans'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: 'xl' }}
                                 fontWeight={'600'}
                             >
@@ -366,7 +367,7 @@ export default function Dashboard() {
                                 mt={2}
                                 textAlign={'left'}
                                 color='gray.300'
-                                fontFamily={'Bricolage Grotesque'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: 'md' }}
                                 fontWeight={'500'}
                             >
@@ -380,7 +381,7 @@ export default function Dashboard() {
                                 mt={2}
                                 textAlign={'left'}
                                 color='gray.300'
-                                fontFamily={'Bricolage Grotesque'}
+                                fontFamily={'Epilogue'}
                                 fontSize={{ base: 'xl', md: 'md' }}
                                 fontWeight={'500'}
                             >

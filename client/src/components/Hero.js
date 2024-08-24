@@ -46,7 +46,7 @@ export default function Hero() {
                                         fontWeight={'600'}
                                         className='text-select'
                                         color='#fff'
-                                        fontFamily={'Geist Sans'}
+                                        fontFamily={'Epilogue'}
                                         textAlign={'center'}
                                         
                                     >
@@ -74,7 +74,7 @@ export default function Hero() {
                                         fontWeight={'600'}
                                         className='text-select'
                                         color='#fff'
-                                        fontFamily={'Geist Sans'}
+                                        fontFamily={'Epilogue'}
                                         textAlign={'center'}
                                         
                                     >
@@ -108,7 +108,7 @@ export default function Hero() {
                                         _hover={{ bg: 'gray.100' }}
                                         as='a'
                                         href='/dashboard'
-                                        fontFamily={'Geist Sans'}
+                                        fontFamily={'Epilogue'}
                                         width={{base: 'full', sm: 'auto'}}
                                     >
                                         Dashboard
@@ -124,7 +124,7 @@ export default function Hero() {
                                         _hover={{ bg: 'gray.100' }}
                                         as='a'
                                         href='/auth/signup'
-                                        fontFamily={'Geist Sans'}
+                                        fontFamily={'Epilogue'}
                                         width={{base: 'full', sm: 'auto'}}
                                     >
                                         Get started

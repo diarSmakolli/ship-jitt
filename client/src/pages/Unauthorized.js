@@ -17,22 +17,21 @@ function Unauthorized() {
         display="inline-block"
         as="h2"
         size="2xl"
-        bgGradient="linear(to-r, teal.400, blue.600)"
+        bgGradient="linear(to-r, gray.100, red.600)"
         backgroundClip="text"
         fontFamily={'Bricolage Grotesque'}>
         401
       </Heading>
-      <Text fontSize="18px" mt={3} mb={2} fontFamily={'Bricolage Grotesque'} color='gray.200'>
+      <Text fontSize="25px" mt={3} mb={2} fontFamily={'Epilogue'} color='gray.200'>
         Unauthorized
       </Text>
-      <Text color={'gray.400'} mb={6} fontFamily={'Bricolage Grotesque'}>
+      <Text color={'gray.400'} mb={6} fontFamily={'Epilogue'}>
         The page you're looking for requires access.
       </Text>
 
       <Button
-        colorScheme="teal"
-        bgGradient="linear(to-r, blue.300, blue.600, blue.600)"
-        color="white"
+        bg='white'       
+        color="black"
         variant="solid"
         as='a'
         href='/'>

@@ -50,11 +50,11 @@ function Invoices() {
 
                     <Box width='50%'>
 
-                        <Text color='white' fontFamily={'Geist Sans'} fontSize={'2xl'} mt={10} fontWeight={600}>
+                        <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Invoices Information
                         </Text>
 
-                        <Text color='gray.200' fontFamily={'Bricolage Grotesque'} fontSize={'lg'} mt={5}>
+                        <Text color='gray.300' fontFamily={'Epilogue'} fontSize={'lg'} mt={5}>
                             This page will display all the invoices information.
                         </Text>
 
@@ -62,29 +62,29 @@ function Invoices() {
                 </HStack>
 
 
-                <SimpleGrid columns={3} spacing={10} mt={10}>
+                <SimpleGrid columns={{base: 1, md: 3}} spacing={10} mt={10}>
 
                     {invoices.map((invoice) => (
                     <Box bg="rgba(0,0,0,.5)" p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
 
-                            <Text mt={2} color='white' fontSize={'lg'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={500}>
                                 Invoice: {invoice.invoiceNumber}
                             </Text>
-                            <Text mt={2} color='white' fontSize={'md'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
                                 Amount: {invoice.amount.toFixed(2)} {invoice.currency.toUpperCase()}
                                 {/* {invoice.currency.charAt(0).toUpperCase() + invoice.currency.slice(1)}  */}
                                 
                             </Text>
-                            <Text mt={2} color='white' fontSize={'md'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'md'} fontFamily={'Epilogue'} fontWeight={500}>
                                 To: {user.email}
                             </Text>
-                            <Text mt={2} color='white' fontSize={'md'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'md'} fontFamily={'Epilogue'} fontWeight={500}>
                                 From: ShipJitt
                             </Text>
-                            <Text mt={2} color='white' fontSize={'md'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'md'} fontFamily={'Epilogue'} fontWeight={500}>
                                 Date: {invoice.date}
                             </Text>
-                            <Text mt={2} color='white' fontSize={'md'} fontFamily="Geist Sans" fontWeight={500}>
+                            <Text mt={2} color='white' fontSize={'md'} fontFamily={'Epilogue'} fontWeight={500}>
                                 Status: {invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)} 
                                 
                                 {
@@ -95,7 +95,7 @@ function Invoices() {
 
                             </Text>
 
-                            <Button as='a' size='sm' mt={5} width='full' href={`/invoices/${invoice.id}`}>View Details</Button>
+                            <Button as='a' size='sm' mt={5} width='full' href={`/invoices/${invoice.id}`} fontFamily={'Epilogue'}>View Details</Button>
 
                     </Box>
                     ))}

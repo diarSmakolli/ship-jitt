@@ -9,15 +9,15 @@ const GetStarted = () => {
         <Box py={28}>
             <Center>
                 <Text fontSize="5xl" mb={4} color='white' fontWeight={500}
-                    fontFamily={'Geist Sans'}
+                    fontFamily={'Epilogue'}
                 >
                     Boost your app, launch, earn 🤑
                 </Text>
             </Center>
 
             <Center>
-                <Text fontSize="xl"  mb={8} color='gray.300'
-                    fontFamily={'Geist Sans'}
+                <Text fontSize="xl"  mb={8} color='gray.400'
+                    fontFamily={'Epilogue'}
                 >
                     Don't waste your time, build now.
                 </Text>

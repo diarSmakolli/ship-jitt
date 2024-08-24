@@ -114,7 +114,7 @@ const Pricing = () => {
             <Text
                 // textAlign={'center'}
                 color='white'
-                fontFamily={'Geist Sans'}
+                fontFamily={'Epilogue'}
                 fontSize={{ base: 'xl', md: '5xl' }}
                 fontWeight={'600'}
             >
@@ -124,7 +124,7 @@ const Pricing = () => {
             <Text
                 color='#8b949e'
                 fontWeight={500}
-                fontFamily={'Geist Sans'}
+                fontFamily={'Epilogue'}
                 mt={2}
                 fontSize={'lg'}
             >
@@ -147,7 +147,7 @@ const Pricing = () => {
                         textAlign="left"
                     >
                         <VStack align="start">
-                            <Text fontSize="2xl" color="white" fontFamily="Syne" fontWeight={600}>Shipjitt starter</Text>
+                            <Text fontSize="2xl" color="white" fontFamily={'Epilogue'} fontWeight={600}>Shipjitt starter</Text>
                             <Text mt={2} color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
                                 For individual developers, freelancers, students, and educators that want to build and ship faster.
                             </Text>
@@ -177,13 +177,6 @@ const Pricing = () => {
                                 <HStack >
                                     <CheckIcon color="green.500" />
                                     <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        SEO & Blog
-                                    </Text>
-                                </HStack>
- 
-                                <HStack >
-                                    <CheckIcon color="green.500" />
-                                    <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
                                         Mailgun integrations to send transactional emails
                                     </Text>
                                 </HStack>
@@ -205,7 +198,7 @@ const Pricing = () => {
                                 <HStack >
                                     <CheckIcon color="green.500" />
                                     <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        MongoDB, Postgres (Sequelize ORM)
+                                        Postgres, SQL, Sequelize, MySQL, SQLite
                                     </Text>
                                 </HStack>
  
@@ -215,18 +208,11 @@ const Pricing = () => {
                                         20+ Chakra UI Components
                                     </Text>
                                 </HStack>
- 
+
                                 <HStack >
-                                    <SmallCloseIcon color="red.500" />
+                                    <CheckIcon color="green.500" />
                                     <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        Leaderboard
-                                    </Text>
-                                </HStack>
- 
-                                <HStack >
-                                <SmallCloseIcon color="red.500" />
-                                    <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        Affiliate system
+                                        Access in Github repo
                                     </Text>
                                 </HStack>
  
@@ -254,7 +240,7 @@ const Pricing = () => {
                         textAlign="left"
                     >
                         <VStack align="start">
-                            <Text fontSize="2xl" color="white" fontFamily="Syne" fontWeight={600}>Shipjitt VIP</Text>
+                            <Text fontSize="2xl" color="white" fontFamily={'Epilogue'} fontWeight={600}>Shipjitt VIP</Text>
                             <Text mt={2} color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
                                 For individual developers, freelancers, students, and educators that want to build and ship faster.
                             </Text>
@@ -281,12 +267,6 @@ const Pricing = () => {
                                     </Text>
                                 </HStack>
  
-                                <HStack >
-                                    <CheckIcon color="green.500" />
-                                    <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        SEO & Blog
-                                    </Text>
-                                </HStack>
  
                                 <HStack >
                                     <CheckIcon color="green.500" />
@@ -312,7 +292,7 @@ const Pricing = () => {
                                 <HStack >
                                     <CheckIcon color="green.500" />
                                     <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        MongoDB, Postgres (Sequelize ORM)
+                                        Postgres, SQL, Sequelize, MySQL, SQLite
                                     </Text>
                                 </HStack>
  
@@ -322,18 +302,11 @@ const Pricing = () => {
                                         20+ Chakra UI Components
                                     </Text>
                                 </HStack>
- 
+
                                 <HStack >
                                     <CheckIcon color="green.500" />
                                     <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        Leaderboard
-                                    </Text>
-                                </HStack>
- 
-                                <HStack >
-                                    <CheckIcon color="green.500" />
-                                    <Text color="#8b949e" fontSize="md" fontFamily="Poppins" fontWeight={500}>
-                                        Affiliate system
+                                        Access in Github repo
                                     </Text>
                                 </HStack>
  

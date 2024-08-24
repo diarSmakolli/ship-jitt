@@ -228,11 +228,11 @@ function Profile() {
 
                     <Box width='50%'>
 
-                        <Text color='white' fontFamily={'Poppins'} fontSize={'2xl'} mt={10} fontWeight={600}>
+                        <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Profile Information
                         </Text>
 
-                        <Text color='gray.200' fontFamily={'Bricolage Grotesque'} fontSize={'lg'} mt={5}>
+                        <Text color='gray.200' fontFamily={'Epilogue'} fontSize={'lg'} mt={5}>
                             Update your account's profile information and email address.
                         </Text>
 
@@ -249,33 +249,33 @@ function Profile() {
 
                         <Input type='file' onChange={handleProfilePictureChange} mt={5} hidden />
 
-                        <Button bg='white' color='black' mt={5} onClick={() => document.querySelector('input[type="file"]').click()}>
+                        <Button bg='white' size='sm' color='black' mt={5} onClick={() => document.querySelector('input[type="file"]').click()}>
                             Change profile picture
                         </Button>
 
-                        <Text color='gray.400' mt={3}>
+                        <Text color='gray.400' mt={3} fontFamily={'Epilogue'}>
                             Maximum size of 2MB
                         </Text>
 
-                        <FormLabel mt={10} color='gray.200'>
+                        <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             First name
                         </FormLabel>
-                        <Input type='text' width='40%' color='gray.200' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                        <Input type='text' width='40%' color='gray.200'  value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
-                        <FormLabel mt={10} color='gray.200'>
+                        <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Last name
                         </FormLabel>
                         <Input type='text' width='40%' color='gray.200' value={lastName} onChange={(e) => setLastName(e.target.value)} />
 
                         {/* // email cannot be updated */}
-                        <FormLabel mt={10} color='gray.200'>
+                        <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Email
                         </FormLabel>
                         <Input type='text' width='40%' color='gray.200' value={user.email} disabled />
 
 
                         <HStack>
-                            <Button bg='white' color='black' mt={5} onClick={handleSave}>
+                            <Button bg='white' color='black' mt={5} onClick={handleSave} fontFamily={'Epilogue'}>
                                 Save
                             </Button>
                         </HStack>
@@ -289,11 +289,11 @@ function Profile() {
 
                     <Box width='50%'>
 
-                        <Text color='white' fontFamily={'Poppins'} fontSize={'2xl'} mt={10} fontWeight={600}>
+                        <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Change password
                         </Text>
 
-                        <Text color='gray.200' fontFamily={'Bricolage Grotesque'} fontSize={'lg'} mt={5}>
+                        <Text color='gray.200' fontFamily={'Epilogue'} fontSize={'lg'} mt={5}>
                             Ensure your account is using a long, random password to stay secure.
                         </Text>
                     </Box>
@@ -301,7 +301,7 @@ function Profile() {
 
                     <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' mt={10} width={'100%'}>
 
-                        <FormLabel mt={10} color='gray.200'>
+                        <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Current password
                         </FormLabel>
                         <Input type='password'
@@ -314,7 +314,7 @@ function Profile() {
                             </Text>
                         )}
 
-                        <FormLabel mt={10} color='gray.200'>
+                        <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             New password
                         </FormLabel>
                         <Input type='password'
@@ -327,7 +327,7 @@ function Profile() {
                             </Text>
                         )}
 
-                        <FormLabel mt={10} color='gray.200'>
+                        <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Confirm new password
                         </FormLabel>
                         <Input type='password'

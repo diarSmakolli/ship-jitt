@@ -15,7 +15,7 @@ export default function Testimonials() {
                 textAlign={'center'}
                 fontSize={'5xl'}
                 color='white'
-                fontFamily={'Poppins'}
+                fontFamily={'Epilogue'}
                 fontWeight={500}
             >
                 Trusted by the world's best.
