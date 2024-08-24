@@ -24,6 +24,7 @@ export default function Dashboard() {
     const [githubRequest, setGithubRequest] = React.useState(null);
     const toast = useToast();
     const { user, loading } = useAuth();
+    const [githubUsernameError, setGithubUsernameError] = React.useState('');
 
     useEffect(() => {
         if (!user || loading) return;
@@ -105,6 +106,12 @@ export default function Dashboard() {
     }, [user, loading]);
 
     const handleRequestAccess = async () => {
+
+        if (!githubUsername) {
+            setGithubUsernameError('Github email is required');
+            return;
+        };
+
         try {
             const response = await axios.post(
                 'http://localhost:6099/api/users/github-request', {
@@ -221,7 +228,7 @@ export default function Dashboard() {
                                 Ship Jitt Boilerplate
                             </Text>
 
-                            { !githubRequest || githubRequest.status != 'accepted' ? (
+                            {!githubRequest || githubRequest.status != 'accepted' ? (
                                 <Text
                                     textAlign={'left'}
                                     color='gray.300'
@@ -233,19 +240,29 @@ export default function Dashboard() {
                                     <br />
                                     You'll receive an email from Github to confirm your access.
                                 </Text>
-                                ) : null }
+                            ) : null}
 
                             {!githubRequest || githubRequest.status != 'accepted' ?
                                 (
-                                    <FormControl mt={5}>
-                                        <FormLabel color='gray.200'>Github username</FormLabel>
-                                        <Input
-                                            value={githubUsername}
-                                            onChange={(e) => setGithubUsername(e.target.value)}
-                                            width='500px'
-                                            border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)" color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
-                                        />
-                                    </FormControl>
+                                    <>
+                                        <FormControl mt={5}>
+                                            <FormLabel color='gray.200'>Github username</FormLabel>
+                                            <Input
+                                                value={githubUsername}
+                                                onChange={(e) => setGithubUsername(e.target.value)}
+                                                width='500px'
+                                                border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)" color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
+                                            />
+                                        </FormControl>
+
+                                        {githubUsernameError && (
+                                            <Text py={2} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
+                                                {githubUsernameError}
+                                            </Text>
+                                        )}
+
+                                    </>
+
                                 ) : null}
 
 
@@ -263,32 +280,32 @@ export default function Dashboard() {
                                 </Button>
                             ) : null}
 
-                            { githubRequest && githubRequest.status == 'accepted' ? (
+                            {githubRequest && githubRequest.status == 'accepted' ? (
                                 <Text
-                                textAlign={'left'}
-                                color='gray.300'
-                                fontFamily={'Epilogue'}
-                                fontSize={{ base: 'xl', md: 'lg' }}
-                                fontWeight={'400'}
-                            >
-                                You have access to the repository. Start building your project now!
-                            </Text>
+                                    textAlign={'left'}
+                                    color='gray.300'
+                                    fontFamily={'Epilogue'}
+                                    fontSize={{ base: 'xl', md: 'lg' }}
+                                    fontWeight={'400'}
+                                >
+                                    You have access to the repository. Start building your project now!
+                                </Text>
                             ) : null}
 
                             <Divider color='gray.700' pt='4' />
 
-                            { githubRequest && githubRequest.status == 'accepted' ? (
+                            {githubRequest && githubRequest.status == 'accepted' ? (
                                 <Text
-                                py={3}
-                                textAlign={'left'}
-                                color='gray.300'
-                                fontFamily={'Epilogue'}
-                                fontSize={{ base: 'xl', md: 'lg' }}
-                                fontWeight={'400'}
-                            >
-                               Go to Documentation now and see how to use the boilerplate.
-                            </Text>
-                            ) : null }
+                                    py={3}
+                                    textAlign={'left'}
+                                    color='gray.300'
+                                    fontFamily={'Epilogue'}
+                                    fontSize={{ base: 'xl', md: 'lg' }}
+                                    fontWeight={'400'}
+                                >
+                                    Go to Documentation now and see how to use the boilerplate.
+                                </Text>
+                            ) : null}
 
 
                             <Text

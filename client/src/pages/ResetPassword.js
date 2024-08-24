@@ -10,8 +10,27 @@ const ResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const toast = useToast();
+    const [newPasswordError, setNewPasswordError] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
     const handleResetPassword = async () => {
+
+        let hasError = false;
+
+        if (!newPassword) {
+            setNewPasswordError('New Password is required');
+            hasError = true;
+        }
+
+        if (!confirmPassword) {
+            setConfirmPasswordError('Confirm Password is required');
+            hasError = true;
+        }
+
+        if (hasError) {
+            return;
+        }
+
         if (newPassword !== confirmPassword) {
             toast({
                 title: 'Error',
@@ -22,6 +41,7 @@ const ResetPassword = () => {
             });
             return;
         }
+        
 
         setLoading(true);
         try {
@@ -61,45 +81,59 @@ const ResetPassword = () => {
 
     return (
         <Box bg='#000' minH='100vh'>
-        
-        <Helmet>
-            <title>Reset Password | ShipJitt</title>
-        </Helmet>
 
-        <Container>
-            <Box py={48}>
-            <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border="1.5px solid rgba(255,255,255,.12)">
-                <Text color="white" fontSize="2xl" fontFamily={'Epilogue'}>Reset Password</Text>
-                <FormLabel mt={5} color="gray.200">New Password</FormLabel>
-                <Input
-                    type="password"
-                    color="gray.200"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
-                    required
-                />
-                <FormLabel mt={5} color="gray.200">Confirm New Password</FormLabel>
-                <Input
-                    type="password"
-                    color="gray.200"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
-                    required
-                />
-                <Button
-                    mt={5}
-                    bg="white"
-                    color="black"
-                    onClick={handleResetPassword}
-                    isLoading={loading}
-                >
-                    Submit
-                </Button>
-            </Box>
-            </Box>
-        </Container>
+            <Helmet>
+                <title>Reset Password | ShipJitt</title>
+            </Helmet>
+
+            <Container>
+                <Box py={48}>
+                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border="1.5px solid rgba(255,255,255,.12)">
+                        <Text color="white" fontSize="2xl" fontFamily={'Epilogue'}>Reset Password</Text>
+                        <FormLabel mt={5} color="gray.200">New Password</FormLabel>
+                        <Input
+                            type="password"
+                            color="gray.200"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
+                            required
+                        />
+
+                        {newPasswordError && (
+                            <Text py={2} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
+                                {newPasswordError}
+                            </Text>
+                        )}
+
+                        <FormLabel mt={5} color="gray.200">Confirm New Password</FormLabel>
+                        <Input
+                            type="password"
+                            color="gray.200"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
+                            required
+                        />
+
+                        {confirmPasswordError && (
+                            <Text py={2} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
+                                {confirmPasswordError}
+                            </Text>
+                        )}
+
+                        <Button
+                            mt={5}
+                            bg="white"
+                            color="black"
+                            onClick={handleResetPassword}
+                            isLoading={loading}
+                        >
+                            Submit
+                        </Button>
+                    </Box>
+                </Box>
+            </Container>
         </Box>
     );
 };

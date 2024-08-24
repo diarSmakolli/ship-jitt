@@ -7,9 +7,17 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const toast = useToast();
+    const [emailError, setEmailError] = useState('');
 
     const handleForgotPassword = async () => {
         setLoading(true);
+
+        if (!email) {
+            setEmailError('Email is required');
+            setLoading(false);
+            return;
+        }
+
         try {
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
             const response = await axios.post('http://localhost:6099/api/users/forgot-password', {
@@ -73,6 +81,13 @@ const ForgotPassword = () => {
                         border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)"
                         color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
                     />
+
+                    {emailError && (
+                        <Text py={2} color='red.500' fontSize={'md'} fontFamily={'Epilogue'}>
+                            {emailError}
+                        </Text>
+                    )}
+
                 </FormControl>
                 <Stack spacing={6}>
                     <Button
