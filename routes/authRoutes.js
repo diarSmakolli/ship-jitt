@@ -21,6 +21,8 @@ const { Invoice } = require('../models');
 const GithubRequest = require('../models/GithubRequest');
 const PDFDocument = require('pdfkit');
 const { generateInvoicePDF } = require('../services/generateInvoicePdf');
+const { Sequelize } = require('sequelize');
+const sequelize = require('sequelize');
 
 // mailgun config
 const mg = mailgun({
@@ -237,6 +239,11 @@ router.post('/login', async (req, res) => {
                 message: 'Email not verified. Verification email sent.'
             });
         }
+
+        // last login
+        const lastLogin = moment().tz(selectedTimeZone).format();
+
+        await User.update({ lastLoginAt: lastLogin, updatedAt: updatedAtTimeZone }, { where: { email: email } });
         
        
         const token = jwt.sign({ id: user.id }, process.env.SECRETJWT, { expiresIn: '1h' });
@@ -492,19 +499,81 @@ router.put('/change-password/:id', verifyToken, async(req, res) => {
 })
 
 // get all users with the pagination - admin  ✅
-router.get('/getall', verifyToken, async(req, res) => {
+// router.get('/getall', verifyToken, async(req, res) => {
+//     const page = parseInt(req.query.page) || 1;
+//     const pageSize = parseInt(req.query.pageSize) || 5;
+//     const search = req.query.search || '';
+//     const { timeZone } = req.body;
+//     try {
+//         const users = await User.findAll({
+//             where: { deletedAt: null },
+//             order: [['createdAt', 'DESC']],
+//             limit: pageSize,
+//             offset: (page - 1) * pageSize
+//         });
+
+//         if(users.length === 0) {
+//             return res.status(404).json({
+//                 status: 'error',
+//                 statusCode: 404,
+//                 message: 'Users not found'
+//             });
+//         }
+
+//         const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
+
+//         const formattedUsers = users.map(user => {
+//             return {
+//                 ...user.toJSON(),
+//                 createdAt: moment(user.createdAt).tz(selectedTimeZone).format(),
+//                 updatedAt: moment(user.updatedAt).tz(selectedTimeZone).format(),
+//                 deletedAt: moment(user.deletedAt).tz(selectedTimeZone).format(),
+//                 resetTokenExpiry: moment(user.resetTokenExpiry).tz(selectedTimeZone).format()
+//             }
+//         })
+
+//         return res.status(200).json({
+//             status: 'success', 
+//             statusCode: 200,
+//             message: 'Users retrieved successfully.',
+//             users: formattedUsers
+//         });
+//     } catch (error) {
+//         console.error("An Error has occurred and we're working to fix the problem!");
+//         console.error(error);
+//         res.status(500).json({
+//             status: 'error',
+//             statusCode: 500,
+//             message: "An Error has occurred and we're working to fix the problem!"
+//         });
+//     }
+// })
+
+router.get('/getall', verifyToken, async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 5;
+    const search = req.query.search || ''; // Add search query parameter
     const { timeZone } = req.body;
+
     try {
+        // Define the where clause with optional search criteria
+        const whereClause = {
+            deletedAt: null,
+            [Op.or]: [
+                { first_name: { [Op.like]: `%${search}%` } },
+                { last_name: { [Op.like]: `%${search}%` } },
+                { email: { [Op.like]: `%${search}%` } }
+            ]
+        };
+
         const users = await User.findAll({
-            where: { deletedAt: null },
+            where: whereClause,
             order: [['createdAt', 'DESC']],
             limit: pageSize,
             offset: (page - 1) * pageSize
         });
 
-        if(users.length === 0) {
+        if (users.length === 0) {
             return res.status(404).json({
                 status: 'error',
                 statusCode: 404,
@@ -521,11 +590,11 @@ router.get('/getall', verifyToken, async(req, res) => {
                 updatedAt: moment(user.updatedAt).tz(selectedTimeZone).format(),
                 deletedAt: moment(user.deletedAt).tz(selectedTimeZone).format(),
                 resetTokenExpiry: moment(user.resetTokenExpiry).tz(selectedTimeZone).format()
-            }
-        })
+            };
+        });
 
         return res.status(200).json({
-            status: 'success', 
+            status: 'success',
             statusCode: 200,
             message: 'Users retrieved successfully.',
             users: formattedUsers
@@ -539,7 +608,758 @@ router.get('/getall', verifyToken, async(req, res) => {
             message: "An Error has occurred and we're working to fix the problem!"
         });
     }
-})
+});
+
+// Queries
+
+// total users count
+router.get('/total-users', verifyToken, async(req, res) => {
+    try {
+        const totalUsers = await User.count();
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Total users count retrieved successfully.',
+            totalUsers
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// total active users count
+router.get('/active-users', verifyToken, async (req, res) => {
+    try {
+        const activeUsers = await User.count({
+            where: {
+                hasAccess: true,
+                deletedAt: null
+            }
+        });
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            activeUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch active users.'
+        });
+    }
+});
+
+// last 7 days
+router.get('/recent-users', verifyToken, async (req, res) => {
+    try {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+        const recentUsers = await User.count({
+            where: {
+                createdAt: {
+                    [Op.gte]: sevenDaysAgo
+                },
+                deletedAt: null
+            }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            recentUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch recent users.'
+        });
+    }
+});
+
+// get count users which have deletedAt not null
+router.get('/count-unactive', verifyToken, async (req, res) => {
+    try {
+        const deletedUsers = await User.count({
+            where: {
+                deletedAt: {
+                    [Op.not]: null
+                }
+            }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            deletedUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch deleted users.'
+        });
+    }
+});
+
+// user retention count - have lastLoginAt in DB
+router.get('/user-retention', verifyToken, async (req, res) => {
+    try {
+        const userRetention = await User.count({
+            where: {
+                lastLoginAt: {
+                    [Op.not]: null
+                }
+            }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            userRetention
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch user retention count.'
+        });
+    }
+});
+
+// average invoice amount
+router.get('/average-invoice-amount', verifyToken, async (req, res) => {
+    try {
+        const averageInvoiceAmount = await Invoice.findOne({
+            attributes: [
+                [sequelize.fn('AVG', sequelize.col('amount')), 'avgAmount']
+            ]
+        });
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            averageInvoiceAmount: averageInvoiceAmount.getDataValue('avgAmount')
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch average invoice amount.'
+        });
+    }
+});
+
+router.get('/total-revenue', verifyToken, async (req, res) => {
+    // const { startDate, endDate } = req.query;
+    try {
+        const totalRevenue = await Invoice.sum('amount', {
+            
+        });
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            totalRevenue
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch total revenue.'
+        });
+    }
+});
+
+// build an query to calculate users with invoices percentage ✅
+router.get('/invoices-this-month', verifyToken, async (req, res) => {
+    try {
+        const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        const endOfMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59);
+
+        const invoicesThisMonth = await Invoice.count({
+            where: {
+                date: {
+                    [Op.between]: [startOfMonth, endOfMonth]
+                }
+            }
+        });
+
+        res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            invoicesThisMonth
+        });
+    } catch (error) {
+        console.error("An error occurred while fetching invoices for this month:", error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An error occurred while fetching invoices for this month."
+        });
+    }
+});
+
+// Daily Active Users (DAU)
+router.get('/daily-active-users', verifyToken, async (req, res) => {
+    try {
+        const oneDayAgo = new Date();
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
+        const dailyActiveUsers = await User.count({
+            where: {
+                lastLoginAt: {
+                    [Op.gte]: oneDayAgo
+                }
+            }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            dailyActiveUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch daily active users.'
+        });
+    }
+});
+
+// Monthly Active Users (MAU)
+router.get('/monthly-active-users', verifyToken, async (req, res) => {
+    try {
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+
+        const monthlyActiveUsers = await User.count({
+            where: {
+                lastLoginAt: {
+                    [Op.gte]: oneMonthAgo
+                }
+            }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            monthlyActiveUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch monthly active users.'
+        });
+    }
+});
+
+// User Growth Over Time
+router.get('/user-growth', verifyToken, async (req, res) => {
+    try {
+        const usersByDay = await User.findAll({
+            attributes: [
+                [sequelize.fn('DATE', sequelize.col('createdAt')), 'date'],
+                [sequelize.fn('COUNT', sequelize.col('id')), 'count']
+            ],
+            group: ['date'],
+            order: [['date', 'ASC']]
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            usersByDay
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch user growth data.'
+        });
+    }
+});
+
+// Average Revenue Per User (ARPU)
+router.get('/arpu', verifyToken, async (req, res) => {
+    try {
+        const totalRevenue = await Invoice.sum('amount');
+        const totalUsers = await User.count();
+
+        const arpu = totalRevenue / totalUsers;
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            arpu: arpu.toFixed(2)
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to calculate ARPU.'
+        });
+    }
+});
+
+// Weekly Active Users (WAU)
+router.get('/metrics/weekly-active-users', verifyToken, async (req, res) => {
+    try {
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+        const weeklyActiveUsers = await User.count({
+            where: {
+                lastLoginAt: {
+                    [Op.gte]: oneWeekAgo
+                }
+            }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            weeklyActiveUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch weekly active users.'
+        });
+    }
+});
+
+router.get('/metrics/monthly-retention-rate', verifyToken, async (req, res) => {
+    try {
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+
+        const totalUsers = await User.count();
+        const retainedUsers = await User.count({
+            where: {
+                lastLoginAt: {
+                    [Op.gte]: oneMonthAgo
+                }
+            }
+        });
+
+        const retentionRate = (retainedUsers / totalUsers) * 100;
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            retentionRate: retentionRate.toFixed(2)
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch monthly retention rate.'
+        });
+    }
+});
+
+router.get('/metrics/revenue-growth', verifyToken, async (req, res) => {
+    try {
+        const revenueGrowth = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('DATE', sequelize.col('date')), 'date'],
+                [sequelize.fn('SUM', sequelize.col('amount')), 'totalRevenue']
+            ],
+            group: ['date'],
+            order: [['date', 'ASC']]
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            revenueGrowth
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch revenue growth data.'
+        });
+    }
+});
+
+router.get('/metrics/invoice-count', verifyToken, async (req, res) => {
+    try {
+        const invoiceCount = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('DATE', sequelize.col('date')), 'date'],
+                [sequelize.fn('COUNT', sequelize.col('id')), 'invoiceCount']
+            ],
+            group: ['date'],
+            order: [['date', 'ASC']]
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            invoiceCount
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch invoice count data.'
+        });
+    }
+});
+
+router.get('/metrics/arpu-growth', verifyToken, async (req, res) => {
+    try {
+        const arpuGrowth = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('DATE', sequelize.col('date')), 'date'],
+                [sequelize.literal('SUM(amount) / COUNT(DISTINCT "userId")'), 'averageRevenuePerUser']
+            ],
+            group: ['date'],
+            order: [['date', 'ASC']]
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            arpuGrowth
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch ARPU growth data.'
+        });
+    }
+});
+
+router.get('/metrics/daily-active-users', verifyToken, async (req, res) => {
+    try {
+        const dailyActiveUsers = await User.findAll({
+            attributes: [
+                [
+                    sequelize.fn(
+                        'DATE_TRUNC', 
+                        'day', 
+                        sequelize.literal(`"lastLoginAt" AT TIME ZONE 'UTC'`)
+                    ), 
+                    'date'
+                ],
+                [sequelize.fn('COUNT', sequelize.fn('DISTINCT', sequelize.col('id'))), 'activeUsers']
+            ],
+            where: {
+                lastLoginAt: {
+                    [Sequelize.Op.gte]: sequelize.literal("NOW() - INTERVAL '1 month'")
+                }
+            },
+            group: [sequelize.fn('DATE_TRUNC', 'day', sequelize.literal(`"lastLoginAt" AT TIME ZONE 'UTC'`))],
+            order: [[sequelize.fn('DATE_TRUNC', 'day', sequelize.literal(`"lastLoginAt" AT TIME ZONE 'UTC'`)), 'ASC']]
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            dailyActiveUsers
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch daily active users.'
+        });
+    }
+});
+
+router.get('/metrics/new-users-over-time', verifyToken, async (req, res) => {
+    try {
+        const newUsersOverTime = await User.findAll({
+            attributes: [
+                [sequelize.fn('DATE_TRUNC', 'day', sequelize.col('createdAt')), 'date'],
+                [sequelize.fn('COUNT', sequelize.col('id')), 'newUsers']
+            ],
+            where: {
+                createdAt: {
+                    [Sequelize.Op.gte]: sequelize.literal("NOW() - INTERVAL '3 months'")
+                }
+            },
+            group: [sequelize.fn('DATE_TRUNC', 'day', sequelize.col('createdAt'))],
+            order: [[sequelize.fn('DATE_TRUNC', 'day', sequelize.col('createdAt')), 'ASC']]
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            newUsersOverTime
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch new users over time.'
+        });
+    }
+});
+
+// Revenue every month from the first data in DB
+router.get('/metrics/revenue-monthly-growth', verifyToken, async (req, res) => {
+    try {
+        const revenueGrowth = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM "date"')), 'year'], // Extract year from createdAt
+                [sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM "date"')), 'month'], // Extract month from createdAt
+                [sequelize.fn('SUM', sequelize.col('amount')), 'totalRevenue'] // Sum of amounts for each month
+            ],
+            group: ['year', 'month'], // Group by year and month
+            order: [
+                [sequelize.literal('EXTRACT(YEAR FROM "date")'), 'ASC'],
+                [sequelize.literal('EXTRACT(MONTH FROM "date")'), 'ASC']
+            ] // Order by year and month
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            data: revenueGrowth
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch monthly revenue growth data.',
+            error: error.message // Provide additional error details
+        });
+    }
+});
+
+// Revenue every week last 3 months
+router.get('/metrics/revenue-weekly', verifyToken, async (req, res) => {
+    try {
+        // Get the current date and calculate the date three months ago
+        const today = moment().startOf('day');
+        const threeMonthsAgo = today.clone().subtract(3, 'months');
+
+        // Find all invoices within the last three months and group by week
+        const weeklyRevenue = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('EXTRACT', sequelize.literal('WEEK FROM "date"')), 'week'], // Extract week from date
+                [sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM "date"')), 'year'],
+                 // Extract year to avoid overlap of weeks across years
+                 [sequelize.fn('DATE', sequelize.col('date')), 'date'],
+                [sequelize.fn('SUM', sequelize.col('amount')), 'totalRevenue'] // Sum of amounts for each week
+            ],
+            where: {
+                date: {
+                    [Op.between]: [threeMonthsAgo.toDate(), today.toDate()] // Filter to last three months
+                }
+            },
+            group: ['year', 'week', 'date'], // Group by year and week
+            order: [
+                [sequelize.literal('EXTRACT(YEAR FROM "date")'), 'ASC'],
+                [sequelize.literal('EXTRACT(WEEK FROM "date")'), 'ASC']
+            ] // Order by year and week
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            data: weeklyRevenue
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch weekly revenue data.',
+            error: error.message // Provide additional error details
+        });
+    }
+});
+
+// Invoices every month from the first data in DB
+router.get('/metrics/invoices-monthly-growth', verifyToken, async (req, res) => {
+    try {
+        const invoiceGrowth = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM "date"')), 'year'], // Extract year from createdAt
+                [sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM "date"')), 'month'], // Extract month from createdAt
+                [sequelize.fn('COUNT', sequelize.col('id')), 'invoiceCount'] // Sum of amounts for each month
+            ],
+            group: ['year', 'month'], // Group by year and month
+            order: [
+                [sequelize.literal('EXTRACT(YEAR FROM "date")'), 'ASC'],
+                [sequelize.literal('EXTRACT(MONTH FROM "date")'), 'ASC']
+            ] // Order by year and month
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            data: invoiceGrowth
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch monthly revenue growth data.',
+            error: error.message // Provide additional error details
+        });
+    }
+});
+
+// Invoices every week last 3 months
+router.get('/metrics/invoices-weekly', verifyToken, async (req, res) => {
+    try {
+        // Get the current date and calculate the date three months ago
+        const today = moment().startOf('day');
+        const threeMonthsAgo = today.clone().subtract(3, 'months');
+
+        // Find all invoices within the last three months and group by week
+        const weeklyInvoices = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('EXTRACT', sequelize.literal('WEEK FROM "date"')), 'week'], // Extract week from date
+                [sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM "date"')), 'year'],
+                 // Extract year to avoid overlap of weeks across years
+                 [sequelize.fn('DATE', sequelize.col('date')), 'date'],
+                [sequelize.fn('COUNT', sequelize.col('id')), 'invoiceCount'] // Sum of amounts for each week
+            ],
+            where: {
+                date: {
+                    [Op.between]: [threeMonthsAgo.toDate(), today.toDate()] // Filter to last three months
+                }
+            },
+            group: ['year', 'week', 'date'], // Group by year and week
+            order: [
+                [sequelize.literal('EXTRACT(YEAR FROM "date")'), 'ASC'],
+                [sequelize.literal('EXTRACT(WEEK FROM "date")'), 'ASC']
+            ] // Order by year and week
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            data: weeklyInvoices
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch weekly revenue data.',
+            error: error.message // Provide additional error details
+        });
+    }
+});
+
+// ARPU every month from the first data in DB
+router.get('/metrics/arpu-monthly-growth', verifyToken, async (req, res) => {
+    try {
+        const arpuGrowth = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM "date"')), 'year'], // Extract year from createdAt
+                [sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM "date"')), 'month'], // Extract month from createdAt
+                [sequelize.fn('AVG', sequelize.col('amount')), 'averageRevenue'] // Average of amounts for each month
+            ],
+            group: ['year', 'month'], // Group by year and month
+            order: [
+                [sequelize.literal('EXTRACT(YEAR FROM "date")'), 'ASC'],
+                [sequelize.literal('EXTRACT(MONTH FROM "date")'), 'ASC']
+            ] // Order by year and month
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            data: arpuGrowth
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch monthly ARPU growth data.',
+            error: error.message // Provide additional error details
+        });
+    }
+});
+
+// ARPU every week last 3 months
+router.get('/metrics/arpu-weekly', verifyToken, async (req, res) => {
+    try {
+        // Get the current date and calculate the date three months ago
+        const today = moment().startOf('day');
+        const threeMonthsAgo = today.clone().subtract(3, 'months');
+
+        // Find all invoices within the last three months and group by week
+        const weeklyArpu = await Invoice.findAll({
+            attributes: [
+                [sequelize.fn('EXTRACT', sequelize.literal('WEEK FROM "date"')), 'week'], // Extract week from date
+                [sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM "date"')), 'year'],
+                 // Extract year to avoid overlap of weeks across years
+                 [sequelize.fn('DATE', sequelize.col('date')), 'date'],
+                [sequelize.fn('AVG', sequelize.col('amount')), 'averageArpu'] // Sum of amounts for each week
+            ],
+            where: {
+                date: {
+                    [Op.between]: [threeMonthsAgo.toDate(), today.toDate()] // Filter to last three months
+                }
+            },
+            group: ['year', 'week', 'date'], // Group by year and week
+            order: [
+                [sequelize.literal('EXTRACT(YEAR FROM "date")'), 'ASC'],
+                [sequelize.literal('EXTRACT(WEEK FROM "date")'), 'ASC']
+            ] // Order by year and week
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            data: weeklyArpu
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'Unable to fetch weekly revenue data.',
+            error: error.message // Provide additional error details
+        });
+    }
+});
+
+
+
+
+
+// End queries
 
 // get all deleted inactive users with the pagination - admin  ✅
 router.get('/getdeletedusers', verifyToken, async(req, res) => {
@@ -644,13 +1464,21 @@ router.post('/forgot-password', async(req, res) => {
     try {
         const { email, timeZone } = req.body;
 
+        if(!email || email == '') {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Email is required.'
+            })
+        }
+
         const user = await User.findOne({ where: { email } });
 
         if(!user) {
             return res.status(404).json({
                 status: 'error',
                 statusCode: 404,
-                message: 'User not found'
+                message: 'This email doesn\'t exist.'
             })
         }
 
@@ -709,6 +1537,14 @@ router.post('/reset-password/:token', async(req, res) => {
     try {
         
         const { newPassword, confirmPassword, timeZone } = req.body;
+
+        if(newPassword == '' || confirmPassword == '') {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'New password and confirm password are required.'
+            })
+        }
     
         const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
 
@@ -1283,7 +2119,6 @@ router.delete('/github-request/:id', async(req, res) => {
         });
     }
 });
-
 
 // get all github requests with the pagination
 // router.get('/github-requests', async(req, res) => {

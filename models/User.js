@@ -121,7 +121,11 @@ const User = sequelize.define('users', {
         //     is: /^price_.+/,
         // },
         allowNull: true,
-    }
+    },
+    lastLoginAt: {
+        type: Sequelize.DataTypes.DATE,
+        allowNull: true,
+    },
 }, {
     tableName: 'users',
     timestamps: false
