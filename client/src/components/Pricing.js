@@ -98,7 +98,6 @@ const Pricing = () => {
     return (
         <Box py={20}>
  
- 
             <Button
                 bg='transparent'
                 color='white'
@@ -117,6 +116,7 @@ const Pricing = () => {
                 fontFamily={'Epilogue'}
                 fontSize={{ base: 'xl', md: '5xl' }}
                 fontWeight={'600'}
+                mt={2}
             >
                 Take flight with Ship Jitt
             </Text>

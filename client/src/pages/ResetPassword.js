@@ -42,7 +42,6 @@ const ResetPassword = () => {
             return;
         }
         
-
         setLoading(true);
         try {
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;

@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async';
 
 function Unauthorized() {
   return (
-    <Box textAlign="center" py={64} px={6} bg='#0d1117' minH='100vh'>
+    <Box textAlign="center" py={64} px={6} bg='#000' minH='100vh'>
       <Helmet>
         <title>Unauthorized | ShipJitt</title>
       </Helmet>

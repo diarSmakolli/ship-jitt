@@ -50,7 +50,9 @@ const ForgotPassword = () => {
             minH={'100vh'}
             align={'center'}
             justify={'center'}
-            bg='#000'>
+            bg='#000'
+            p={2}
+            >
             
             <Helmet>
                 <title>Forgot Password | ShipJitt</title>

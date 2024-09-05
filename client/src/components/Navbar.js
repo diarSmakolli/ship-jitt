@@ -60,8 +60,10 @@ export default function WithSubnavigation() {
           display={{ base: 'flex', md: 'none' }}>
           <IconButton
             onClick={onToggle}
+            _focus={{color: 'white'}}
+            _hover={{color: 'white', bg: 'transparent'}}
             icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              isOpen ? <CloseIcon w={3} h={3} color='white' _focus={{color: 'white'}} _hover={{color: 'white', bg: 'transparent'}} /> : <HamburgerIcon w={5} h={5} color='white' _focus={{color: 'white'}} _hover={{color: 'white', bg: 'transparent'}}/>
             }
             variant={'ghost'}
             aria-label={'Toggle Navigation'}
@@ -230,9 +232,9 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
 const MobileNav = () => {
     return (
         <Stack
-            bg={useColorModeValue('white', 'gray.800')}
+            bg={'#000'}
             p={4}
-            display={{ md: 'none' }}>
+            display={{ md: 'none' }} minHeight={'100vh'} >
             {NAV_ITEMS.map((navItem) => (
                 <MobileNavItem key={navItem.label} {...navItem} />
             ))}
@@ -255,8 +257,12 @@ const MobileNavItem = ({ label, children, href }) => {
                     textDecoration: 'none',
                 }}>
                 <Text
-                    fontWeight={600}
-                    color={useColorModeValue('gray.600', 'gray.200')}>
+                    fontWeight={500}
+                    color={'gray.300'}
+                    fontFamily={'Epilogue'}
+                    fontSize={'xl'}
+
+                    >
                     {label}
                 </Text>
                 {children && (

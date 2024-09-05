@@ -21,7 +21,7 @@ export default function Hero() {
             height={{ base: 'auto', md: 'auto' }}
             width={'full'}
             zIndex={1}
-            pb={14}
+            pb={{ base: 0, md: 24 }}
         >
             <Container maxW='6xl'>
             <Stack

@@ -224,9 +224,9 @@ function Profile() {
 
             <Container maxW='6xl'>
 
-                <HStack spacing='10' align={'start'}>
+                <HStack spacing='10' align={'start'} display={'flex'} flexDirection={{base: 'column', md: 'row'}}>
 
-                    <Box width='50%'>
+                    <Box width={{base: '100%', md: '50%'}}>
 
                         <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Profile Information
@@ -239,7 +239,9 @@ function Profile() {
                     </Box>
 
 
-                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' mt={10} width='100%'>
+                    <Box bg="rgba(0,0,0,.5)" p={9} 
+                    borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' mt={{base: 5, md: 10}} width='100%'
+                    >
 
                         <HStack>
                             <Image src={profilePictureUrl} width='100px' height='100px'
@@ -260,18 +262,17 @@ function Profile() {
                         <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             First name
                         </FormLabel>
-                        <Input type='text' width='40%' color='gray.200'  value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                        <Input type='text' width={{base: '100%', md: '40%'}} color='gray.200'  value={firstName} onChange={(e) => setFirstName(e.target.value)} />
 
                         <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Last name
                         </FormLabel>
-                        <Input type='text' width='40%' color='gray.200' value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                        <Input type='text' width={{base: '100%', md: '40%'}} color='gray.200' value={lastName} onChange={(e) => setLastName(e.target.value)} />
 
-                        {/* // email cannot be updated */}
                         <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Email
                         </FormLabel>
-                        <Input type='text' width='40%' color='gray.200' value={user.email} disabled />
+                        <Input type='text' width={{base: '100%', md: '40%'}} color='gray.200' value={user.email} disabled />
 
 
                         <HStack>
@@ -285,9 +286,9 @@ function Profile() {
                 </HStack>
 
 
-                <HStack spacing='10' align={'start'}>
+                <HStack spacing='10' align={'start'} display={'flex'} flexDirection={{base: 'column', md: 'row'}}>
 
-                    <Box width='50%'>
+                    <Box width={{base: '100%', md: '50%'}}>
 
                         <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Change password
@@ -299,14 +300,14 @@ function Profile() {
                     </Box>
 
 
-                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' mt={10} width={'100%'}>
+                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1.5rem" border='1.5px solid rgba(255,255,255,.12)' mt={{base: 5, md: 10}} width={'100%'}>
 
                         <FormLabel mt={10} color='gray.200' fontFamily={'Epilogue'}>
                             Current password
                         </FormLabel>
                         <Input type='password'
                             value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)}
-                            width='40%' color='gray.200' required />
+                            width={{base: '100%', md: '40%'}} color='gray.200' required />
 
                         {currentPasswordError && (
                             <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
@@ -319,7 +320,7 @@ function Profile() {
                         </FormLabel>
                         <Input type='password'
                             value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
-                            width='40%' color='gray.200' required />
+                            width={{base: '100%', md: '40%'}} color='gray.200' required />
 
                         {newPasswordError && (
                             <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
@@ -332,7 +333,7 @@ function Profile() {
                         </FormLabel>
                         <Input type='password'
                             value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
-                            width='40%' color='gray.200' required />
+                            width={{base: '100%', md: '40%'}} color='gray.200' required />
 
                         {confirmPasswordError && (
                             <Text py={0} color='red.500' fontSize={'md'} fontFamily={'Bricolage Grotesque'}>
@@ -342,7 +343,7 @@ function Profile() {
 
 
                         <HStack>
-                            <Button bg='white' color='black' mt={5} onClick={handleChangePassword}>
+                            <Button bg='white' color='black' mt={5} onClick={handleChangePassword}> 
                                 {isLoading ? 'Loading...' : 'Save'}
                             </Button>
                         </HStack>

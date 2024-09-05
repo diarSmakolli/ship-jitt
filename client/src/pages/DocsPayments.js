@@ -53,7 +53,7 @@ import {
 import usermodel from '../images/usermodel.png';
 
 import { FaDiscord, FaClipboard, FaBars, FaRegCheckCircle } from 'react-icons/fa';
-import { HamburgerIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
 
@@ -292,7 +292,7 @@ router.post('/login', async (req, res) => {
 });
 `;
 
-const protectedRouteByMiddleware = `
+    const protectedRouteByMiddleware = `
 const verifyToken = async(req, res, next) => {
     try {   
         const token = req.cookies['token'];
@@ -359,7 +359,7 @@ const verifyToken = async(req, res, next) => {
 };
 `;
 
-const privateRouteReactJs = `
+    const privateRouteReactJs = `
 const PrivateRoute = ({ children }) => {
     const { user, loading, isVerify, logout } = useAuth();
   
@@ -376,7 +376,7 @@ const PrivateRoute = ({ children }) => {
   };
 `;
 
-const pricingComponent = `
+    const pricingComponent = `
 const [starterPlanUrl, setStarterPlanUrl] = useState('');
 const [allInPlanUrl, setAllInPlanUrl] = useState('');
 
@@ -424,7 +424,7 @@ const handleStarterPlan = async () => {
 ... then the logic frontend return( ) to handle the links which route in the link of the stripe to pay the plan.
 `;
 
-const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webhook`;
+    const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webhook`;
 
 
 
@@ -448,7 +448,12 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
                         </Text>
 
                         <IconButton
-                            icon={<HamburgerIcon />}
+                            icon={
+                                isOpen ? <CloseIcon w={3} h={3} color='white' _focus={{ color: 'white' }} _hover={{ color: 'white', bg: 'transparent' }} /> : <HamburgerIcon w={5} h={5} color='white' _focus={{ color: 'white' }} _hover={{ color: 'white', bg: 'transparent' }} />
+                            }
+                            bg='transparent'
+                            _focus={{ color: 'white' }}
+                            _hover={{ color: 'white', bg: 'transparent' }}
                             aria-label="Open Menu"
                             onClick={() => setIsOpen(true)}
                             display={{ base: 'flex', md: 'none' }}
@@ -457,177 +462,107 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
                     </HStack>
 
                     <Box display={{ base: 'none', md: 'block' }} py={10}>
-                        <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                        <Heading size="sm" color='gray.200' fontFamily="Epilogue"
                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                             Getting started
                         </Heading>
 
                         <Box rounded='xl' mt={2}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" color='gray.200' fontFamily="Epilogue"
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                 Tutorials
                             </Heading>
 
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/authentication'>
                                 Authentication
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/private-page'>
                                 Protected routes
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/stripe'>
                                 Stripe integration
                             </Text>
                         </Box>
 
                         <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" fontFamily="Epilogue" color='gray.200'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                 Features
                             </Heading>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/features/database'>
+                                Database
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' as='a' href='/docs/features/emails' display={'flex'}
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
+                                Emails
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/features/payments'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
+                                Payments
                             </Text>
                         </Box>
 
                         <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" fontFamily="Epilogue" color='gray.200' display={'flex'}
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                 Components
                             </Heading>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/navbar'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
+                                Navbar
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/hero'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
+                                Hero
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/fast-access'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
+                                Fast Access
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/services'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
+                                Services
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/pricing'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
+                                Pricing
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/testimonials'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
+                                Testimonial
                             </Text>
 
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
+                            <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/banner'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
+                                Banner
                             </Text>
+
+                            <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/footer'
+                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                Footer
+                            </Text>
+
+
+
                         </Box>
 
                         <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                Chakra UI components
-                            </Heading>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                API calls
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Authentication
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                AWS Setup
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Pages
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Protected routes
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Quick launch
-                            </Text>
-
-                            <Text fontFamily={'Geist Sans'} color='hsl(240 5% 64.9%)'
-                                p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
-                                Stripe integration
-                            </Text>
-                        </Box>
-
-                        <Box rounded='xl' mt={5}>
-                            <Heading size="sm" fontFamily={'Geist Sans'} color='gray.200'
+                            <Heading size="sm" fontFamily="Epilogue" color='gray.200'
                                 p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                 Deployment
                             </Heading>
@@ -637,188 +572,113 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
                     {/* Drawer */}
                     <Drawer placement="left" onClose={() => setIsOpen(false)} isOpen={isOpen}>
                         <DrawerOverlay />
-                        <DrawerContent bg="white" color="white">
+                        <DrawerContent bg="#000" color="white">
                             <DrawerCloseButton />
-                            <DrawerHeader>Menu</DrawerHeader>
+                            <DrawerHeader color='white'>Menu</DrawerHeader>
                             <DrawerBody>
                                 <Box rounded="xl" mt={2}>
                                     <Box rounded='xl' mt={2}>
 
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                        <Heading size="sm" fontFamily="Epilogue" color='white'
                                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                             Introduction
                                         </Heading>
 
 
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                        <Heading size="sm" fontFamily="Epilogue" color='white'
                                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                            TUTORIALS
+                                            Tutorials
                                         </Heading>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            API calls
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                        <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/authentication'>
                                             Authentication
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            AWS Setup
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Pages
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                        <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/private-page'>
                                             Protected routes
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Quick launch
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
+                                        <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/tutorials/stripe'>
                                             Stripe integration
                                         </Text>
                                     </Box>
 
                                     <Box rounded='xl' mt={2}>
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.200'
+                                        <Heading size="sm" fontFamily="Epilogue" color='gray.200'
                                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                            FEATURES
+                                            Features
                                         </Heading>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            API calls
+                                        <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'}
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400} as='a' href='/docs/features/database'>
+                                            Database
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Authentication
+                                        <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' as='a' href='/docs/features/emails' display={'flex'}
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Emails
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            AWS Setup
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Pages
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Protected routes
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Quick launch
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Stripe integration
+                                        <Text fontFamily="Epilogue" color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/features/payments'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Payments
                                         </Text>
                                     </Box>
 
                                     <Box rounded='xl' mt={2}>
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                        <Heading size="sm" fontFamily={'Epilogue'} color='gray.200' display={'flex'}
                                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                            COMPONENTS
+                                            Components
                                         </Heading>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            API calls
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/navbar'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Navbar
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Authentication
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/hero'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Hero
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            AWS Setup
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/fast-access'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Fast Access
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Pages
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/services'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Services
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Protected routes
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/pricing'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Pricing
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Quick launch
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/testimonials'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Testimonial
                                         </Text>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Stripe integration
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/banner'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Banner
+                                        </Text>
+
+                                        <Text fontFamily={'Epilogue'} color='hsl(240 5% 64.9%)' display={'flex'} as='a' href='/docs/components/footer'
+                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={400}>
+                                            Footer
                                         </Text>
                                     </Box>
 
-                                    <Box rounded='xl' mt={2}>
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
-                                            CHAKRA COMPONENTS
-                                        </Heading>
 
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            API calls
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Authentication
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            AWS Setup
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Pages
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Protected routes
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Quick launch
-                                        </Text>
-
-                                        <Text fontFamily={'Poppins'} color='gray.800'
-                                            p={2} rounded='xl' fontSize={'sm'} fontWeight={500}>
-                                            Stripe integration
-                                        </Text>
-                                    </Box>
 
                                     <Box rounded='xl' mt={5}>
-                                        <Heading size="sm" fontFamily={'Poppins'} color='gray.900'
+                                        <Heading size="sm" fontFamily={'Epilogue'} color='gray.200'
                                             p={2} rounded='xl' fontSize={'sm'} fontWeight={600}>
                                             Deployment
                                         </Heading>
@@ -832,188 +692,15 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
 
                 </Box>
 
-                <Box display={{ base: 'flex', md: 'none' }} bg='white' width={'100%'} py={20}>
+                <Box display={{ base: 'flex', md: 'none' }} bg='#000' width={'100%'} py={10}>
 
                     <Container maxW={'container.md'}>
-                        <Box bg="white" pb={10} maxW={'100%'} mt={5}>
-
-
-                            <Text
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.900'
-                                fontSize={'2xl'}
-                                fontWeight={600}
-                                mt={10}
-                            >
-                                Getting Started with Ship jitt
-                            </Text>
-
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'xl'}
-                            >
-                                Hey maker, welcome to Ship-jitt 👋
-                            </Text>
-
-                            <Text
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={500}
-                                fontSize={'md'}
-                                mt={5}
-                            >
-                                Here's a quick overview of the boilerplate. Follow along to get your app up and running.
-                            </Text>
-
-                            <Text
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={500}
-                                fontSize={'md'}
-                                mt={5}
-                            >
-                                Get started with Ship jitt Boilerplate, the trendiest boilerplate for React JS, Node.js, C, Supabase, Stripe & ChatGPT API.
-                                Horizon UI Boilerplate comes with over 100+ fully coded & designed frontend components and more than 20+ section & web app page examples
-                                giving you the freedom of choosing and combining.
-                            </Text>
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.900'
-                                fontWeight={600}
-                                fontSize={'xl'}
-                            >
-                                React.js & Node.js project structure
-                            </Text>
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/auth</Code> - Authentication routes
-                            </Text>
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/components</Code> - React components
-                            </Text>
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/images</Code> - Images for the project
-                            </Text>
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/models</Code> - Database models
-                            </Text>
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/middleware</Code> - Middleware functions
-                            </Text>
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/routes</Code> - API routes
-                            </Text>
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.700'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                <Code bg='gray.900' border='1px solid rgb(255,255,255,0.3)' color='gray.200' p={1} rounded='lg'>/services</Code> - Services for the project
-                            </Text>
-
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.900'
-                                fontWeight={600}
-                                fontSize={'xl'}
-                            >
-                                Start a local server
-                            </Text>
-
-
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.800'
-                                fontWeight={600}
-                                fontSize={'lg'}
-                            >
-                                1. In your terminal, run the following commands one-by-one.
-                            </Text>
-
-                            <CodeBlock code={code} />
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.800'
-                                fontWeight={600}
-                                fontSize={'lg'}
-                            >
-                                2. Configure your environment variables .env file.
-                            </Text>
-
-                            <CodeBlock code={envconf} />
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.800'
-                                fontWeight={600}
-                                fontSize={'lg'}
-                            >
-                                3. Open http://localhost:3000 to see your site. And voila!
-                            </Text>
-
-
-
-                            <Text mt={5}
-                                fontFamily={'Bricolage Grotesque'}
-                                color='gray.800'
-                                fontWeight={600}
-                                fontSize={'md'}
-                            >
-                                Now go ahead to the Tutorials section to get the app live within 5 minutes.
-                            </Text>
-
-
-
-
-                        </Box>
-                    </Container>
-                </Box>
-
-                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} minH='100vh' pl={80}>
                     <Box bg='hsl(240 10% 3.9%)' height={'full'}>
                         <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
                             <Box bg="hsl(240 10% 3.9%)" pb={10}>
 
                                 <Text
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='hsl(240 5% 64.9%)'
                                     fontWeight={400}
                                     fontSize={'sm'}
@@ -1024,9 +711,9 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
 
 
                                 <Text
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='#fff'
-                                    fontSize={'4xl'}
+                                    fontSize={'2xl'}
                                     fontWeight={700}
                                     mt='2'
                                 >
@@ -1034,7 +721,7 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
                                 </Text>
 
                                 <Text
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.200'
                                     fontWeight={600}
                                     maxW={'700px'}
@@ -1045,96 +732,224 @@ const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webh
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   1. Create a new account on Stripe and activate payments (boring, I know.. see you in a bit!)
+                                    1. Create a new account on Stripe and activate payments (boring, I know.. see you in a bit!)
                                 </Text>
 
-                                
-                                <Text mt={5}
-                                    fontFamily={'Geist Sans'}
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                   2. In your [Settings], [Public Details], add your website URL.
-                                </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   3. In your [Settings], [Branding], add your logo & colors
+                                    2. In your [Settings], [Public Details], add your website URL.
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   4. In your [Settings], [Webhooks], add a new endpoint for the webhook URL.
+                                    3. In your [Settings], [Branding], add your logo & colors
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   5. In the searchbox, type 'rules' and click {' [FraudPrevention > Rules] '}, <br />
-                                   make sure the first 3DS rule is enabled. I also turn on the second one <br />
-                                   (recommended by Stripe). Make sure to block payments if CVC fails (check below)
+                                    4. In your [Settings], [Webhooks], add a new endpoint for the webhook URL.
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   6. Turn ON Test Mode.
+                                    5. In the searchbox, type 'rules' and click {' [FraudPrevention > Rules] '}, <br />
+                                    make sure the first 3DS rule is enabled. I also turn on the second one <br />
+                                    (recommended by Stripe). Make sure to block payments if CVC fails (check below)
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   7. Create new product and copy the price ID in the <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>Pricing.js</Code> file.
+                                    6. Turn ON Test Mode.
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   8. In your [Developers], copy your public & pricate keys and add them to your .env file.
+                                    7. Create new product and copy the price ID in the <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>Pricing.js</Code> file.
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily={'Geist Sans'}
+                                    fontFamily="Epilogue"
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                   9. To set up the webook locally, follow the steps in [Developers], <br />
-                                   [Webhook], [Test in local env], After login to STRIPE CLI, use this <br />
-                                   command to forward webhook event to our API:
+                                    8. In your [Developers], copy your public & pricate keys and add them to your .env file.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    9. To set up the webook locally, follow the steps in [Developers], <br />
+                                    [Webhook], [Test in local env], After login to STRIPE CLI, use this <br />
+                                    command to forward webhook event to our API:
                                 </Text>
 
                                 <CodeBlock code={stripeWebhook} />
 
 
+                            </Box>
+                        </Box>
+                    </Box>
+                    </Container>
+                </Box>
+
+                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} minH='100vh' pl={80}>
+                    <Box bg='hsl(240 10% 3.9%)' height={'full'}>
+                        <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
+                            <Box bg="hsl(240 10% 3.9%)" pb={10}>
+
+                                <Text
+                                    fontFamily="Epilogue"
+                                    color='hsl(240 5% 64.9%)'
+                                    fontWeight={400}
+                                    fontSize={'sm'}
+                                    mt={24}
+                                >
+                                    Docs {' > '} Features {' > '} Payments
+                                </Text>
 
 
+                                <Text
+                                    fontFamily="Epilogue"
+                                    color='#fff'
+                                    fontSize={'4xl'}
+                                    fontWeight={700}
+                                    mt='2'
+                                >
+                                    Payment integrations
+                                </Text>
+
+                                <Text
+                                    fontFamily="Epilogue"
+                                    color='gray.200'
+                                    fontWeight={600}
+                                    maxW={'700px'}
+                                    fontSize={'xl'}
+                                    mt={5}
+                                >
+                                    Setup
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    1. Create a new account on Stripe and activate payments (boring, I know.. see you in a bit!)
+                                </Text>
+
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    2. In your [Settings], [Public Details], add your website URL.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    3. In your [Settings], [Branding], add your logo & colors
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    4. In your [Settings], [Webhooks], add a new endpoint for the webhook URL.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    5. In the searchbox, type 'rules' and click {' [FraudPrevention > Rules] '}, <br />
+                                    make sure the first 3DS rule is enabled. I also turn on the second one <br />
+                                    (recommended by Stripe). Make sure to block payments if CVC fails (check below)
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    6. Turn ON Test Mode.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    7. Create new product and copy the price ID in the <Code bg='transparent' border='1px solid rgb(255,255,255,0.3)' color='gray.200' px={3} rounded='lg'>Pricing.js</Code> file.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    8. In your [Developers], copy your public & pricate keys and add them to your .env file.
+                                </Text>
+
+                                <Text mt={5}
+                                    fontFamily="Epilogue"
+                                    color='gray.100'
+                                    fontWeight={400}
+                                    fontSize={'md'}
+                                >
+                                    9. To set up the webook locally, follow the steps in [Developers], <br />
+                                    [Webhook], [Test in local env], After login to STRIPE CLI, use this <br />
+                                    command to forward webhook event to our API:
+                                </Text>
+
+                                <CodeBlock code={stripeWebhook} />
 
 
                             </Box>

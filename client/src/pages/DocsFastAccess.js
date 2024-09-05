@@ -51,13 +51,15 @@ import {
 
 } from '@chakra-ui/react';
 import usermodel from '../images/usermodel.png';
+import hero from '../images/fastaccess.png';
 
 import { FaDiscord, FaClipboard, FaBars, FaRegCheckCircle } from 'react-icons/fa';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Docs from './Docs';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../auth/authContext';
 import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
-
-
 
 const CodeBlock = ({ code }) => {
     const { hasCopied, onCopy } = useClipboard(code);
@@ -94,9 +96,48 @@ const CodeBlock = ({ code }) => {
     );
 };
 
+const CodePreview = ({ code }) => {
+    const { hasCopied, onCopy } = useClipboard(code);
+    return (
+        <Box position="relative" color="white" p="4" borderRadius="md" boxShadow="md" maxW="container.md">
+            <Code display="block" whiteSpace="pre" overflowX="auto" p="6" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                {code}
+            </Code>
+            <IconButton
+                aria-label="Copy to clipboard"
+                icon={<FaClipboard />}
+                onClick={onCopy}
+                position="absolute"
+                top="8"
+                right="8"
+                size="xs"
+                color='white'
+                bg="transparent"
+                _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+            />
+            {hasCopied && (
+                <IconButton
+                    icon={<FaRegCheckCircle />}
+                    position="absolute"
+                    top="8"
+                    right="8"
+                    size="xs"
+                    color='white'
+                    bg="transparent"
+                    _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+                />
+            )}
+        </Box>
+    );
+};
 
-function DocsDatabase() {
+function DocsHero() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, loading, logout, hasAccess } = useAuth();
+    const [activeButton, setActiveButton] = useState('button1');
+
+
+
 
     const code = `git clone https://github.com/dijarsmakolli/ship-jitt.git [YOUR_APP_NAME]
 cd [YOUR_APP_NAME]
@@ -424,13 +465,95 @@ const handleStarterPlan = async () => {
 ... then the logic frontend return( ) to handle the links which route in the link of the stripe to pay the plan.
 `;
 
+    const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webhook`;
+
+    const navbarCode = `
+    import React from 'react';
+    import { Box, Text, SimpleGrid, Image } from '@chakra-ui/react';
+     
+    const FastAccess = () => {
+        return (
+            <Box>
+                <Text
+                    textAlign={'center'}
+                    color='white'
+                    fontFamily={'Epilogue'}
+                    fontSize={{ base: '2xl', md: '5xl' }}
+                    fontWeight={'600'}
+                >
+                    Fast access to essential tools
+                </Text>
+     
+                <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} mt={10}>
+                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
+                        <Image src="https://cdn-icons-png.flaticon.com/128/10473/10473692.png" width='50px' height='50px' />
+     
+                        <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Geist Sans" fontWeight={500}>Seamless payments</Text>
+     
+                        <Text mt={2} color='hsl(240 5% 64.9%)' fontSize={'md'} fontFamily={'Geist Sans'} fontWeight={500}>
+                             Effortesly manage transactions with our seamless Stripe integration,
+                            ensuring secure and fast payment processing for your customers.
+                        </Text>
+     
+                    </Box>
+     
+                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
+                        <Image src="https://cdn-icons-png.flaticon.com/128/10484/10484291.png" width='50px' height='50px' />
+     
+                        <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Geist Sans" fontWeight={500}>Custom authentication</Text>
+     
+                        <Text mt={2} color='hsl(240 5% 64.9%)' fontSize={'md'} fontFamily={'Geist Sans'} fontWeight={500}>
+                             Enhance your app security with our custom authentication solutions,
+                            designed to provide robust and reliable user verification.
+                        </Text>
+     
+     
+                    </Box>
+     
+                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
+                        <Image src="https://cdn-icons-png.flaticon.com/128/10490/10490223.png" width='50px' height='50px' />
+     
+                        <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Geist Sans" fontWeight={500}>Automated emails</Text>
+     
+                        <Text mt={2} color='hsl(240 5% 64.9%)' fontSize={'md'} fontFamily={'Geist Sans'} fontWeight={500}>
+                            Streamline your communication with our Mailgun integration,
+                            offering powerful email automation and management capabilites.
+                        </Text>
+     
+     
+                    </Box>
+     
+                    <Box bg="rgba(0,0,0,.5)" p={9} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
+                        <Image src="https://cdn-icons-png.flaticon.com/128/8488/8488859.png" width='50px' height='50px' />
+     
+                        <Text mt={2} color='white' fontSize={'2xl'} fontFamily="Geist Sans" fontWeight={500}>Chakra UI components</Text>
+     
+                        <Text mt={2} color='hsl(240 5% 64.9%)' fontSize={'md'} fontFamily={'Geist Sans'} fontWeight={500}>
+                             Develop and customize your application with 20+ ready-to-use components
+                            from Chakra UI, ensuring a consistent and modern design.
+                        </Text>
+     
+     
+                    </Box>
+     
+     
+     
+                </SimpleGrid>
+     
+            </Box>
+        );
+    };
+     
+    export default FastAccess;
+    `;
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
 
             <Helmet>
-                <title>Docs | Database | ShipJitt</title>
+                <title>Docs | FastAccess | ShipJitt</title>
             </Helmet>
+
 
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
@@ -703,7 +826,7 @@ const handleStarterPlan = async () => {
                                     fontSize={'sm'}
                                     mt={24}
                                 >
-                                    Docs {' > '} Features {' > '} Database
+                                    Docs {' > '} Components {' > '} Fast Access
                                 </Text>
 
 
@@ -714,34 +837,7 @@ const handleStarterPlan = async () => {
                                     fontWeight={700}
                                     mt='2'
                                 >
-                                    Database
-                                </Text>
-
-
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Let's create the first model for the database using PostgreSQL.
-
-                                    <br />
-
-                                    You can use MySQL, SQLITE, or any other database you prefer.
-                                </Text>
-
-
-
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='gray.200'
-                                    fontWeight={600}
-                                    maxW={'700px'}
-                                    fontSize={'xl'}
-                                    mt={5}
-                                >
-                                    Setup
+                                    Fast Access Component
                                 </Text>
 
                                 <Text mt={5}
@@ -750,32 +846,31 @@ const handleStarterPlan = async () => {
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    I have been used postgreSQL for the database, you can use any database you prefer.
-
-                                    <br />
-
-
-                                    And for the models, i have been used the database first but you can use the code first approach.
-
-
-
-
+                                    The fast access component provides a quick overview of the essential tools and features available in the Ship-jitt boilerplate.
                                 </Text>
-
-                                <Text mt={10}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Make sure to have the user model in database like this:
-                                </Text>
-
 
                                 <Box mt={5}>
-                                    <Image src={usermodel} rounded='lg' width='80%' />
+                                    <Button onClick={() => setActiveButton('button1')} mr={3} size='sm'>
+                                        Preview
+                                    </Button>
+                                    {user && hasAccess() ?
+                                        <Button onClick={() => setActiveButton('button2')} size='sm'>
+                                            Code
+                                        </Button>
+                                        : <Button as='a' href='/' size='sm'>Get Code</Button>}
                                 </Box>
 
+                                {activeButton === 'button1' && (
+                                    <Box position="relative" color="white" p="4" borderRadius="md">
+                                        <Code display="block" whiteSpace="pre" width='90%' p={6} overflowX="auto" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                                            <Image src={hero} alt="Navbar" />
+                                        </Code>
+                                    </Box>
+                                )}
+
+                                {activeButton === 'button2' && (
+                                    <CodeBlock code={navbarCode} />
+                                )}
 
                             </Box>
                         </Box>
@@ -783,7 +878,7 @@ const handleStarterPlan = async () => {
                     </Container>
                 </Box>
 
-                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} pl={80}>
+                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} minH='100vh' pl={80}>
                     <Box bg='hsl(240 10% 3.9%)' height={'full'}>
                         <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
                             <Box bg="hsl(240 10% 3.9%)" pb={10}>
@@ -795,7 +890,7 @@ const handleStarterPlan = async () => {
                                     fontSize={'sm'}
                                     mt={24}
                                 >
-                                    Docs {' > '} Features {' > '} Database
+                                    Docs {' > '} Components {' > '} Fast Access
                                 </Text>
 
 
@@ -806,34 +901,7 @@ const handleStarterPlan = async () => {
                                     fontWeight={700}
                                     mt='2'
                                 >
-                                    Database
-                                </Text>
-
-
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Let's create the first model for the database using PostgreSQL.
-
-                                    <br />
-
-                                    You can use MySQL, SQLITE, or any other database you prefer.
-                                </Text>
-
-
-
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='gray.200'
-                                    fontWeight={600}
-                                    maxW={'700px'}
-                                    fontSize={'xl'}
-                                    mt={5}
-                                >
-                                    Setup
+                                    Fast Access Component
                                 </Text>
 
                                 <Text mt={5}
@@ -842,32 +910,31 @@ const handleStarterPlan = async () => {
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    I have been used postgreSQL for the database, you can use any database you prefer.
-
-                                    <br />
-
-
-                                    And for the models, i have been used the database first but you can use the code first approach.
-
-
-
-
+                                    The fast access component provides a quick overview of the essential tools and features available in the Ship-jitt boilerplate.
                                 </Text>
-
-                                <Text mt={10}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Make sure to have the user model in database like this:
-                                </Text>
-
 
                                 <Box mt={5}>
-                                    <Image src={usermodel} rounded='lg' width='80%' />
+                                    <Button onClick={() => setActiveButton('button1')} mr={3} size='sm'>
+                                        Preview
+                                    </Button>
+                                    {user && hasAccess() ?
+                                        <Button onClick={() => setActiveButton('button2')} size='sm'>
+                                            Code
+                                        </Button>
+                                        : <Button as='a' href='/' size='sm'>Get Code</Button>}
                                 </Box>
 
+                                {activeButton === 'button1' && (
+                                    <Box position="relative" color="white" p="4" borderRadius="md">
+                                        <Code display="block" whiteSpace="pre" width='90%' p={6} overflowX="auto" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                                            <Image src={hero} alt="Navbar" />
+                                        </Code>
+                                    </Box>
+                                )}
+
+                                {activeButton === 'button2' && (
+                                    <CodeBlock code={navbarCode} />
+                                )}
 
                             </Box>
                         </Box>
@@ -883,4 +950,4 @@ const handleStarterPlan = async () => {
 
 
 
-export default DocsDatabase;
+export default DocsHero;

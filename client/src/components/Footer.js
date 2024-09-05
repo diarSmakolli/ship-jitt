@@ -36,14 +36,15 @@ export default function Footer() {
       color={'gray.300'}
       py={10}
       >
-      <Container as={Stack} maxW={'6xl'} py={10}>
+      <Container as={Stack} maxW={'6xl'} py={{base: 0, md: 10}}>
         <SimpleGrid
           templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr 1fr' }}
           spacing={8}>
           <Stack spacing={6}>
-            <Box>
+            
+          <Box>
             <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+            textAlign={{ base: 'left', md: 'left' }}
             fontFamily={'Bricolage Grotesque'} 
             color='gray.50'
             fontSize={'3xl'}
@@ -52,8 +53,7 @@ export default function Footer() {
             Ship jitt
           </Text>
             </Box>
- 
-           
+            
  
             <Text fontSize={'sm'}>
               © {getCurrentYear()} ShipJitt. All rights reserved

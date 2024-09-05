@@ -8,7 +8,7 @@ const FastAccess = () => {
                 textAlign={'center'}
                 color='white'
                 fontFamily={'Epilogue'}
-                fontSize={{ base: 'xl', md: '5xl' }}
+                fontSize={{ base: '2xl', md: '5xl' }}
                 fontWeight={'600'}
             >
                 Fast access to essential tools

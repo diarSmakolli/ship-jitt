@@ -11,7 +11,7 @@ function TOS() {
 
             <Container maxW='2xl'>
 
-                <Box py={10}>
+                <Box py={14}>
 
                     <Button as='a' href='/' size='sm' fontFamily={'Epilogue'}>
                         Back

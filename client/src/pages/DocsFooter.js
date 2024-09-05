@@ -51,13 +51,15 @@ import {
 
 } from '@chakra-ui/react';
 import usermodel from '../images/usermodel.png';
+import hero from '../images/footer.png';
 
 import { FaDiscord, FaClipboard, FaBars, FaRegCheckCircle } from 'react-icons/fa';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Docs from './Docs';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../auth/authContext';
 import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
-
-
 
 const CodeBlock = ({ code }) => {
     const { hasCopied, onCopy } = useClipboard(code);
@@ -94,9 +96,48 @@ const CodeBlock = ({ code }) => {
     );
 };
 
+const CodePreview = ({ code }) => {
+    const { hasCopied, onCopy } = useClipboard(code);
+    return (
+        <Box position="relative" color="white" p="4" borderRadius="md" boxShadow="md" maxW="container.md">
+            <Code display="block" whiteSpace="pre" overflowX="auto" p="6" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                {code}
+            </Code>
+            <IconButton
+                aria-label="Copy to clipboard"
+                icon={<FaClipboard />}
+                onClick={onCopy}
+                position="absolute"
+                top="8"
+                right="8"
+                size="xs"
+                color='white'
+                bg="transparent"
+                _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+            />
+            {hasCopied && (
+                <IconButton
+                    icon={<FaRegCheckCircle />}
+                    position="absolute"
+                    top="8"
+                    right="8"
+                    size="xs"
+                    color='white'
+                    bg="transparent"
+                    _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+                />
+            )}
+        </Box>
+    );
+};
 
-function DocsDatabase() {
+function DocsHero() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, loading, logout, hasAccess } = useAuth();
+    const [activeButton, setActiveButton] = useState('button1');
+
+
+
 
     const code = `git clone https://github.com/dijarsmakolli/ship-jitt.git [YOUR_APP_NAME]
 cd [YOUR_APP_NAME]
@@ -424,13 +465,109 @@ const handleStarterPlan = async () => {
 ... then the logic frontend return( ) to handle the links which route in the link of the stripe to pay the plan.
 `;
 
+    const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webhook`;
+
+    const navbarCode = `
+    import { React } from 'react';
+ 
+import {
+  Box,
+  Container,
+  Link,
+  SimpleGrid,
+  Stack,
+  Text,
+  Image,
+  Button,
+  useBreakpointValue
+} from '@chakra-ui/react';
+
+
+ 
+const ListHeader = ({children}) => {
+  return (
+    <Text fontWeight={'500'} fontSize={'lg'} mb={2}>
+      {children}
+    </Text>
+  );
+};
+ 
+export default function Footer() {
+ 
+    const getCurrentYear = () => {
+        let date = new Date();
+        let currentYear = date.getFullYear();
+        return currentYear;
+    }
+ 
+  return (
+    <Box
+      bg={'transparent'}
+      color={'gray.300'}
+      py={10}
+      >
+      <Container as={Stack} maxW={'6xl'} py={{base: 0, md: 10}}>
+        <SimpleGrid
+          templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 1fr 1fr' }}
+          spacing={8}>
+          <Stack spacing={6}>
+            
+          <Box>
+            <Text
+            textAlign={{ base: 'left', md: 'left' }}
+            fontFamily={'Bricolage Grotesque'} 
+            color='gray.50'
+            fontSize={'3xl'}
+            fontWeight={'500'}
+            >
+            Ship jitt
+          </Text>
+            </Box>
+            
+ 
+            <Text fontSize={'sm'}>
+              © {getCurrentYear()} ShipJitt. All rights reserved
+            </Text>
+
+            <Text fontSize={'sm'}>
+              Created with ❤️ by Dijar
+            </Text>
+
+          </Stack>
+          <Stack align={'flex-start'}>
+            <ListHeader>LINKS</ListHeader>
+            <Link href={'#'}>Pricing</Link>
+            <Link href={'/docs'}>Documentation</Link>
+            <Link href={'/contact-us'}>Customer Support</Link>
+          </Stack>
+          <Stack align={'flex-start'}>
+            <ListHeader>LEGAL</ListHeader>
+            <Link href={'/tos'}>Terms & conditions</Link>
+            <Link href={'/privacy-policy'}>Privacy policy</Link>
+            <Link href={'/license'}>Licenses</Link>
+          </Stack>
+          <Stack align={'flex-start'}>
+            <ListHeader>MORE</ListHeader>
+            <Link href={'https://github.com/diarSmakolli'}>Github</Link>
+            <Link href={'https://linkedin.com/in/dijarsmakolli'}>Linked in</Link>
+            <Link href={'https://x.com/shipjitt'}>X</Link>
+          </Stack>
+        </SimpleGrid>
+      </Container>
+    </Box>
+  );
+}
+    `;
+
+
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
 
             <Helmet>
-                <title>Docs | Database | ShipJitt</title>
+                <title>Docs | Hero | ShipJitt</title>
             </Helmet>
+
 
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
@@ -692,182 +829,126 @@ const handleStarterPlan = async () => {
                 <Box display={{ base: 'flex', md: 'none' }} bg='#000' width={'100%'} py={10}>
 
                     <Container maxW={'container.md'}>
-                    <Box bg='hsl(240 10% 3.9%)' height={'full'}>
-                        <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
-                            <Box bg="hsl(240 10% 3.9%)" pb={10}>
+                        <Box bg='hsl(240 10% 3.9%)' height={'full'}>
+                            <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
+                                <Box bg="hsl(240 10% 3.9%)" pb={10}>
 
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='hsl(240 5% 64.9%)'
-                                    fontWeight={400}
-                                    fontSize={'sm'}
-                                    mt={24}
-                                >
-                                    Docs {' > '} Features {' > '} Database
-                                </Text>
-
-
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='#fff'
-                                    fontSize={'2xl'}
-                                    fontWeight={700}
-                                    mt='2'
-                                >
-                                    Database
-                                </Text>
+                                    <Text
+                                        fontFamily={'Epilogue'}
+                                        color='hsl(240 5% 64.9%)'
+                                        fontWeight={400}
+                                        fontSize={'sm'}
+                                        mt={24}
+                                    >
+                                        Docs {' > '} Components {' > '} Footer
+                                    </Text>
 
 
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Let's create the first model for the database using PostgreSQL.
+                                    <Text
+                                        fontFamily={'Epilogue'}
+                                        color='#fff'
+                                        fontSize={'2xl'}
+                                        fontWeight={700}
+                                        mt='2'
+                                    >
+                                        Footer Component
+                                    </Text>
 
-                                    <br />
+                                    <Text mt={5}
+                                        fontFamily={'Epilogue'}
+                                        color='gray.100'
+                                        fontWeight={400}
+                                        fontSize={'md'}
+                                    >
+                                        The Footer component is the last thing users see when they visit your site. It's a great way to provide contact information, links to social media, and other important information.
+                                    </Text>
 
-                                    You can use MySQL, SQLITE, or any other database you prefer.
-                                </Text>
+                                    <Box mt={5}>
+                                        <Button onClick={() => setActiveButton('button1')} mr={3} size='sm'>
+                                            Preview
+                                        </Button>
+                                        {user && hasAccess() ?
+                                            <Button onClick={() => setActiveButton('button2')} size='sm'>
+                                                Code
+                                            </Button>
+                                            : <Button as='a' href='/' size='sm'>Get Code</Button>}
+                                    </Box>
 
+                                    {activeButton === 'button1' && (
+                                        <Box position="relative" color="white" p="4" borderRadius="md">
+                                            <Code display="block" whiteSpace="pre" width='90%' p={6} overflowX="auto" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                                                <Image src={hero} alt="Navbar" />
+                                            </Code>
+                                        </Box>
+                                    )}
 
+                                    {activeButton === 'button2' && (
+                                        <CodeBlock code={navbarCode} />
+                                    )}
 
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='gray.200'
-                                    fontWeight={600}
-                                    maxW={'700px'}
-                                    fontSize={'xl'}
-                                    mt={5}
-                                >
-                                    Setup
-                                </Text>
-
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    I have been used postgreSQL for the database, you can use any database you prefer.
-
-                                    <br />
-
-
-                                    And for the models, i have been used the database first but you can use the code first approach.
-
-
-
-
-                                </Text>
-
-                                <Text mt={10}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Make sure to have the user model in database like this:
-                                </Text>
-
-
-                                <Box mt={5}>
-                                    <Image src={usermodel} rounded='lg' width='80%' />
                                 </Box>
-
-
                             </Box>
                         </Box>
-                    </Box>
                     </Container>
                 </Box>
 
-                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} pl={80}>
+                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} minH='100vh' pl={80}>
                     <Box bg='hsl(240 10% 3.9%)' height={'full'}>
                         <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
                             <Box bg="hsl(240 10% 3.9%)" pb={10}>
 
                                 <Text
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='hsl(240 5% 64.9%)'
                                     fontWeight={400}
                                     fontSize={'sm'}
                                     mt={24}
                                 >
-                                    Docs {' > '} Features {' > '} Database
+                                    Docs {' > '} Components {' > '} Footer
                                 </Text>
 
 
                                 <Text
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='#fff'
                                     fontSize={'4xl'}
                                     fontWeight={700}
                                     mt='2'
                                 >
-                                    Database
-                                </Text>
-
-
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Let's create the first model for the database using PostgreSQL.
-
-                                    <br />
-
-                                    You can use MySQL, SQLITE, or any other database you prefer.
-                                </Text>
-
-
-
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='gray.200'
-                                    fontWeight={600}
-                                    maxW={'700px'}
-                                    fontSize={'xl'}
-                                    mt={5}
-                                >
-                                    Setup
+                                    Footer Component
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    I have been used postgreSQL for the database, you can use any database you prefer.
-
-                                    <br />
-
-
-                                    And for the models, i have been used the database first but you can use the code first approach.
-
-
-
-
+                                    The Footer component is the last thing users see when they visit your site. It's a great way to provide contact information, links to social media, and other important information.
                                 </Text>
-
-                                <Text mt={10}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Make sure to have the user model in database like this:
-                                </Text>
-
 
                                 <Box mt={5}>
-                                    <Image src={usermodel} rounded='lg' width='80%' />
+                                    <Button onClick={() => setActiveButton('button1')} mr={3} size='sm'>
+                                        Preview
+                                    </Button>
+                                    {user && hasAccess() ?
+                                        <Button onClick={() => setActiveButton('button2')} size='sm'>
+                                            Code
+                                        </Button>
+                                        : <Button as='a' href='/' size='sm'>Get Code</Button>}
                                 </Box>
 
+                                {activeButton === 'button1' && (
+                                    <Box position="relative" color="white" p="4" borderRadius="md">
+                                        <Code display="block" whiteSpace="pre" width='90%' p={6} overflowX="auto" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                                            <Image src={hero} alt="Navbar" />
+                                        </Code>
+                                    </Box>
+                                )}
+
+                                {activeButton === 'button2' && (
+                                    <CodeBlock code={navbarCode} />
+                                )}
 
                             </Box>
                         </Box>
@@ -883,4 +964,4 @@ const handleStarterPlan = async () => {
 
 
 
-export default DocsDatabase;
+export default DocsHero;

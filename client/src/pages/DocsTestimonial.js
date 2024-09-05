@@ -51,13 +51,15 @@ import {
 
 } from '@chakra-ui/react';
 import usermodel from '../images/usermodel.png';
+import hero from '../images/testimonial.png';
 
 import { FaDiscord, FaClipboard, FaBars, FaRegCheckCircle } from 'react-icons/fa';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Docs from './Docs';
+import Navbar from '../components/Navbar';
+import { useAuth } from '../auth/authContext';
 import { Helmet } from 'react-helmet-async';
 const { useState } = require('react');
-
-
 
 const CodeBlock = ({ code }) => {
     const { hasCopied, onCopy } = useClipboard(code);
@@ -94,9 +96,48 @@ const CodeBlock = ({ code }) => {
     );
 };
 
+const CodePreview = ({ code }) => {
+    const { hasCopied, onCopy } = useClipboard(code);
+    return (
+        <Box position="relative" color="white" p="4" borderRadius="md" boxShadow="md" maxW="container.md">
+            <Code display="block" whiteSpace="pre" overflowX="auto" p="6" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                {code}
+            </Code>
+            <IconButton
+                aria-label="Copy to clipboard"
+                icon={<FaClipboard />}
+                onClick={onCopy}
+                position="absolute"
+                top="8"
+                right="8"
+                size="xs"
+                color='white'
+                bg="transparent"
+                _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+            />
+            {hasCopied && (
+                <IconButton
+                    icon={<FaRegCheckCircle />}
+                    position="absolute"
+                    top="8"
+                    right="8"
+                    size="xs"
+                    color='white'
+                    bg="transparent"
+                    _hover={{ bg: 'hsl(240 3.7% 15.9%)' }}
+                />
+            )}
+        </Box>
+    );
+};
 
-function DocsDatabase() {
+function DocsHero() {
     const [isOpen, setIsOpen] = useState(false);
+    const { user, loading, logout, hasAccess } = useAuth();
+    const [activeButton, setActiveButton] = useState('button1');
+
+
+
 
     const code = `git clone https://github.com/dijarsmakolli/ship-jitt.git [YOUR_APP_NAME]
 cd [YOUR_APP_NAME]
@@ -424,13 +465,343 @@ const handleStarterPlan = async () => {
 ... then the logic frontend return( ) to handle the links which route in the link of the stripe to pay the plan.
 `;
 
+    const stripeWebhook = `stripe listen --forward-to localhost:6099/api/stripe/webhook`;
+
+    const navbarCode = `
+    import {
+        Box,
+        Image,
+        VStack,
+        HStack,
+        Text,
+        SimpleGrid,
+    } from '@chakra-ui/react';
+    
+    export default function Testimonials() {
+        return (
+            <Box>
+    
+    
+                <Text
+                    textAlign={'center'}
+                    fontSize={{base: '2xl', md: '5xl'}}
+                    color='white'
+                    fontFamily={'Epilogue'}
+                    fontWeight={500}
+                >
+                    Trusted by the world's best.
+                </Text>
+    
+    
+    
+                <HStack width='100%' rounded='2xl' mt={10} display={{ base: 'none', md: 'flex' }}>
+                    <VStack width='33.33%' height={'auto'}>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={10} bborderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                    </VStack>
+    
+                    <VStack width='33.33%' height={'auto'} mt={20}>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                    </VStack>
+    
+                    <VStack width='33.33%' height={'auto'}>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={10} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <HStack>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+                            </HStack>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                    </VStack>
+                </HStack>
+    
+    
+    
+                {/* // mobile */}
+                <Box display={{ base: 'block', md: 'none' }} mt={10}>
+                    <SimpleGrid columns={1} spacing={10} >
+    
+                        <Box p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <Box>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </Box>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <Box>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </Box>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <Box>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </Box>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <Box>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </Box>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <Box>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </Box>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+                        <Box p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)' bg='rgb(0,0,0,0.5)' rounded='xl'>
+                            <Box>
+                                <Image src='https://pbs.twimg.com/profile_images/1620476753398452224/fcozbw1J_400x400.jpg'
+                                    rounded={'full'} width='40px' height='40px'
+                                />
+    
+                                <Text color='gray.200' fontFamily={'Poppins'}>
+                                    Dev Ed - Software Developer
+                                </Text>
+    
+    
+                            </Box>
+    
+                            <Text mt={5} color='gray.300' fontFamily={'Poppins'}>
+                                Been using daisyUI for a while and I must say...such a fun addon for Tailwind CSS, well done 🔥
+                            </Text>
+                        </Box>
+    
+    
+    
+    
+                    </SimpleGrid>
+                </Box>
+    
+            </Box>
+        )
+    }    
+    `;
+
+
 
     return (
         <Flex direction="column" bg="hsl(240 10% 3.9%)">
 
             <Helmet>
-                <title>Docs | Database | ShipJitt</title>
+                <title>Docs | Hero | ShipJitt</title>
             </Helmet>
+
 
             <Flex flex="1">
                 <Box width={{ base: '100%', md: '300px' }} color="white" padding="8" maxH={'100vh'} bg='hsl(240 10% 3.9%)' pos={'fixed'} overflowY={'scroll'} zIndex={'10'} className='scroller'>
@@ -697,85 +1068,57 @@ const handleStarterPlan = async () => {
                             <Box bg="hsl(240 10% 3.9%)" pb={10}>
 
                                 <Text
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='hsl(240 5% 64.9%)'
                                     fontWeight={400}
                                     fontSize={'sm'}
                                     mt={24}
                                 >
-                                    Docs {' > '} Features {' > '} Database
+                                    Docs {' > '} Components {' > '} Testimonial
                                 </Text>
 
 
                                 <Text
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='#fff'
                                     fontSize={'2xl'}
                                     fontWeight={700}
                                     mt='2'
                                 >
-                                    Database
-                                </Text>
-
-
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Let's create the first model for the database using PostgreSQL.
-
-                                    <br />
-
-                                    You can use MySQL, SQLITE, or any other database you prefer.
-                                </Text>
-
-
-
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='gray.200'
-                                    fontWeight={600}
-                                    maxW={'700px'}
-                                    fontSize={'xl'}
-                                    mt={5}
-                                >
-                                    Setup
+                                    Testimonial Component
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    I have been used postgreSQL for the database, you can use any database you prefer.
-
-                                    <br />
-
-
-                                    And for the models, i have been used the database first but you can use the code first approach.
-
-
-
-
+                                    The Testimonial component is used to display user reviews or feedback on your website.
                                 </Text>
-
-                                <Text mt={10}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Make sure to have the user model in database like this:
-                                </Text>
-
 
                                 <Box mt={5}>
-                                    <Image src={usermodel} rounded='lg' width='80%' />
+                                    <Button onClick={() => setActiveButton('button1')} mr={3} size='sm'>
+                                        Preview
+                                    </Button>
+                                    {user && hasAccess() ?
+                                        <Button onClick={() => setActiveButton('button2')} size='sm'>
+                                            Code
+                                        </Button>
+                                        : <Button as='a' href='/' size='sm'>Get Code</Button>}
                                 </Box>
 
+                                {activeButton === 'button1' && (
+                                    <Box position="relative" color="white" p="4" borderRadius="md">
+                                        <Code display="block" whiteSpace="pre" width='90%' p={6} overflowX="auto" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                                            <Image src={hero} alt="Navbar" />
+                                        </Code>
+                                    </Box>
+                                )}
+
+                                {activeButton === 'button2' && (
+                                    <CodeBlock code={navbarCode} />
+                                )}
 
                             </Box>
                         </Box>
@@ -783,91 +1126,63 @@ const handleStarterPlan = async () => {
                     </Container>
                 </Box>
 
-                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} pl={80}>
+                <Box display={{ base: 'none', md: 'flex' }} bg='hsl(240 10% 3.9%)' width={'100%'} minH='100vh' pl={80}>
                     <Box bg='hsl(240 10% 3.9%)' height={'full'}>
                         <Box rounded='xl' bg='hsl(240 10% 3.9%)'>
                             <Box bg="hsl(240 10% 3.9%)" pb={10}>
 
                                 <Text
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='hsl(240 5% 64.9%)'
                                     fontWeight={400}
                                     fontSize={'sm'}
                                     mt={24}
                                 >
-                                    Docs {' > '} Features {' > '} Database
+                                    Docs {' > '} Components {' > '} Testimonial
                                 </Text>
 
 
                                 <Text
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='#fff'
                                     fontSize={'4xl'}
                                     fontWeight={700}
                                     mt='2'
                                 >
-                                    Database
-                                </Text>
-
-
-                                <Text mt={5}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Let's create the first model for the database using PostgreSQL.
-
-                                    <br />
-
-                                    You can use MySQL, SQLITE, or any other database you prefer.
-                                </Text>
-
-
-
-                                <Text
-                                    fontFamily="Epilogue"
-                                    color='gray.200'
-                                    fontWeight={600}
-                                    maxW={'700px'}
-                                    fontSize={'xl'}
-                                    mt={5}
-                                >
-                                    Setup
+                                    Testimonial Component
                                 </Text>
 
                                 <Text mt={5}
-                                    fontFamily="Epilogue"
+                                    fontFamily={'Epilogue'}
                                     color='gray.100'
                                     fontWeight={400}
                                     fontSize={'md'}
                                 >
-                                    I have been used postgreSQL for the database, you can use any database you prefer.
-
-                                    <br />
-
-
-                                    And for the models, i have been used the database first but you can use the code first approach.
-
-
-
-
+                                    The Testimonial component is used to display user reviews or feedback on your website.
                                 </Text>
-
-                                <Text mt={10}
-                                    fontFamily="Epilogue"
-                                    color='gray.100'
-                                    fontWeight={400}
-                                    fontSize={'md'}
-                                >
-                                    Make sure to have the user model in database like this:
-                                </Text>
-
 
                                 <Box mt={5}>
-                                    <Image src={usermodel} rounded='lg' width='80%' />
+                                    <Button onClick={() => setActiveButton('button1')} mr={3} size='sm'>
+                                        Preview
+                                    </Button>
+                                    {user && hasAccess() ?
+                                        <Button onClick={() => setActiveButton('button2')} size='sm'>
+                                            Code
+                                        </Button>
+                                        : <Button as='a' href='/' size='sm'>Get Code</Button>}
                                 </Box>
 
+                                {activeButton === 'button1' && (
+                                    <Box position="relative" color="white" p="4" borderRadius="md">
+                                        <Code display="block" whiteSpace="pre" width='90%' p={6} overflowX="auto" bg="rgb(24 24 27)" border='1px solid hsl(240 3.7% 15.9%)' borderRadius="md" color='gray.300'>
+                                            <Image src={hero} alt="Navbar" />
+                                        </Code>
+                                    </Box>
+                                )}
+
+                                {activeButton === 'button2' && (
+                                    <CodeBlock code={navbarCode} />
+                                )}
 
                             </Box>
                         </Box>
@@ -883,4 +1198,4 @@ const handleStarterPlan = async () => {
 
 
 
-export default DocsDatabase;
+export default DocsHero;

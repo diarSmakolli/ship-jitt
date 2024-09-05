@@ -24,7 +24,7 @@ function VerifyEmail() {
                         token: token,
                     },
                     data: {
-                        timeZone: 'Europe/Belgrade', // replace with your time zone
+                        timeZone: 'Europe/Belgrade',
                     },
                 });
 
@@ -70,7 +70,7 @@ function VerifyEmail() {
             <Helmet>
                 <title>Verify Email | ShipJitt</title>
             </Helmet>
-            <Box alignItems={'center'} justifyContent={'center'}>
+            <Box alignItems={'center'} justifyContent={'center'} p={6}>
 
 
 
@@ -96,7 +96,7 @@ function VerifyEmail() {
 
                 {backButton && (
                     <Container>
-                        <Button textAlign='center' color='black' mt={5} as='a' href='/'>
+                        <Button  color='black' mt={5} as='a' href='/'>
                             Go back to Home
                         </Button>
                     </Container>

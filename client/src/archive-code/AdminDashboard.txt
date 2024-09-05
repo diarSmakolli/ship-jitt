@@ -1,0 +1,565 @@
+<Box mb={4}>
+                        <Input
+                            placeholder="Search users..."
+                            value={search}
+                            onChange={handleSearchChange}
+                            mb={4}
+                            color="white"
+                        />
+                    </Box>
+
+                    
+                    {loadingUsers ? (
+                        <Spinner color="white" />
+                    ) : error ? (
+                        <Text color="red.500">{error}</Text>
+                    ) : (
+                        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10} mt={10}>
+                            {users.map(user => (
+                                <Box bg="rgba(0,0,0,.5)" p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
+
+                                    <Text mt={2} color='white' fontSize={'lg'} fontFamily={'Epilogue'} fontWeight={500}>
+                                        ID: {user.id}
+                                    </Text>
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Name: {user.first_name} {user.last_name}
+                                    </Text>
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Email: { user.email }
+                                    </Text>
+                                    {/* <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Password: { user.password }
+                                    </Text> */}
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Verified Account: {user.isVerify ? 'Yes' : 'No'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Has Access: {user.hasAccess ? 'Yes' : 'No'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        User Type: {user.isAdmin ? 'Admin' : 'User'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Created At: {user.createdAt ? user.createdAt : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Created By: {user.createdBy ? user.createdBy : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Deleted At: {user.deletedAt ? user.deletedAt : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Deleted By: {user.deletedBy ? user.deletedBy : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Updated At: {user.updatedAt ? user.updatedAt : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Updated By: {user.updatedBy ? user.updatedBy : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Price ID: {user.priceId ? user.priceId : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                        Customer ID: {user.customerId ? user.customerId : 'No data'}
+                                    </Text>
+
+                                    <Text mt={2} color='white' fontSize={'md'} ffontFamily={'Epilogue'} fontWeight={500}>
+                                       Plan: {user.priceId ? user.priceId === 'price_1PIcjiP1jRGQyMPG1shY69it' ? 'Starter Plan' : 'All-in Plan' : 'No data'}
+                                    </Text>
+
+                                    
+
+                                    {/* <Button as='a' size='sm' mt={5} width='full' href={`/invoices/${invoice.id}`} fontFamily={'Epilogue'}>View Details</Button> */}
+
+                                </Box>
+                            ))}
+                        </SimpleGrid>
+                    )}
+
+                    <HStack mt={4} spacing={4}>
+                        <Button onClick={handlePreviousPage} disabled={page === 1} colorScheme="blue">
+                            Previous
+                        </Button>
+                        <Text color="white">Page {page}</Text>
+                        <Button onClick={handleNextPage} colorScheme="blue">
+                            Next
+                        </Button>
+                    </HStack>
+
+
+
+
+
+
+
+v2: // import React, { useState, useEffect } from 'react';
+// import Navbar from '../components/Navbar';
+// import {
+//     Box,
+//     Container,
+//     HStack,
+//     Text,
+//     Button,
+//     Input,
+//     Spinner,
+//     Table,
+//     Thead,
+//     Tr,
+//     Th,
+//     Tbody,
+//     Td,
+//     useToast,
+//     SimpleGrid,
+//     Flex,
+// } from '@chakra-ui/react';
+// import Hero from '../components/Hero';
+// import Companies from '../components/Companies';
+// import Services from '../components/Services';
+// import FastAccess from '../components/FastAccess';
+// import Footer from '../components/Footer';
+// import Pricing from '../components/Pricing';
+// import GetStarted from '../components/GetStarted';
+// import Testimonial from '../components/Testimonials';
+// import { Helmet } from 'react-helmet-async';
+// import { useAuth } from '../auth/authContext';
+// import axios from 'axios';
+
+
+// export default function Dashboard() {
+
+//     const { user, loading } = useAuth();
+
+//     let toast = useToast();
+
+
+//     return (
+//         <div>
+//             <Box
+//                 height={'auto'}
+//                 background={'#000'}
+//             >
+//                 <Helmet>
+//                     <title>Admin Dashboard | ShipJitt</title>
+//                 </Helmet>
+
+//                 <Box>
+//                     <Navbar />
+//                 </Box>
+
+//                 <Container maxW='6xl'>
+
+//                     <Box py={10}>
+//                         <Text fontFamily={'Epilogue'} fontSize={'2xl'} color='gray.100'>
+//                             Welcome {user.first_name} {user.last_name} in Metrics Dashboard
+//                         </Text>
+//                     </Box>
+
+
+//                 </Container>
+
+
+
+//             </Box>
+//         </div>
+//     );
+// }
+
+
+{/* <SimpleGrid columns={{ base: 1, md: 3 }} spacing={3}>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Total Users: {totalUsers}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Active Users with plan: {activeUsers}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Recent users: {recentUsers}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Unactive users: {unactiveUsers}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Retention users: {retentionUsers}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Average Invoice Amount: {averageInvoiceAmount}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+<Box py={3}>
+    {loadingUsers ? (
+        <Spinner color="gray.100" />
+    ) : (
+        <Flex
+            align="center"
+            justify="center"
+            bg="rgba(0,0,0,.5)" 
+            borderRadius="1rem" 
+            border='1px solid hsl(240 3.7% 15.9%)'
+            p={8}
+        >
+            <Text fontSize="lg" color="white" fontFamily={'Epilogue'}>
+                Total revenue: {totalRevenue}
+            </Text>
+        </Flex>
+    )}
+    {error && (
+        <Text color="red.500" mt={4}>
+            {error}
+        </Text>
+    )}
+</Box>
+
+
+
+
+</SimpleGrid> */}
+
+// const [users, setUsers] = useState([]);
+// const [page, setPage] = useState(1);
+// const [pageSize, setPageSize] = useState(10);
+// const [search, setSearch] = useState('');
+// const [loadingUsers, setLoadingUsers] = useState(false);
+// const [error, setError] = useState('');
+// const [totalUsers, setTotalUsers] = useState(0);
+// const [activeUsers, setActiveUsers] = useState(0);
+// const [recentUsers, setRecentUsers] = useState(0);
+// const [unactiveUsers, setUnactiveUsers] = useState(0);
+// const [retentionUsers, setRetentionUsers] = useState(0);
+// const [averageInvoiceAmount, setAverageInvoiceAmount] = useState(0);
+// const [totalRevenue, setTotalRevenue] = useState(0);
+
+// useEffect(() => {
+    // const fetchUsers = async () => {
+    //     setLoadingUsers(true);
+    //     try {
+    //         const response = await axios.get('http://localhost:6099/api/users/getall', {
+    //             params: {
+    //                 page,
+    //                 pageSize,
+    //                 search
+    //             },
+    //             withCredentials: true
+    //         });
+    //         setUsers(response.data.users);
+
+    //         setLoadingUsers(false);
+    //     } catch (err) {
+    //         setError('Failed to load users');
+    //         setLoadingUsers(false);
+    //     }
+    // };
+
+    // const fetchTotalUsers = async () => {
+    //     setLoadingUsers(true);
+    //     try {
+    //         const response = await axios.get('http://localhost:6099/api/users/total-users', {
+    //             withCredentials: true
+    //         });
+    //         setTotalUsers(response.data.totalUsers);
+    //         setLoadingUsers(false);
+    //     } catch (err) {
+    //         setError('Failed to load total users count');
+    //         setLoadingUsers(false);
+    //         toast({
+    //             title: "Error",
+    //             description: "Failed to load total users count",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //         });
+    //     }
+    // }
+
+    // const fetchActiveUsers = async () => {
+    //     setLoadingUsers(true);
+    //     try {
+    //         const response = await axios.get('http://localhost:6099/api/users/active-users', {
+    //             withCredentials: true
+    //         });
+    //         setActiveUsers(response.data.activeUsers);
+    //         setLoadingUsers(false);
+    //     } catch (err) {
+    //         setError('Failed to load total users count');
+    //         setLoadingUsers(false);
+    //         toast({
+    //             title: "Error",
+    //             description: "Failed to load total users count",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //         });
+    //     }
+    // }
+
+    // // last 7 days users
+    // const recentUsers = async () => {
+    //     setLoadingUsers(true);
+    //     try {
+    //         const response = await axios.get('http://localhost:6099/api/users/recent-users', {
+    //             withCredentials: true
+    //         });
+    //         setRecentUsers(response.data.recentUsers);
+    //         setLoadingUsers(false);
+    //     } catch (err) {
+    //         setError('Failed to load total users count');
+    //         setLoadingUsers(false);
+    //         toast({
+    //             title: "Error",
+    //             description: "Failed to load total users count",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //         });
+    //     }
+    // }
+
+    // const unActiveUsers = async () => {
+    //     setLoadingUsers(true);
+    //     try {
+    //         const response = await axios.get('http://localhost:6099/api/users/count-unactive', {
+    //             withCredentials: true
+    //         });
+    //         setUnactiveUsers(response.data.deletedUsers);
+    //         setLoadingUsers(false);
+    //     } catch (err) {
+    //         setError('Failed to load total users count');
+    //         setLoadingUsers(false);
+    //         toast({
+    //             title: "Error",
+    //             description: "Failed to load total users count",
+    //             status: "error",
+    //             duration: 5000,
+    //             isClosable: true,
+    //         });
+    //     }
+    // }
+
+//     const retentionUsers = async () => {
+//         setLoadingUsers(true);
+//         try {
+//             const response = await axios.get('http://localhost:6099/api/users/user-retention', {
+//                 withCredentials: true
+//             });
+//             setRetentionUsers(response.data.userRetention);
+//             setLoadingUsers(false);
+//         } catch (err) {
+//             setError('Failed to load total users count');
+//             setLoadingUsers(false);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to load total users count",
+//                 status: "error",
+//                 duration: 5000,
+//                 isClosable: true,
+//             });
+//         }
+//     }
+
+//     const averageInvoiceAmount = async () => {
+//         setLoadingUsers(true);
+//         try {
+//             const response = await axios.get('http://localhost:6099/api/users/average-invoice-amount', {
+//                 withCredentials: true
+//             });
+//             setAverageInvoiceAmount(response.data.averageInvoiceAmount);
+//             setLoadingUsers(false);
+//         } catch (err) {
+//             setError('Failed to load total users count');
+//             setLoadingUsers(false);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to load total users count",
+//                 status: "error",
+//                 duration: 5000,
+//                 isClosable: true,
+//             });
+//         }
+//     }
+
+//     const totalRevenue = async () => {
+//         setLoadingUsers(true);
+//         try {
+//             const response = await axios.get('http://localhost:6099/api/users/total-revenue', {
+//                 withCredentials: true
+//             });
+//             setTotalRevenue(response.data.totalRevenue);
+//             setLoadingUsers(false);
+//         } catch (err) {
+//             setError('Failed to load total users count');
+//             setLoadingUsers(false);
+//             toast({
+//                 title: "Error",
+//                 description: "Failed to load total users count",
+//                 status: "error",
+//                 duration: 5000,
+//                 isClosable: true,
+//             });
+//         }
+//     }
+
+
+    
+
+
+//     fetchUsers();
+//     fetchTotalUsers();
+//     fetchActiveUsers();
+//     recentUsers();
+//     unActiveUsers();
+//     retentionUsers();
+//     averageInvoiceAmount();
+//     totalRevenue();
+// }, [page, search]);
+
+// const handleNextPage = () => {
+//     setPage(prevPage => prevPage + 1);
+// };
+
+// const handlePreviousPage = () => {
+//     if (page > 1) {
+//         setPage(prevPage => prevPage - 1);
+//     }
+// };
+
+// const handleSearchChange = (e) => {
+//     setSearch(e.target.value);
+//     setPage(1); // Reset to the first page on search
+// };

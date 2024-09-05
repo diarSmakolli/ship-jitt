@@ -72,7 +72,7 @@ function InvoiceDetails() {
 
                 <HStack spacing='10' align={'start'}>
 
-                    <Box width='50%'>
+                    <Box width={{base: '100%', md: '50%'}}>
 
                         <Text color='white' fontFamily={'Epilogue'} fontSize={'2xl'} mt={10} fontWeight={600}>
                             Invoice Details

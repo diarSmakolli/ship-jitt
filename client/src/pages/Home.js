@@ -28,7 +28,6 @@ export default function Home() {
 
 
                     <Container maxW={'6xl'}>
-                        <Box mt={20}></Box>
                         <FastAccess />
                         <Services />
                         <Pricing />

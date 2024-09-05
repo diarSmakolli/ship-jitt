@@ -31,7 +31,12 @@ import InvoiceDetails from './pages/InvoiceDetails';
 import TOS from './pages/TOS';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import License from './pages/License';
-
+import DocsFastAccess from './pages/DocsFastAccess';
+import DocsServices from './pages/DocsServices';
+import DocsPricing from './pages/DocsPricing';
+import DocsTestimonial from './pages/DocsTestimonial';
+import DocsGetStarted from './pages/DocsGetStarted';
+import DocsFooter from './pages/DocsFooter';
 
 const App = () => {
   return (
@@ -53,6 +58,16 @@ const App = () => {
             <Route path='/docs/features/payments' element={<DocsPayments />} />
             <Route path='/docs/components/navbar' element={<DocsNavbar />} />
             <Route path='/docs/components/hero' element={<DocsHero />} />
+            <Route path='/docs/components/fast-access' element={<DocsFastAccess />} />
+            <Route path='/docs/components/services' element={<DocsServices />} />
+            <Route path='/docs/components/pricing' element={<DocsPricing />} />
+            <Route path='/docs/components/testimonials' element={<DocsTestimonial />} />
+            <Route path='/docs/components/banner' element={<DocsGetStarted />} />
+            <Route path='/docs/components/footer' element={<DocsFooter />} />
+
+
+            {/* end of docs */}
+
             <Route path='/contact-us' element={<SupportCenter />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -63,10 +78,10 @@ const App = () => {
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
             <Route path='/cancel' element={<PrivateRoute><Cancel /></PrivateRoute>} />
             <Route path="/dashboard" element={<PaidRoute><Dashboard /></PaidRoute>} />
-            <Route path='/admin' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+            <Route path='/codesculp/dashboard' element={<AdminRoute><AdminDashboard /></AdminRoute>} />
             <Route path='/tos' element={<TOS />} />
-            <Route path='/privacy-policy' element={<PrivacyPolicy />} /> 
-            <Route path='/license' element={<License />} /> 
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+            <Route path='/license' element={<License />} />
           </Routes>
         </Router>
       </AuthProvider>
@@ -116,8 +131,6 @@ const PaidRoute = ({ children }) => {
 
   return user && hasAccess() ? children : <Navigate to="/unauthorized" />;
 };
-
-
 
 export default App;
 

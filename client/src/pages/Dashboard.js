@@ -215,8 +215,8 @@ export default function Dashboard() {
 
                 <Container maxW={'6xl'}>
 
-                    <Stack direction='row' columns={2} py={20}>
-                        <Box height={'600px'} width='70%'>
+                    <Stack direction={{base: 'column', md: 'row'}} columns={2} py={{base: 10, md: 20}}>
+                        <Box width={{base: '100%', md: '70%'}}>
 
                             <Text
                                 textAlign={'left'}
@@ -233,7 +233,8 @@ export default function Dashboard() {
                                     textAlign={'left'}
                                     color='gray.300'
                                     fontFamily={'Epilogue'}
-                                    fontSize={{ base: 'xl', md: 'lg' }}
+                                    fontSize={{ base: 'md', md: 'lg' }}
+                                    pt={{base: 3, md: 0}}
                                     fontWeight={'400'}
                                 >
                                     Enter your Github username to get access in repository.
@@ -250,7 +251,7 @@ export default function Dashboard() {
                                             <Input
                                                 value={githubUsername}
                                                 onChange={(e) => setGithubUsername(e.target.value)}
-                                                width='500px'
+                                                width={{ base: '100%', md: '500px' }}
                                                 border='1.5px solid rgba(255,255,255,.12)' bg="rgba(0,0,0,.5)" color='gray.200' _hover={{ border: '1.5px solid rgba(255,255,255,.12)' }}
                                             />
                                         </FormControl>
@@ -268,7 +269,7 @@ export default function Dashboard() {
 
                             {!githubRequest || githubRequest.status != 'accepted' ? (
                                 <Button
-                                    width='500px'
+                                    width={{ base: '100%', md: '500px' }}
                                     bg="white"
                                     color="black"
                                     mt={4}
@@ -312,7 +313,7 @@ export default function Dashboard() {
                                 textAlign={'left'}
                                 color='gray.300'
                                 fontFamily={'Epilogue'}
-                                fontSize={{ base: 'xl', md: 'md' }}
+                                fontSize={{ base: 'md', md: 'md' }}
                                 fontWeight={'400'}
                                 mt={5}
                             >
@@ -327,7 +328,7 @@ export default function Dashboard() {
                         </Box>
 
 
-                        <Box height={'600px'} width='30%' p={5} borderLeft={'1px'} borderColor={'gray.700'}>
+                        <Box height={'auto'} width={{base: '100%', md: '30%'}} p={5} borderLeft={'1px'} borderColor={'gray.700'}>
 
 
 
@@ -339,7 +340,7 @@ export default function Dashboard() {
                                     textAlign={'left'}
                                     color='gray.300'
                                     fontFamily={'Epilogue'}
-                                    fontSize={{ base: 'xl', md: 'sm' }}
+                                    fontSize={{ base: 'sm', md: 'sm' }}
                                     fontWeight={'600'}
                                     as='a'
                                     target='_blank'
@@ -356,7 +357,7 @@ export default function Dashboard() {
                                     textAlign={'left'}
                                     color='gray.300'
                                     fontFamily={'Epilogue'}
-                                    fontSize={{ base: 'xl', md: 'sm' }}
+                                    fontSize={{ base: 'sm', md: 'sm' }}
                                     fontWeight={'600'}
                                     as='a'
                                     target='_blank'
@@ -373,7 +374,7 @@ export default function Dashboard() {
                                 textAlign={'left'}
                                 color='white'
                                 fontFamily={'Epilogue'}
-                                fontSize={{ base: 'xl', md: 'xl' }}
+                                fontSize={{ base: 'lg', md: 'xl' }}
                                 fontWeight={'600'}
                             >
                                 Welcome to Ship Jitt!
@@ -385,7 +386,7 @@ export default function Dashboard() {
                                 textAlign={'left'}
                                 color='gray.300'
                                 fontFamily={'Epilogue'}
-                                fontSize={{ base: 'xl', md: 'md' }}
+                                fontSize={{ base: 'md', md: 'md' }}
                                 fontWeight={'500'}
                             >
                                 It help you ship your startup faster and get $.
@@ -399,7 +400,7 @@ export default function Dashboard() {
                                 textAlign={'left'}
                                 color='gray.300'
                                 fontFamily={'Epilogue'}
-                                fontSize={{ base: 'xl', md: 'md' }}
+                                fontSize={{ base: 'md', md: 'md' }}
                                 fontWeight={'500'}
                             >
                                 It's normal to want to add features and overthink it. Remember, the goal is to ship fast and get feedback. <br />

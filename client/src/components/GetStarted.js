@@ -8,10 +8,10 @@ const GetStarted = () => {
     return (
         <Box py={28}>
             <Center>
-                <Text fontSize="5xl" mb={4} color='white' fontWeight={500}
+                <Text fontSize={{base: '2xl', md: '5xl'}} mb={4} color='white' fontWeight={500}
                     fontFamily={'Epilogue'}
                 >
-                    Boost your app, launch, earn 🤑
+                    Boost your app, launch, earn
                 </Text>
             </Center>
 
@@ -25,7 +25,7 @@ const GetStarted = () => {
             </Center>
             <Center>
                 { !user &&  (
-                <Button bg="white" color='black' as='a' href='/auth/signup' fontFamily='Geist Sans'>
+                <Button bg="white" color='black' as='a' href='/auth/signup' fontFamily='Epilogue'>
                     Get Started
                 </Button>
                 )}

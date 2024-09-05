@@ -20,7 +20,8 @@ export default function HeroSupportCenter() {
             width={'full'}
             borderBottomRadius={'5%'}
             zIndex={1}
-            pb={14}
+            pb={{ base: 0, md: 14 }}
+            pt={{base: 10, md: 0}}
         >
             <Container maxW='6xl'>
                 <Stack
@@ -40,8 +41,8 @@ export default function HeroSupportCenter() {
                             textAlign={'center'}
                             fontWeight={700}
                             className='text-select'
-                            color={useColorModeValue('#fff', 'black')}
-                            fontSize={'5xl'}
+                            color='white'
+                            fontSize={{base: '4xl', md: '5xl'}}
 
                         >
 

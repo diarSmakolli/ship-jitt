@@ -28,8 +28,8 @@ function SupportCenter() {
 
 
             <Container maxW='6xl'>
-                <Box mt={28}>
-                    <Text fontSize='4xl' fontWeight='600' textAlign='center' mt={14} mb={14}
+                <Box mt={{base: 0, md: 28}}>
+                    <Text fontSize={{base: '3xl', md: '4xl'}} fontWeight='600' textAlign='center' mt={14} mb={14}
                         fontFamily={'Epilogue'} color='gray.50'>
                         Frequently Asked Questions
                     </Text>
@@ -151,7 +151,7 @@ function SupportCenter() {
 
                 <Box mt={20}>
 
-                    <Text fontSize='4xl' fontWeight='500' textAlign='center' mt={14}
+                    <Text fontSize={{base: '3xl', md: '4xl'}} fontWeight='500' textAlign='center' mt={14}
                         ffontFamily={'Epilogue'} color='white'
                     >
                         Contact Us
@@ -217,7 +217,7 @@ function SupportCenter() {
 
 
                 <Box mt={24} mb={10}>
-                    <Text fontSize='4xl' textAlign='center'
+                    <Text fontSize={{base: '3xl', md: '4xl'}} textAlign='center'
                         fontFamily={'Epilogue'} fontWeight='700' color='gray.50'
                     >
                         Can't find your answer?
