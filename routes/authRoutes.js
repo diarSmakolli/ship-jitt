@@ -1355,10 +1355,6 @@ router.get('/metrics/arpu-weekly', verifyToken, async (req, res) => {
     }
 });
 
-
-
-
-
 // End queries
 
 // get all deleted inactive users with the pagination - admin  ✅

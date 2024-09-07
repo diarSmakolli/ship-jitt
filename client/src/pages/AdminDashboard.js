@@ -321,10 +321,7 @@ const AdminDashboard = () => {
                         <Heading size="md" color='white' fontFamily={'Epilogue'}>Users Metrics</Heading>
                         <Bar data={barData} color='white' fontFamily={'Epilogue'}  />
                     </Box>
-                    <Box bg="rgba(0,0,0,.5)" p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
-                        <Heading size="md" color='white' fontFamily={'Epilogue'}>User Growth Over Time</Heading>
-                        <Line data={lineData} options={chartOptions} />
-                    </Box>
+                    
                     <Box bg="rgba(0,0,0,.5)" p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
                         <Heading size="md" color='white' fontFamily={'Epilogue'}>Invoices Metrics</Heading>
                         <Pie data={pieData} color='white' fontFamily={'Epilogue'}/>
@@ -352,6 +349,11 @@ const AdminDashboard = () => {
                             <StatLabel color='white' fontFamily={'Epilogue'}>Monthly Retention Rate %</StatLabel>
                             <StatNumber color='white' fontFamily={'Epilogue'}>{data.monthlyRetentionRate}%</StatNumber>
                         </Stat>
+                    </Box>
+
+                    <Box bg="rgba(0,0,0,.5)" p={5} borderRadius="1rem" border='1px solid hsl(240 3.7% 15.9%)'>
+                        <Heading size="md" color='white' fontFamily={'Epilogue'}>User Growth Over Time</Heading>
+                        <Line data={lineData} options={chartOptions} />
                     </Box>
 
 

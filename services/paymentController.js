@@ -58,11 +58,13 @@
                 const paymentMethod = session.payment_method_types[0];
                 const paymentStatus = session.payment_status; // paid
                 // const tax = (amount * 0.18).toFixed(2);
+                const country = session.customer_details.address.country;
+
 
                 const user = await User.findOne({ where: { id: userId } });
                 if (user) {
                     user.hasAccess = true;
-                    user.priceId = priceId;
+                    // user.priceId = priceId;
                     await user.save();
                     console.log(`User ${user.email} has been granted access.`);
 
@@ -70,6 +72,9 @@
                     const randomString = Math.random().toString(36).substring(2, 8).toUpperCase();
                     const sequentialNumber = (await Invoice.count()) + 1;
                     const invoiceNumber = `${prefix}${randomString}-${sequentialNumber.toString().padStart(4, '0')}`;
+
+                    const firstName = user.first_name;
+                    const lastName = user.last_name;
 
                     const invoiceDetails = {
                         amount: (amount / 100).toFixed(2),
@@ -85,6 +90,8 @@
                         priceId: priceId,
                         planName: priceId == starterplan ? 'Starter Plan' : 'All-in Plan',
                         invoiceNumber: invoiceNumber,
+                        customerName: `${firstName} ${lastName}`,
+                        email: email,
                     };
 
                     // await generateInvoicePDF(invoiceDetails);
@@ -107,9 +114,9 @@
                     //     invoiceNumber: invoiceNumber,
                     // });
 
-                    await Invoice.create(invoiceDetails);
+                    // await Invoice.create(invoiceDetails);
 
-                    sendInvoice(email, invoiceNumber, invoiceDetails);
+                    // sendInvoice(email, invoiceNumber, invoiceDetails);
 
                     console.log(`Invoice ${invoiceNumber} has been sent to ${email}.`);
                 }
