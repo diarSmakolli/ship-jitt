@@ -18,6 +18,7 @@ const mailgun = require('mailgun-js');
 const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } = require('../services/email');
 const fs = require('fs');
 const { Invoice } = require('../models');
+const { Notification } = require('../models');
 const GithubRequest = require('../models/GithubRequest');
 const PDFDocument = require('pdfkit');
 const { generateInvoicePDF } = require('../services/generateInvoicePdf');
@@ -1680,6 +1681,38 @@ router.get('/:id', verifyToken, async(req, res) => {
     }
 });
 
+// router.get('/notifications/all', verifyToken, async (req, res) => {
+//     try {
+//         // Fetch all notifications from the database
+//         const notifications = await Notification.findAll({
+//             include: [User]  // If you want to include associated users
+//         });
+
+//         if (!notifications || notifications.length === 0) {
+//             return res.status(404).json({
+//                 status: 'error',
+//                 statusCode: 404,
+//                 message: 'No notifications found'
+//             });
+//         }
+
+//         return res.status(200).json({
+//             status: 'success',
+//             statusCode: 200,
+//             message: 'Notifications retrieved successfully.',
+//             notifications
+//         });
+//     } catch (error) {
+//         console.error("An Error has occurred and we're working to fix the problem!");
+//         console.error(error);
+//         res.status(500).json({
+//             status: 'error',
+//             statusCode: 500,
+//             message: "An Error has occurred and we're working to fix the problem!"
+//         });
+//     }
+// });
+
 // get user invoices
 router.get('/:id/invoices', verifyToken, async(req, res) => {
     const userId = req.params.id;
@@ -1886,6 +1919,171 @@ router.delete('/:id', verifyToken, async(req, res) => {
         });
     }
 })
+
+// Notification routes
+// get all notifications for a specific user
+router.get('/notifications/:userId', verifyToken, async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        // Fetch all notifications from the database
+        const notifications = await Notification.findAll({
+            where: { userId: req.params.userId },
+            include: [User],
+            order: [['createdAt', 'DESC']]
+        });
+
+        if (!notifications || notifications.length === 0) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'No notifications found'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Notifications retrieved successfully.',
+            notifications
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// get a notification by id for a specific user
+router.get('/notifications/:id', verifyToken, async (req, res) => {
+    // const userId = req.body.userId;
+    const notificationId = req.params.id;
+    try {
+        // Fetch the notification from the database
+        const notification = await Notification.findByPk(notificationId, {
+            include: [User]
+        });
+
+        if (!notification) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Notification not found'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Notification retrieved successfully.',
+            notification
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// mark an notification as read
+router.put('/notifications/:id', verifyToken, async (req, res) => {
+    const notificationId = req.params.id;
+    try {
+        // Fetch the notification from the database
+        const notification = await Notification.findByPk(notificationId);
+
+        if (!notification) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'Notification not found'
+            });
+        }
+
+        // Mark the notification as read
+        notification.read = true;
+        await notification.save();
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Notification marked as read successfully.',
+            notification
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// get unread notifications count for a user
+router.get('/notifications/unread/:userId', verifyToken, async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        // Fetch all unread notifications from the database
+        const unreadNotifications = await Notification.findAll({
+            where: { userId, read: false }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Unread notifications count retrieved successfully.',
+            count: unreadNotifications.length
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+// get last 5 notifications for a user
+router.get('/notifications/last/:userId', verifyToken, async (req, res) => {
+    const userId = req.params.userId;
+    try {
+        // Fetch the last 5 notifications from the database
+        const notifications = await Notification.findAll({
+            where: { userId },
+            order: [['createdAt', 'DESC']],
+            limit: 5
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Last 5 notifications retrieved successfully.',
+            notifications
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+
+// END NOTIFICATION
 
 // request github access
 router.post('/github-request', async(req, res) => {
@@ -2197,6 +2395,7 @@ router.get('/deleted-github-requests', async(req, res) => {
         });
     }
 });
+
 
 
 module.exports = router;

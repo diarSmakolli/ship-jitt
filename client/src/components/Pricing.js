@@ -12,8 +12,8 @@ import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import {useAuth} from '../auth/authContext';
 import axios from 'axios';
 
-const starterPriceId = 'price_1PIcjiP1jRGQyMPG1shY69it';
-const allinPriceId = 'price_1PIZ7TP1jRGQyMPGkZlMPkmT';
+const starterPriceId = 'price_1PwYx1P1jRGQyMPGbDhde91U';
+const allinPriceId = 'price_1PwYxxP1jRGQyMPGHpjvqKD6';
 let al;
  
  

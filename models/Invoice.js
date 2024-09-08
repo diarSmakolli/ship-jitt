@@ -69,8 +69,28 @@ const Invoice = sequelize.define('invoices', {
     invoiceNumber: {
         type: Sequelize.DataTypes.STRING,
         unique: true,
-    }
-    
+    },
+    customerName: {
+        type: Sequelize.DataTypes.STRING,
+    },
+    email: {
+        type: Sequelize.DataTypes.STRING,
+    },
+    country: {
+        type: Sequelize.DataTypes.STRING,
+    },
+    balance_transaction: {
+        type: Sequelize.DataTypes.STRING,
+    },
+    creditCardBrand: {
+        type: Sequelize.DataTypes.STRING,
+    },
+    paid: {
+        type: Sequelize.DataTypes.BOOLEAN,
+    },
+    last4Digits: {
+        type: Sequelize.DataTypes.STRING,
+    },
 }, {
     tableName: 'invoices',
     timestamps: false
