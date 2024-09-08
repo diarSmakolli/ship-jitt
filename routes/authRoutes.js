@@ -1508,7 +1508,7 @@ router.post('/forgot-password', async(req, res) => {
             text: `Click the following link to reset your password: ${resetLink}`
         };
 
-        await sendPasswordResetEmail(email, resetLink);
+        await sendPasswordResetEmail(email, resetLink, user.first_name);
 
         res.status(200).json({
             status: 'success',
@@ -1680,38 +1680,6 @@ router.get('/:id', verifyToken, async(req, res) => {
         });
     }
 });
-
-// router.get('/notifications/all', verifyToken, async (req, res) => {
-//     try {
-//         // Fetch all notifications from the database
-//         const notifications = await Notification.findAll({
-//             include: [User]  // If you want to include associated users
-//         });
-
-//         if (!notifications || notifications.length === 0) {
-//             return res.status(404).json({
-//                 status: 'error',
-//                 statusCode: 404,
-//                 message: 'No notifications found'
-//             });
-//         }
-
-//         return res.status(200).json({
-//             status: 'success',
-//             statusCode: 200,
-//             message: 'Notifications retrieved successfully.',
-//             notifications
-//         });
-//     } catch (error) {
-//         console.error("An Error has occurred and we're working to fix the problem!");
-//         console.error(error);
-//         res.status(500).json({
-//             status: 'error',
-//             statusCode: 500,
-//             message: "An Error has occurred and we're working to fix the problem!"
-//         });
-//     }
-// });
 
 // get user invoices
 router.get('/:id/invoices', verifyToken, async(req, res) => {
@@ -1928,7 +1896,7 @@ router.get('/notifications/:userId', verifyToken, async (req, res) => {
         // Fetch all notifications from the database
         const notifications = await Notification.findAll({
             where: { userId: req.params.userId },
-            include: [User],
+            // include: [User],
             order: [['createdAt', 'DESC']]
         });
 
@@ -1957,15 +1925,96 @@ router.get('/notifications/:userId', verifyToken, async (req, res) => {
     }
 });
 
+// get unread notifications count for a user
+router.get('/notifications/unread/:userId', verifyToken, async (req, res) => {
+    try {
+        const userId = req.params.userId; // Corrected the assignment of userId
+
+        // Fetch all unread notifications from the database
+        const unreadNotifications = await Notification.findAll({
+            where: { userId, read: false }
+        });
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Unread notifications count retrieved successfully.',
+            count: unreadNotifications.length
+        });
+    } catch (error) {
+        console.error("An Error has occurred and we're working to fix the problem!");
+        console.error(error);
+        res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: "An Error has occurred and we're working to fix the problem!"
+        });
+    }
+});
+
+router.get('/notifications/recently/:userId', verifyToken, async (req, res) => {
+    try {
+        const userId = parseInt(req.params.userId);  // Ensure it's a valid number
+
+        if (isNaN(userId)) {
+            return res.status(400).json({
+                status: 'error',
+                statusCode: 400,
+                message: 'Invalid user ID'
+            });
+        }
+
+        // Fetch the last 5 notifications for the user
+        const notifications = await Notification.findAll({
+            where: { userId },
+            order: [['createdAt', 'DESC']],
+            limit: 5
+        });
+
+        if (!notifications || notifications.length === 0) {
+            return res.status(404).json({
+                status: 'error',
+                statusCode: 404,
+                message: 'No notifications found for the user'
+            });
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            statusCode: 200,
+            message: 'Notifications retrieved successfully.',
+            notifications
+        });
+    } catch (error) {
+        console.error("An error occurred: ", error.message);
+        return res.status(500).json({
+            status: 'error',
+            statusCode: 500,
+            message: 'An internal server error occurred'
+        });
+    }
+});
+
 // get a notification by id for a specific user
-router.get('/notifications/:id', verifyToken, async (req, res) => {
+router.get('/notifications/:userId/:id', verifyToken, async (req, res) => {
     // const userId = req.body.userId;
     const notificationId = req.params.id;
+    const userId = req.params.userId;
     try {
         // Fetch the notification from the database
-        const notification = await Notification.findByPk(notificationId, {
-            include: [User]
-        });
+        // const notification = await Notification.findByPk(notificationId, {
+        //     include: [User]
+        // });
+
+        const notification = await Notification.findByPk(notificationId);
+
+        if(notification.userId != userId) {
+            return res.status(403).json({
+                status: 'error',
+                statusCode: 403,
+                message: 'You are not authorized to view this notification.'
+            });
+        }
 
         if (!notification) {
             return res.status(404).json({
@@ -1993,7 +2042,7 @@ router.get('/notifications/:id', verifyToken, async (req, res) => {
 });
 
 // mark an notification as read
-router.put('/notifications/:id', verifyToken, async (req, res) => {
+router.put('/notifications/marked/:id', verifyToken, async (req, res) => {
     const notificationId = req.params.id;
     try {
         // Fetch the notification from the database
@@ -2027,61 +2076,6 @@ router.put('/notifications/:id', verifyToken, async (req, res) => {
         });
     }
 });
-
-// get unread notifications count for a user
-router.get('/notifications/unread/:userId', verifyToken, async (req, res) => {
-    const userId = req.params.userId;
-    try {
-        // Fetch all unread notifications from the database
-        const unreadNotifications = await Notification.findAll({
-            where: { userId, read: false }
-        });
-
-        return res.status(200).json({
-            status: 'success',
-            statusCode: 200,
-            message: 'Unread notifications count retrieved successfully.',
-            count: unreadNotifications.length
-        });
-    } catch (error) {
-        console.error("An Error has occurred and we're working to fix the problem!");
-        console.error(error);
-        res.status(500).json({
-            status: 'error',
-            statusCode: 500,
-            message: "An Error has occurred and we're working to fix the problem!"
-        });
-    }
-});
-
-// get last 5 notifications for a user
-router.get('/notifications/last/:userId', verifyToken, async (req, res) => {
-    const userId = req.params.userId;
-    try {
-        // Fetch the last 5 notifications from the database
-        const notifications = await Notification.findAll({
-            where: { userId },
-            order: [['createdAt', 'DESC']],
-            limit: 5
-        });
-
-        return res.status(200).json({
-            status: 'success',
-            statusCode: 200,
-            message: 'Last 5 notifications retrieved successfully.',
-            notifications
-        });
-    } catch (error) {
-        console.error("An Error has occurred and we're working to fix the problem!");
-        console.error(error);
-        res.status(500).json({
-            status: 'error',
-            statusCode: 500,
-            message: "An Error has occurred and we're working to fix the problem!"
-        });
-    }
-});
-
 
 // END NOTIFICATION
 
@@ -2395,7 +2389,5 @@ router.get('/deleted-github-requests', async(req, res) => {
         });
     }
 });
-
-
 
 module.exports = router;

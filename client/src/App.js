@@ -37,10 +37,15 @@ import DocsPricing from './pages/DocsPricing';
 import DocsTestimonial from './pages/DocsTestimonial';
 import DocsGetStarted from './pages/DocsGetStarted';
 import DocsFooter from './pages/DocsFooter';
+import Notifications from './pages/Notifications';
+// import { QueryClient, QueryClientProvider } from 'react-query';
+
+// const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <div className='App'>
+      {/* <QueryClientProvider client={queryClient}> */}
       <AuthProvider>
         <Router>
           <Routes>
@@ -64,10 +69,7 @@ const App = () => {
             <Route path='/docs/components/testimonials' element={<DocsTestimonial />} />
             <Route path='/docs/components/banner' element={<DocsGetStarted />} />
             <Route path='/docs/components/footer' element={<DocsFooter />} />
-
-
             {/* end of docs */}
-
             <Route path='/contact-us' element={<SupportCenter />} />
             <Route path="/verify-email" element={<VerifyEmail />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -75,6 +77,7 @@ const App = () => {
             <Route path='/profile' element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path='/invoices' element={<PrivateRoute><Invoices /></PrivateRoute>} />
             <Route path='/invoices/:id' element={<PrivateRoute><InvoiceDetails /></PrivateRoute>} />
+            <Route path='/notifications' element={<PrivateRoute><Notifications /></PrivateRoute>} />
             <Route path='/success' element={<PrivateRoute><Success /></PrivateRoute>} />
             <Route path='/cancel' element={<PrivateRoute><Cancel /></PrivateRoute>} />
             <Route path="/dashboard" element={<PaidRoute><Dashboard /></PaidRoute>} />
@@ -85,6 +88,7 @@ const App = () => {
           </Routes>
         </Router>
       </AuthProvider>
+      {/* </QueryClientProvider> */}
     </div>
   );
 };

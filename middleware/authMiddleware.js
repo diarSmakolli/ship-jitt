@@ -108,9 +108,6 @@ const isAdmin = (req, res, next) => {
 
 const isPaid = (req, res,next) => {
     const user = req.user;
-    
-    // we need to handle if isPaid is true
-
     if(!user.isPaid) {
         return res.status(401).json({
             status: 'error',
