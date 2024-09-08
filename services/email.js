@@ -23,16 +23,13 @@ const transporter = nodemailer.createTransport({
     debug: true,
 });
 
-
-
 const sendVerificationEmail = async (email, token) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
         to: email,
-        bcc: 'dijarsmakolli99@gmail.com',
         subject: 'Verify your email address',
         html: `<p>Please click <a href="http://localhost:3000/verify-email?token=${token}">here</a> to verify your email address.</p>`
-    };
+    };  
 
     // try {
     //     await mg.messages().send(mailOptions);
@@ -43,17 +40,29 @@ const sendVerificationEmail = async (email, token) => {
     // }
 
     // lets build an promise
+    // return new Promise((resolve, reject) => {
+    //     mg.messages().send(data, (error, body) => {
+    //         if(error) {
+    //             reject(error);
+    //             console.log('error');
+    //         } else {
+    //             resolve(body);
+    //             console.log('Verification email sent successfully.');
+    //         }
+    //     })
+    // })
+
     return new Promise((resolve, reject) => {
-        mg.messages().send(data, (error, body) => {
-            if(error) {
-                reject(error);
-                console.log('error');
-            } else {
-                resolve(body);
-                console.log('Verification email sent successfully.');
-            }
-        })
-    })
+      transporter.sendMail(data, (error, body) => {
+          if(error) {
+              reject(error);
+              console.log('error', error);
+          } else {
+              resolve(body);
+              console.log('Email sent successfully');
+          }
+      })
+  })
 
 };
 
@@ -67,15 +76,27 @@ const sendWelcomeEmail = async(email) => {
         `Thank you for signing up with us. We are excited to have you on board.`
     }
 
-    return new Promise((resolve,reject) => {
-        mg.messages().send(data, (error, body) => {
-            if(error) {
-                reject(error);
-            } else {
-                resolve(body);
-            }
-        })
-    });
+    // return new Promise((resolve,reject) => {
+    //     mg.messages().send(data, (error, body) => {
+    //         if(error) {
+    //             reject(error);
+    //         } else {
+    //             resolve(body);
+    //         }
+    //     })
+    // });
+
+    return new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, body) => {
+          if(error) {
+              reject(error);
+              console.log('error', error);
+          } else {
+              resolve(body);
+              console.log('Email sent successfully');
+          }
+      })
+  })
 
 }
 
@@ -1381,7 +1402,6 @@ const sendFailedInvoice = async (email, invoiceNumber, invoiceDetails) => {
       throw err;
   }
 };
-
 
 // const sendPasswordResetEmail = async (email, resetLink) => {
 //     const data = {

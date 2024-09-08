@@ -335,6 +335,14 @@ router.get('/verify-email', async(req, res) => {
 
         await User.update({ isVerify: true, updatedAt: updatedAtTimeZone }, { where: { email: email } });
 
+        await Notification.create({
+            title: 'Account Successfully Verified',
+            message: `Congratulations! Your account has been successfully verified. Thank you for completing the verification process.`,
+            read: false,
+            userId: userByEmail.id,
+            createdAt: updatedAtTimeZone
+        });
+
         res.status(200).json({
             status: 'success',
             message: 'Email verification successful.',
@@ -480,6 +488,14 @@ router.put('/change-password/:id', verifyToken, async(req, res) => {
         const hashedNewPassword = await bcrypt.hash(new_password, 10);
 
         await user.update({ password: hashedNewPassword, updatedAt: updatedAtTimeZone, updatedBy });
+
+        await Notification.create({
+            title: 'Password Successfully Changed',
+            message: `Your password has been successfully updated. For your security, please ensure that this change was made by you. If you did not request this change, contact our support team immediately.`,
+            read: false,
+            userId: userByEmail.id,
+            createdAt: updatedAtTimeZone
+        });
 
         return res.status(200).json({
             status: 'success',
@@ -1828,6 +1844,15 @@ router.put('/:id', verifyToken, async(req, res) => {
             updatedBy,
         });
 
+        await Notification.create({
+            title: 'Profile Information',
+            message: `Your first and last name have been successfully updated. Please review your profile to ensure all information is correct. If you did not make this change, contact our support team immediately.`,
+            read: false,
+            userId: userByEmail.id,
+            createdAt: updatedAtTimeZone
+        });
+
+
         return res.status(200).json({
             status: 'success',
             statusCode: 200,
@@ -2145,6 +2170,14 @@ router.post('/github-request', async(req, res) => {
             userId: userId
         });
 
+        await Notification.create({
+            title: 'Access request received',
+            message: `Thank you for your payment! We have received your request for Github access. Our team will review your request and get back to you shortly.`,
+            read: false,
+            userId: userId,
+            createdAt: createdAtTimeZone
+        });
+
         return res.status(201).json({
             status: 'success',
             statusCode: 201,
@@ -2241,6 +2274,17 @@ router.put('/github-request/:id', async(req, res) => {
             deletedBy,
             userId
         });
+
+        // if the status is pending and updated to accepted i need to create an notification for user
+        if(githubRequest.status === 'pending' && updatedGithubRequest.status === 'accepted') {
+            await Notification.create({
+                title: 'Github Access Granted',
+                message: `Congratulations! Your request for Github access has been approved. You can now access the Github feature.`,
+                read: false,
+                userId: userId,
+                createdAt: updatedAt
+            });
+        }
 
         return res.status(200).json({
             status: 'success',

@@ -63,50 +63,39 @@ export default function WithSubnavigation() {
   }
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await axios.get(`
-        http://localhost:6099/api/users/notifications/recently/${user.id}`, {
-          withCredentials: true
-        });
+    if (!loading && user) { // Only proceed when not loading and user is available
+      const fetchNotifications = async () => {
+        try {
+          const response = await axios.get(`http://localhost:6099/api/users/notifications/${user.id}`, {
+            withCredentials: true,
+          });
+          setNotifications(response.data.notifications);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-        setNotifications(response.data.notifications);
+      const fetchUnreadCount = async () => {
+        try {
+          const response = await axios.get(`http://localhost:6099/api/users/notifications/unread/${user.id}`, {
+            withCredentials: true,
+          });
+          setUnreadCount(response.data.count);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-        console.log(response.data);
-
-      } catch (error) {
-        console.log(error);
-      }
+      fetchNotifications();
+      fetchUnreadCount();
     }
+  }, [loading, user]);
 
-    const fetchUnreadCount = async () => {
-      try {
-        const response = await axios.get(`
-        http://localhost:6099/api/users/notifications/unread/49`, {
-          withCredentials: true
-        });
-
-        setUnreadCount(response.data.count);
-
-        console.log("Count: ", response.data);
-
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  
 
 
 
-    // const intervalId = setInterval(() => {
-    //   fetchNotifications();
-    //   fetchUnreadCount();
-    // }, 30000);
 
-    fetchNotifications();
-    fetchUnreadCount();
-
-    // return () => clearInterval(intervalId);
-  }, []);
 
   const handleMarkAsRead = async (notificationId) => {
     try {
@@ -135,18 +124,19 @@ export default function WithSubnavigation() {
       console.log("Error marking notification as read:", error);
     }
   };
+
   return (
     <Box py={2}>
       <Container maxW='6xl'>
         <Flex
           bg={'transparent'}
-          color={useColorModeValue('gray.600', 'white')}
+          color={'gray.700'}
           minH={'60px'}
           py={{ base: 2 }}
           px={{ base: 4 }}
           borderBottom={0}
           borderStyle={'solid'}
-          borderColor={useColorModeValue('gray.200', 'gray.900')}
+          borderColor={'gray.200'}
           align={'center'}>
           <Flex
             flex={{ base: 1, md: 'auto' }}
@@ -165,7 +155,7 @@ export default function WithSubnavigation() {
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
             <Text
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+              textAlign={{ base: 'center', md: 'left' }}
               fontFamily={'Bricolage Grotesque'}
               color='gray.50'
               fontSize={'3xl'}
@@ -234,7 +224,7 @@ export default function WithSubnavigation() {
                     >
                       {unreadCount ? unreadCount : 0}
                     </Text>
-                    <PopoverContent w="fit-content" _focus={{ boxShadow: 'none' }}>
+                    <PopoverContent w="fit-content" _focus={{ boxShadow: 'none' }} maxW={'400px'}>
                       <PopoverArrow />
                       <PopoverBody>
                         <Stack>
