@@ -6,6 +6,7 @@ const moment = require('moment-timezone');
 const mailgun = require('mailgun-js');
 const nodemailer = require('nodemailer');
 const path = require('path');
+const welcomeTemplate = require('./templates/welcomeTemplate');
 
 // Initialize Mailgun
 const mg = mailgun({
@@ -23,6 +24,7 @@ const transporter = nodemailer.createTransport({
     debug: true,
 });
 
+// verify email template done.
 const sendVerificationEmail = async (email, token) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com', // replace with your mailgun verified sender
@@ -66,14 +68,14 @@ const sendVerificationEmail = async (email, token) => {
 
 };
 
-const sendWelcomeEmail = async(email) => {
+// Welcome email template done.
+const sendWelcomeEmail = async(email, first_name) => {
     const data = {
         from: 'dijarsmakolli99@gmail.com',
         to: email,
         // bcc: 'dijarsmakolli99@gmail.com',
         subject: 'Welcome to ShipJitt',
-        html: 
-        `Thank you for signing up with us. We are excited to have you on board.`
+        html: welcomeTemplate(first_name)
     }
 
     // return new Promise((resolve,reject) => {
@@ -87,7 +89,7 @@ const sendWelcomeEmail = async(email) => {
     // });
 
     return new Promise((resolve, reject) => {
-      transporter.sendMail(mailOptions, (error, body) => {
+      transporter.sendMail(data, (error, body) => {
           if(error) {
               reject(error);
               console.log('error', error);
@@ -98,8 +100,9 @@ const sendWelcomeEmail = async(email) => {
       })
   })
 
-}
+};
 
+// send coupon email template not done yet
 const sendCoupon = async(email, plan, amount, total, transactionId, date, status, currency, paymentMethod, paymentStatus) => {
     const starterPriceId = 'price_1PwYx1P1jRGQyMPGbDhde91U';
     const allinPriceId = 'price_1PwYxxP1jRGQyMPGHpjvqKD6';
@@ -150,6 +153,7 @@ const sendCoupon = async(email, plan, amount, total, transactionId, date, status
 
 };
 
+// send Invoice email template dot done yet
 const sendInvoice = async (email, invoiceNumber, invoiceDetails) => {
 
     let htmlContent = `
@@ -775,6 +779,7 @@ const sendInvoice = async (email, invoiceNumber, invoiceDetails) => {
     }
 };
 
+// send failed email template not done yet 
 const sendFailedInvoice = async (email, invoiceNumber, invoiceDetails) => {
 
   let htmlContent = `
@@ -1432,6 +1437,7 @@ const sendFailedInvoice = async (email, invoiceNumber, invoiceDetails) => {
 
 // };
 
+// sendpasswordreset email template not done yet
 const sendPasswordResetEmail = async (email, resetLink, first_name) => {
 
   let htmlContent = `
@@ -1959,6 +1965,7 @@ const sendPasswordResetEmail = async (email, resetLink, first_name) => {
   }
 };
 
+// sendpasswordreset email template not done yet
 const sendPaymentDetailsEmail = async (email, paymentDetails) => {
     const { plan, amount, total, transactionId, date } = paymentDetails;
     const data = {

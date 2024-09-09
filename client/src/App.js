@@ -98,8 +98,6 @@ const PrivateRoute = ({ children }) => {
 
   if (loading) return null; // Optionally add a loading spinner here
 
-  console.log(user);
-
   if (user && !isVerify()) {
     logout(); // Automatically log out if user is not verified
     return null; // Optionally display a message or redirect to a different page
@@ -112,8 +110,6 @@ const IsAuthenticated = ({ children }) => {
   const { user, loading } = useAuth();
 
   if (loading) return null;
-
-  console.log(user);
 
   return !user ? children : <Navigate to="/" />;
 };
@@ -130,8 +126,6 @@ const PaidRoute = ({ children }) => {
   const { user, hasAccess, loading } = useAuth();
 
   if (loading) return null; // Optionally add a loading spinner here
-
-  console.log(user, hasAccess);
 
   return user && hasAccess() ? children : <Navigate to="/unauthorized" />;
 };

@@ -21,7 +21,7 @@ function Notifications() {
                     withCredentials: true
                 });
 
-                setNotifications(response.data.notifications);
+                setNotifications(response.data.notifications)
                 console.log("Notifications: ", response.data);
             } catch (error) {
                 console.log(error);
@@ -110,31 +110,13 @@ function Notifications() {
                                     No Notifications
                                 </Text>
                             )}
-
-
-
-
-
-
-
-
-
-
                         </Box>
                     </Box>
-
-
-
                 </SimpleGrid>
-
-
-
 
                 <Box py={10}>
                     <Footer />
                 </Box>
-
-
 
             </Container>
         </Box>

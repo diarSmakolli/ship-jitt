@@ -158,18 +158,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // onst getUser = async (userId) => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:6099/api/users/${userId}`, {
-  //       withCredentials: true,
-  //     });
-  //     setUser(response.data.user);
-  //   } catch (error) {
-  //     console.error('Error fetching user:', error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   return (
     <AuthContext.Provider value={{ user, logout, isAdmin, hasAccess, isVerify, loading }}>
       {children}

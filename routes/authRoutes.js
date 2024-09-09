@@ -163,6 +163,8 @@ router.post('/register', async (req, res) => {
             createdAt: createdAtTimeZone
         });
 
+        await sendWelcomeEmail(email, first_name);
+
 
         res.status(201).json({
             status: 'success',
@@ -1640,6 +1642,7 @@ router.get('/:id', verifyToken, async(req, res) => {
 
         let user = await User.findByPk(userId, {
             include: [Invoice],
+            attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
         })
         
         if(!user) {

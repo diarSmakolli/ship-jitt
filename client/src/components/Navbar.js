@@ -45,6 +45,9 @@ import { RiShutDownLine, RiRestartLine, RiFileShredLine, RiNotification4Line } f
 import { MdNotifications } from "react-icons/md";
 import axios from 'axios';
 import { useEffect } from 'react';
+import logo from '../images/shipjitt.png';
+import logo_white from '../images/logo-white.png';
+
 
 
 export default function WithSubnavigation() {
@@ -52,9 +55,6 @@ export default function WithSubnavigation() {
   const { user, loading, logout } = useAuth();
   const [notifications, setNotifications] = React.useState([]);
   const [unreadCount, setUnreadCount] = React.useState(0);
-
-
-  console.log('Navbar user: ', user);
 
   let defaultProfilePicture = "https://www.gravatar.com/avatar/938610872fd268285c3d4024cfa46360.png?d=retro&r=g";
   let profilePicture;
@@ -85,17 +85,10 @@ export default function WithSubnavigation() {
           console.log(error);
         }
       };
-
       fetchNotifications();
       fetchUnreadCount();
     }
   }, [loading, user]);
-
-  
-
-
-
-
 
   const handleMarkAsRead = async (notificationId) => {
     try {
@@ -154,7 +147,7 @@ export default function WithSubnavigation() {
             />
           </Flex>
           <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Text
+            {/* <Text
               textAlign={{ base: 'center', md: 'left' }}
               fontFamily={'Bricolage Grotesque'}
               color='gray.50'
@@ -162,7 +155,10 @@ export default function WithSubnavigation() {
               fontWeight={'500'}
             >
               Ship jitt
-            </Text>
+            </Text> */}
+
+            <Image src={logo} width={'100px'} h='auto' />
+            {/* <Image src={logo_white} width={'100px'} h='auto' /> */}
 
             <Flex display={{ base: 'none', md: 'flex' }} ml={10} mt={3}>
               <DesktopNav />
