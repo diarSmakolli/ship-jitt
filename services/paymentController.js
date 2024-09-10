@@ -6,7 +6,6 @@ const nodemailer = require('nodemailer');
 const moment = require('moment-timezone');
 const { sendInvoice, sendFailedInvoice } = require('./email');
 const { generateInvoicePDF } = require('./generateInvoicePdf');
-const { use } = require('passport');
 
 const createCheckoutSession = async (req, res) => {
     try {
@@ -55,25 +54,23 @@ const handleWebhook = async (req, res) => {
     try {
         event = req.body;
         if (event.type === 'checkout.session.completed') {
-            const session = event.data.object;
-            const userId = session.metadata.userId;
-            const priceId = session.metadata.priceId;
-            const email = session.metadata.email;
-            const amount = session.amount_total;
-            const transactionId = session.id;
+            const session = event.data.object; // session object from stripe
+            const userId = session.metadata.userId; // userID
+            const priceId = session.metadata.priceId; // priceID
+            const email = session.metadata.email; // email
+            const amount = session.amount_total; // 200
+            const transactionId = session.id; // transactionID
             const date = new Date(session.created * 1000).toLocaleString();
-            const status = session.status; // succeeded
+            const status = session.status; // complete
             const currency = session.currency; // usd
-            const paymentMethod = session.payment_method_types[0];
+            const paymentMethod = session.payment_method_types[0]; // card
             const paymentStatus = session.payment_status; // paid
-            const country = session.customer_details.address.country;
-            const balance_transaction = session.balance_transaction;
-            const creditCardBrand = null
-            const paid = session.paid; // true
-            const last4Digits = null;
+            const country = session.customer_details.address.country; // XK
+            const amountSubTotal = session.amount_subtotal; // 24900
+            const amountTotal = session.amount_total; // 14900
+            const discountAmount = amountSubTotal - amountTotal; // 10000
 
-
-
+            
             console.log('Session: ', session);
 
             const user = await User.findOne({ where: { id: userId } });
@@ -108,6 +105,9 @@ const handleWebhook = async (req, res) => {
                     customerName: `${firstName} ${lastName}`,
                     email: email,
                     country: country,
+                    amountSubTotal: (amountSubTotal / 100).toFixed(2),
+                    amountTotal: (amountTotal / 100).toFixed(2),
+                    discountAmount: (discountAmount / 100).toFixed(2),
                     // balance_transaction: balance_transaction,
                     // creditCardBrand: creditCardBrand,
                     // paid: paid,
@@ -123,6 +123,8 @@ const handleWebhook = async (req, res) => {
                 sendInvoice(email, invoiceNumber, invoiceDetails);
 
                 console.log(`Invoice ${invoiceNumber} has been sent to ${email}.`);
+
+                console.log(session);
             }
         }
 
@@ -131,13 +133,13 @@ const handleWebhook = async (req, res) => {
             const userId = session.metadata.userId;
             const priceId = session.metadata.priceId;
             const email = session.metadata.email;
-            const date = new Date(session.created * 1000).toLocaleString();
-            const currency = session.currency;
-            const amount = session.amount;
-            const status = session.status;
-            const country = session.billing_details.address.country;
-            const paymentMethod = session.payment_method_details.type;
-            const paymentStatus = session.paid;
+            const date = new Date(session.created * 1000).toLocaleString(); // date
+            const currency = session.currency; // USD
+            const amount = session.amount; // 14900
+            const status = session.status; // failed
+            const country = session.billing_details.address.country; // XK
+            const paymentMethod = session.payment_method_details.type; // card
+            const paymentStatus = session.paid; // false
 
             const user = await User.findOne({ where: { id: userId } });
 
@@ -160,7 +162,7 @@ const handleWebhook = async (req, res) => {
                     status: status,
                     currency: currency,
                     paymentMethod: paymentMethod,
-                    paymentStatus: paymentStatus == true ? 'paid' : 'pending',
+                    paymentStatus: paymentStatus ? 'paid' : 'fail',
                     createdAt: moment().tz(process.env.DEFAULT_TIMEZONE).format(),
                     createdBy: userId,
                     userId: userId,
@@ -179,14 +181,16 @@ const handleWebhook = async (req, res) => {
                 sendFailedInvoice(email, invoiceNumber, invoiceDetails);
 
                 console.log('Invoice pdf generated no payment made.');
+
+                console.log(session);
             }
         }
 
-        if(event.type = 'checkout.session.expires') {
-            const session = event.data.object;
-        }
+        // if(event.type = 'checkout.session.expires') {
+        //     const session = event.data.object;
+        // }
 
-
+        
 
         res.json({ received: true });
     } catch (err) {

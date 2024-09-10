@@ -219,7 +219,7 @@ module.exports = (first_name) => `
                                                                     <p style="margin: 0;">
                                                                         <span
                                                                             style="word-break: break-word; color: #010001;">At
-                                                                            Ship Jitt, we are dedicated
+                                                                            Ship Jitt, We are dedicated
                                                                             to helping you build and launch fast.
                                                                             Whether
                                                                             you're just getting started or are an

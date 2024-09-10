@@ -1,3 +1,4 @@
+module.exports = (email, token, first_name) => `
 <!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 
@@ -292,7 +293,7 @@
                                                                     <span
                                                                         style="word-break: break-word; padding-left: 0px; padding-right: 0px; 
                                                                                                         font-size: 18px; display: inline-block; letter-spacing: normal; font-weight: bold !important;">
-                                                                        <a href="http://localhost:3000"
+                                                                        <a href="http://localhost:3000/verify-email?token=${token}"
                                                                             style="text-decoration: none;">
                                                                             <span
                                                                                 style="word-break: break-word; line-height: 44px; color: #fff; font-weight: bold !important;">
@@ -323,7 +324,7 @@
                                                                             link below: <br />
 
                                                                             Link:
-                                                                            http://localhost:3000/verify
+                                                                            http://localhost:3000/verify-email?token=${token}
                                                                         </span>
                                                                     </p>
                                                                 </div>
@@ -415,3 +416,4 @@
     </table><!-- End -->
 </body>
 </html>
+`;

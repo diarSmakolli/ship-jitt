@@ -92,7 +92,7 @@ const generateInvoicePDF = async (invoiceDetails) => {
 
         let transferYPos = 600;
 
-        if (!invoiceDetails.paymentStatus === 'paid' || !invoiceDetails.status == 'completed') {
+        if (invoiceDetails.paymentStatus == 'fail') {
             doc.fontSize(9).text('Pay with Bank Transfer', 70, transferYPos)
             doc.text('Account number: PCB 111958215712391', 70, transferYPos + 20)
             doc.text('Account name: ShipJitt INC.', 70, transferYPos + 40)

@@ -91,6 +91,15 @@ const Invoice = sequelize.define('invoices', {
     last4Digits: {
         type: Sequelize.DataTypes.STRING,
     },
+    amountSubTotal: {
+        type: Sequelize.DataTypes.DOUBLE,
+    },
+    amountTotal: {
+        type: Sequelize.DataTypes.DOUBLE,
+    },
+    discountAmount: {
+        type: Sequelize.DataTypes.DOUBLE,
+    },
 }, {
     tableName: 'invoices',
     timestamps: false

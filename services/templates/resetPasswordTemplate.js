@@ -1,3 +1,6 @@
+const { reset } = require("nodemon");
+
+module.exports = (resetLink, first_name) => `
 <!DOCTYPE html>
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
 
@@ -139,6 +142,8 @@
                             </tr>
                         </tbody>
                     </table>
+
+
                     <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-2"
                         role="presentation"
                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f7f9fc;" width="100%">
@@ -166,25 +171,30 @@
                                                                     style="color:white;font-family:'Montserrat','Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;font-size:32px;line-height:120%;text-align:left;mso-line-height-alt:38.4px;">
 
                                                                     <p style="margin: 0; word-break: break-word;">
-                                                                        <span style="word-break: break-word; color: #010001;
+                                                                        <!-- <span style="word-break: break-word; color: #010001;
 																				font-family: 'Bricolage Grotesque'; font-size: 30px;
 																			">
                                                                             Ship jitt
-                                                                        </span>
+                                                                        </span> -->
+                                                                        <img src="https://scontent.fprn4-1.fna.fbcdn.net/v/t1.15752-9/458180391_2436434596553247_5487281233083388446_n.png?_nc_cat=104&ccb=1-7&_nc_sid=9f807c&_nc_ohc=N7hNwBuI0OoQ7kNvgHFaT8M&_nc_ht=scontent.fprn4-1.fna&oh=03_Q7cD1QGdQfX90yuPU7YQmYNUOlQj9bi7-kNbNurawvl3tY0_gg&oe=6706BEF2"
+                                                                            width="120px" height="auto" />
                                                                     </p>
 
 
                                                                     <p
                                                                         style="margin: 0; word-break: break-word; margin-top: 20px;">
-                                                                        <span
-                                                                            style="word-break: break-word; color: #010001; font-size: 25px; ">
-                                                                            <strong>Welcome,
-                                                                                Dijar!</strong></span>
+                                                                        <span style="word-break: break-word; color: #010001; font-size: 25px;
+                                                                            font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica',sans-serif;
+                                                                            ">
+                                                                            Hi,
+                                                                            ${first_name}!</span>
                                                                     </p>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </table>
+
+
                                                     <table border="0" cellpadding="0" cellspacing="0"
                                                         class="paragraph_block block-2" role="presentation"
                                                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
@@ -193,40 +203,64 @@
                                                             <td class="pad"
                                                                 style="padding-bottom:5px;padding-left:30px;padding-right:30px;padding-top:15px;">
                                                                 <div
-                                                                    style="color:#7c7c7c;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;font-size:20px;line-height:150%;text-align:left;mso-line-height-alt:30px;">
+                                                                    style="color:#7c7c7c;font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica',sans-serif;font-size:16px;line-height:150%;text-align:left;mso-line-height-alt:24px;">
                                                                     <p style="margin: 0;"><span
-                                                                            style="word-break: break-word; color: #010001;">Welcome
-                                                                            to ShipJitt! 🎉 We're excited to have you
-                                                                            join us and be a part of our growing
-                                                                            community.</span></p>
+                                                                            style="word-break: break-word; color: #010001;">
+                                                                            We received a request to reset a password
+                                                                            for your Shipjitt account.
+                                                                            <br />
+                                                                            If you made this request, please click the
+                                                                            link below to reset your password.
+                                                                            <br />
+
+
+                                                                        </span></p>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </table>
+
                                                     <table border="0" cellpadding="0" cellspacing="0"
                                                         class="paragraph_block block-3" role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fefffe; color: #000000; width: 700px; margin: 0 auto;"
                                                         width="100%">
                                                         <tr>
                                                             <td class="pad"
                                                                 style="padding-left:30px;padding-right:30px;padding-top:15px;">
                                                                 <div
-                                                                    style="color:#7c7c7c;font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px;line-height:150%;text-align:left;mso-line-height-alt:24px;">
-                                                                    <p style="margin: 0;">
-                                                                        <span
-                                                                            style="word-break: break-word; color: #010001;">At
-                                                                            Ship Jitt, we are dedicated
-                                                                            to helping you build and launch fast.
-                                                                            Whether
-                                                                            you're just getting started or are an
-                                                                            experienced user, we're here to make sure
-                                                                            you get the most out of our platform.
-                                                                        </span>
-                                                                    </p>
+                                                                    style="background-color:#635BFF;
+                                                                                                    border-bottom:0px solid transparent;
+                                                                                                    border-left:0px solid transparent;
+                                                                                                    border-radius:7px;
+                                                                                                    border-right:0px solid transparent;
+                                                                                                    border-top:0px solid transparent;
+                                                                                                    color:#fff;
+                                                                                                    display:block;
+                                                                                                    font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica',sans-serif;
+                                                                                                    font-size:22px;mso-border-alt:none;
+                                                                                                    padding-bottom:0px;padding-top:0px;text-align:center;
+                                                                                                    text-decoration:none;
+                                                                                                    width:30%;word-break:keep-all;">
+                                                                    <span
+                                                                        style="word-break: break-word; padding-left: 0px; padding-right: 0px; 
+                                                                                                        font-size: 18px; display: inline-block; letter-spacing: normal; font-weight: bold !important;">
+                                                                        <a href="${resetLink}"
+                                                                            style="text-decoration: none;">
+                                                                            <span
+                                                                                style="word-break: break-word; line-height: 44px; color: #fff; font-weight: bold !important;">
+                                                                                Reset password
+                                                                            </span>
+                                                                        </a>
+                                                                    </span>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </table>
+
+
+
+
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -235,6 +269,8 @@
                             </tr>
                         </tbody>
                     </table>
+
+
                     <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3"
                         role="presentation"
                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f7f9fc;" width="100%">
@@ -243,7 +279,9 @@
                                 <td>
                                     <table align="center" border="0" cellpadding="0" cellspacing="0"
                                         class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fefffe; color: #000000; width: 700px; margin: 0 auto;"
+                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fefffe; color: #000000; width: 700px; margin: 0 auto;
+                                        padding-bottom: 20px;
+                                        border-top-left-radius: 0px; border-top-right-radius: 0px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;"
                                         width="700">
                                         <tbody>
                                             <tr>
@@ -251,51 +289,44 @@
                                                     style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
                                                     width="100%">
                                                     <table border="0" cellpadding="0" cellspacing="0"
-                                                        class="paragraph_block block-1" role="presentation"
+                                                        class="paragraph_block block-3" role="presentation"
                                                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
                                                         width="100%">
                                                         <tr>
                                                             <td class="pad"
-                                                                style="padding-left: 25px;padding-right:10px;padding-top:25px;">
-                                                                <div style="color:#7c7c7c;
-																	font-family:Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
-																	font-size:20px;line-height:120%;text-align:left;mso-line-height-alt:28.799999999999997px;">
-                                                                    <p style="margin: 0;"><span
+                                                                style="padding-left:30px;padding-right:30px;padding-top:15px;">
+                                                                <div
+                                                                    style="color:#7c7c7c;font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica',sans-serif;font-size:16px;line-height:150%;text-align:left;mso-line-height-alt:24px;">
+                                                                    <p style="margin: 0;">
+                                                                        <span
                                                                             style="word-break: break-word; color: #010001;">
-                                                                            Here’s a quick overview of how to get
-                                                                            started:
-                                                                        </span></p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <table border="0" cellpadding="0" cellspacing="0"
-                                                        class="list_block block-2" role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word; color: #7c7c7c; font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 16px; line-height: 180%; text-align: left; mso-line-height-alt: 28.8px;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td class="pad"
-                                                                style="padding-bottom:30px;padding-left:50px;padding-right:20px;padding-top:15px;">
-                                                                <div style="margin-left:-20px">
-                                                                    <ul
-                                                                        style="margin-top: 0; margin-bottom: 0; list-style-type: revert;">
-                                                                        <li style="Margin: 0 0 0 0;"><span
-                                                                                style="word-break: break-word; color: #010001;"><strong>Login</strong>:
-                                                                                Access your account anytime at
-                                                                                www.shipjitt.com</span></li>
-                                                                        <li style="Margin: 0 0 0 0;"><span
-                                                                                style="word-break: break-word; color: #010001;"><strong>Explore
-                                                                                    Features</strong>: Discover powerful
-                                                                                tools to help you build fast.</span>
-                                                                        </li>
-                                                                        <li style="Margin: 0 0 0 0;"><span
-                                                                                style="word-break: break-word; color: #010001;"><strong>Need
-                                                                                    Help?</strong>: Our support team is
-                                                                                ready to assist you with any questions
-                                                                                or challenges. Reach us at
-                                                                                support@shipjitt.com or visit our
-                                                                                Customer Support.</span></li>
-                                                                    </ul>
+                                                                            If you didn’t request a password reset,
+                                                                            please ignore this email. Your account will
+                                                                            remain secure. <br />
+                                                                            
+                                                                            <br />
+                                                                            For security reasons, the link will expire
+                                                                            in 1 hour.
+                                                                        </span>
+                                                                    </p>
+
+                                                                    <br />
+
+                                                                    <p style="margin: 0;">
+                                                                        <span
+                                                                            style="word-break: break-word; color: #010001;">
+                                                                            If you’re having trouble in clicking
+                                                                            button please go to the link directly:
+                                                                            
+                                                                            <a href="${resetLink}"
+                                                                                style="color: #635BFF; text-decoration: none;">
+                                                                                <span
+                                                                                    style="word-break: break-word; color: #635BFF;">
+                                                                                    ${resetLink}
+                                                                                </span>
+                                                                        </span>
+                                                                    </p>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -304,64 +335,14 @@
                                             </tr>
                                         </tbody>
                                     </table>
+
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4"
-                        role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f7f9fc;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table align="center" border="0" cellpadding="0" cellspacing="0"
-                                        class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fefffe; color: #000000; border-radius: 0 0 20px 20px; width: 700px; margin: 0 auto;"
-                                        width="700">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column column-1"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 60px; padding-top: 25px; vertical-align: top; border-radius: 20px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-                                                    <table border="0" cellpadding="15" cellspacing="0"
-                                                        class="button_block block-1" role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td class="pad">
-                                                                <div align="center" class="alignment">
-                                                                    <div style="background-color:#000;
-																		border-bottom:0px solid transparent;
-																		border-left:0px solid transparent;
-																		border-radius:7px;
-																		border-right:0px solid transparent;
-																		border-top:0px solid transparent;
-																		color:#fff;
-																		display:block;
-																		font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;
-																		font-size:22px;font-weight:undefined;mso-border-alt:none;
-																		padding-bottom:0px;padding-top:0px;text-align:center;
-																		text-decoration:none;
-																		width:30%;word-break:keep-all;">
-                                                                        <span style="word-break: break-word; padding-left: 0px; padding-right: 0px; 
-																			font-size: 18px; display: inline-block; letter-spacing: normal;"><span
-                                                                                style="word-break: break-word; line-height: 44px;">
-                                                                                Start now
-                                                                            </span></span>
-                                                                    </div>
-                                                                    <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <!-- Footer  -->
+
                     <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5"
                         role="presentation"
                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f7f9fc;" width="100%">
@@ -410,3 +391,4 @@
 </body>
 
 </html>
+`

@@ -234,7 +234,7 @@ router.post('/login', async (req, res) => {
             const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
             await User.update({ verification_token: verificationToken, updatedAt: updatedAtTimeZone }, { where: { email: email } });
 
-            await sendVerificationEmail(email, verificationToken);
+            await sendVerificationEmail(email, verificationToken, user.first_name);
 
             return res.status(403).json({
                 status: 'error',
@@ -289,9 +289,11 @@ router.post('/send-verification-email', async(req, res) => {
                 message: 'User is already verified.'
             });
         }
+        const first_name = user.first_name;
+
         const selectedTimeZone = timeZone || process.env.DEFAULT_TIMEZONE;
         const verificationToken = jwt.sign({ email: email }, process.env.SECRETJWT, { expiresIn: '1h' });
-        await sendVerificationEmail(email, verificationToken);
+        await sendVerificationEmail(email, verificationToken, first_name);
 
         res.status(200).json({
             status: 'success',
@@ -630,7 +632,6 @@ router.get('/getall', verifyToken, async (req, res) => {
 });
 
 // Queries
-
 // total users count
 router.get('/total-users', verifyToken, async(req, res) => {
     try {
